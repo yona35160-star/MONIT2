@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import { sendToBackend } from '../api/adminApi';
 import { HeroCards } from '../components/marketing/HeroCards';
@@ -112,7 +112,7 @@ export const MarketingDashboard = () => {
                                 fetchData();
                             }
                         }}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 whitespace-nowrap"
+                        className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 whitespace-nowrap"
                     >
                         סנכרן פייסבוק
                     </button>

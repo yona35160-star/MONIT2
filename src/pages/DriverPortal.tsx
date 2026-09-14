@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDriverPortalData, sendToBackend, acceptRideByPhone, updateDriverProfile } from '../api/driverApi';
@@ -396,7 +396,7 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
             {activeRide && (
               <div 
                 onClick={() => navigate(`/complete-ride?orderId=${activeRide.orderId}&phone=${driver.phone}`)}
-                className="bg-indigo-600 p-6 rounded-[2.5rem] shadow-2xl shadow-indigo-500/40 flex items-center justify-between border border-indigo-400/30 cursor-pointer hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
+                className="bg-primary-600 p-6 rounded-[2.5rem] shadow-2xl shadow-primary-500/40 flex items-center justify-between border border-primary-400/30 cursor-pointer hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
               >
                 <div className="flex items-center gap-5 relative z-10">
                   <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white backdrop-blur-md border border-white/20 animate-pulse">
@@ -404,12 +404,12 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
                   </div>
                   <div>
                     <p className="text-white font-black text-xl tracking-tight leading-none">נסיעה פעילה בביצוע</p>
-                    <p className="text-indigo-200 text-[10px] font-black uppercase tracking-widest mt-2 flex items-center gap-2">
+                    <p className="text-primary-200 text-[10px] font-black uppercase tracking-widest mt-2 flex items-center gap-2">
                        {activeRide.pickupAddress} <ChevronLeft size={10} /> 
                     </p>
                   </div>
                 </div>
-                <div className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-black text-xs shadow-xl relative z-10">
+                <div className="bg-white text-primary-600 px-6 py-3 rounded-2xl font-black text-xs shadow-xl relative z-10">
                   נהל נסיעה
                 </div>
                 <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors" />
@@ -755,12 +755,12 @@ const OrderBadge: React.FC<{ status: string }> = ({ status }) => {
     completed: 'bg-success/10 text-success border-success/20',
     cancelled: 'bg-danger/10 text-danger border-danger/20',
     active: 'bg-primary-600/10 text-primary-400 border-primary-500/20',
-    on_route: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+    on_route: 'bg-primary-500/10 text-primary-400 border-primary-500/20',
     // [FIX BUG-003] Added missing statuses
     assigned: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     confirmed: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     arrived: 'bg-teal-500/10 text-teal-400 border-teal-500/20',
-    in_progress: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+    in_progress: 'bg-primary-500/10 text-primary-400 border-primary-500/20',
     pending: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
     broadcasted: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
     waiting_approval: 'bg-orange-500/10 text-orange-400 border-orange-500/20',

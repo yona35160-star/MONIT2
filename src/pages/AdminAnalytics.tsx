@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
@@ -134,8 +134,8 @@ export const AdminAnalytics = () => {
             >
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 bg-indigo-500/20 rounded-lg">
-                            <BarChart3 className="text-indigo-400" size={24} />
+                        <div className="p-2 bg-primary-500/20 rounded-lg">
+                            <BarChart3 className="text-primary-400" size={24} />
                         </div>
                         <h2 className="text-3xl font-black text-white tracking-tight">אנליטיקה עסקית</h2>
                     </div>
@@ -146,13 +146,13 @@ export const AdminAnalytics = () => {
                     <div className="bg-slate-900/50 p-1.5 rounded-2xl flex items-center border border-white/10 backdrop-blur-md">
                         <button
                             onClick={() => setPeriod('week')}
-                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${period === 'week' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25' : 'text-slate-400 hover:text-white'}`}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${period === 'week' ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25' : 'text-slate-400 hover:text-white'}`}
                         >
                             שבועי
                         </button>
                         <button
                             onClick={() => setPeriod('month')}
-                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${period === 'month' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25' : 'text-slate-400 hover:text-white'}`}
+                            className={`px-6 py-2.5 rounded-xl text-sm font-black transition-all duration-300 ${period === 'month' ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25' : 'text-slate-400 hover:text-white'}`}
                         >
                             חודשי
                         </button>
@@ -169,7 +169,7 @@ export const AdminAnalytics = () => {
                 </div>
                 
                 {/* Decorative background glow */}
-                <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 blur-[100px] pointer-events-none"></div>
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary-500/10 blur-[100px] pointer-events-none"></div>
             </motion.div>
 
             {/* Core Metrics Grid */}
@@ -177,7 +177,7 @@ export const AdminAnalytics = () => {
                 {[
                     { label: 'מחזור עסקאות', value: `₪${revenueData?.totalRevenue?.toLocaleString() || 0}`, icon: DollarSign, color: 'from-emerald-500/20 to-emerald-500/5', iconColor: 'text-emerald-400' },
                     { label: 'עמלות תחנה', value: `₪${revenueData?.totalCommission?.toLocaleString() || 0}`, icon: Zap, color: 'from-amber-500/20 to-amber-500/5', iconColor: 'text-amber-400' },
-                    { label: 'נסיעות שהושלמו', value: revenueData?.rideCount || 0, icon: TrendingUp, color: 'from-indigo-500/20 to-indigo-500/5', iconColor: 'text-indigo-400' },
+                    { label: 'נסיעות שהושלמו', value: revenueData?.rideCount || 0, icon: TrendingUp, color: 'from-primary-500/20 to-primary-500/5', iconColor: 'text-primary-400' },
                     { label: 'נהגים פעילים', value: leaderboard.length, icon: Users, color: 'from-purple-500/20 to-purple-500/5', iconColor: 'text-purple-400' },
                 ].map((stat, i) => (
                     <motion.div 
@@ -211,7 +211,7 @@ export const AdminAnalytics = () => {
                 >
                     <div className="flex justify-between items-center mb-10">
                         <div className="flex items-center gap-3">
-                            <div className="w-1.5 h-8 bg-indigo-500 rounded-full"></div>
+                            <div className="w-1.5 h-8 bg-primary-500 rounded-full"></div>
                             <h3 className="text-2xl font-black text-white">מגמות הכנסה ועמלה</h3>
                         </div>
                         <div className="flex items-center gap-4 text-[10px] font-black text-slate-500 tracking-widest uppercase">
@@ -222,7 +222,7 @@ export const AdminAnalytics = () => {
 
                     <div className="h-[450px] w-full mt-4" dir="ltr">
                         {loading ? (
-                            <div className="w-full h-full flex items-center justify-center"><Zap className="animate-spin text-indigo-500" /></div>
+                            <div className="w-full h-full flex items-center justify-center"><Zap className="animate-spin text-primary-500" /></div>
                         ) : barData.length === 0 ? (
                             <div className="w-full h-full flex flex-col items-center justify-center space-y-4 opacity-50">
                                 <BarChart3 size={64} className="text-slate-600" />
@@ -354,7 +354,7 @@ export const AdminAnalytics = () => {
             >
                 <div className="flex justify-between items-center mb-10">
                     <h3 className="text-2xl font-black text-white flex items-center gap-3">
-                        <Users className="text-indigo-500" size={28} />
+                        <Users className="text-primary-500" size={28} />
                         מובילי ביצועים
                     </h3>
                     <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-4 py-2 bg-slate-900/50 rounded-xl border border-white/5">דירוג נהגים מובילים</div>
@@ -376,14 +376,14 @@ export const AdminAnalytics = () => {
                                 <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-all duration-300 group">
                                     <td className="py-6 pr-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-black text-sm border border-indigo-500/20 shadow-lg group-hover:scale-110 transition-transform">
+                                            <div className="w-10 h-10 rounded-full bg-primary-500/20 flex items-center justify-center text-primary-400 font-black text-sm border border-primary-500/20 shadow-lg group-hover:scale-110 transition-transform">
                                                 {d.name.charAt(0)}
                                             </div>
                                             <span className="font-bold text-lg">{d.name}</span>
                                         </div>
                                     </td>
                                     <td className="py-6">
-                                        <span className="bg-slate-900/60 px-4 py-1.5 rounded-xl text-indigo-400 font-black border border-white/5 shadow-inner">{d.rides}</span>
+                                        <span className="bg-slate-900/60 px-4 py-1.5 rounded-xl text-primary-400 font-black border border-white/5 shadow-inner">{d.rides}</span>
                                     </td>
                                     <td className="py-6 font-black text-xl tracking-tight">₪{d.revenue.toLocaleString()}</td>
                                     <td className="py-6">

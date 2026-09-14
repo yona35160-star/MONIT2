@@ -1,4 +1,4 @@
-import { Button } from '../components/ui';
+﻿import { Button } from '../components/ui';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,7 +61,7 @@ const TabButton: React.FC<{ active: boolean; onClick: () => void; label: string;
   <button
     onClick={onClick}
     className={`flex items-center gap-3 py-3 px-6 rounded-2xl font-black text-sm transition-all duration-300 ${active
-      ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 translate-y-[-2px]'
+      ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20 translate-y-[-2px]'
       : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
       }`}
   >
@@ -532,7 +532,7 @@ export const AdminDashboard: React.FC = () => {
 
   return (
     <div
-      className="p-4 md:p-10 min-h-screen relative font-sans selection:bg-indigo-500 selection:text-white admin-theme-transition"
+      className="p-4 md:p-10 min-h-screen relative font-sans selection:bg-primary-500 selection:text-white admin-theme-transition"
       style={{ backgroundColor: 'var(--admin-bg)', color: 'var(--admin-text-primary)' }}
       dir="rtl"
     >
@@ -554,7 +554,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="flex items-center gap-3 text-xs font-black text-amber-400 uppercase tracking-widest">
             <Car size={16} /> נהגים בזמן אמת: <span className="text-white text-sm">{mapData?.drivers?.filter(d => d.lat && d.lng)?.length || 0}</span>
           </div>
-          <div className="flex items-center gap-3 text-xs font-black text-indigo-400 uppercase tracking-widest">
+          <div className="flex items-center gap-3 text-xs font-black text-primary-400 uppercase tracking-widest">
             <ClipboardIcon size={16} /> הזמנות פעילות: <span className="text-white text-sm">{mapData?.orders?.filter(o => o.status !== 'completed' && o.status !== 'cancelled')?.length || 0}</span>
           </div>
           <div className="flex items-center gap-3 text-xs font-black text-emerald-400 uppercase tracking-widest">
@@ -596,8 +596,8 @@ export const AdminDashboard: React.FC = () => {
               } finally {
                   setIsAiLoading(false);
               }
-          }} className="flex-1 bg-[#1E293B] flex items-center p-2 rounded-2xl border border-indigo-500/30 shadow-lg shadow-indigo-500/10 focus-within:border-indigo-500 transition-colors">
-              <Sparkles className="text-indigo-400 mx-3" size={24} />
+          }} className="flex-1 bg-[#1E293B] flex items-center p-2 rounded-2xl border border-primary-500/30 shadow-lg shadow-primary-500/10 focus-within:border-primary-500 transition-colors">
+              <Sparkles className="text-primary-400 mx-3" size={24} />
               <input 
                   type="text" 
                   value={aiCommand}
@@ -609,7 +609,7 @@ export const AdminDashboard: React.FC = () => {
               <button 
                   type="submit" 
                   disabled={isAiLoading || !aiCommand}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+                  className="bg-primary-600 hover:bg-primary-500 text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 transition-all disabled:opacity-50"
               >
                   {isAiLoading ? <RefreshCw className="animate-spin" size={18}/> : 'שגר'}
               </button>
@@ -630,7 +630,7 @@ export const AdminDashboard: React.FC = () => {
                   }
               }}
               disabled={isAiBriefingLoading}
-              className="bg-gradient-to-r from-purple-600 to-indigo-600 p-2 px-6 rounded-2xl flex items-center justify-center gap-2 font-bold text-white shadow-lg hover:shadow-indigo-500/25 transition-all outline-none"
+              className="bg-gradient-to-r from-primary-600 to-primary-700 p-2 px-6 rounded-2xl flex items-center justify-center gap-2 font-bold text-white shadow-lg hover:shadow-primary-500/25 transition-all outline-none"
           >
                {isAiBriefingLoading ? <RefreshCw className="animate-spin" size={20}/> : <Sparkles size={20} />}
                סיכום מנהלים
@@ -658,7 +658,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="lg:col-span-3 bg-[#1E293B] p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-white/5 overflow-hidden transition-all hover:bg-[#1E293B]/90">
               <div className="flex justify-between items-center mb-10">
                 <h3 className="text-2xl font-black text-white flex items-center gap-3 tracking-tight">
-                  <span className="w-2 h-8 bg-indigo-500 rounded-full"></span>
+                  <span className="w-2 h-8 bg-primary-500 rounded-full"></span>
                   מגמות פעילות והכנסה
                 </h3>
                 <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest border border-white/5 px-4 py-2 rounded-xl">7 ימים אחרונים</div>
@@ -896,7 +896,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="p-10 border-b border-white/5 flex justify-between items-center relative z-10">
                 <div>
                   <h3 className="text-2xl font-black text-white tracking-tight flex items-center gap-3">
-                    <span className="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
+                    <span className="w-1.5 h-6 bg-primary-500 rounded-full"></span>
                     ניהול הזמנות אחרונות
                   </h3>
                   <p className="text-slate-500 text-xs font-medium mt-1">מציג נתוני אמת מכל המקורות</p>
@@ -916,7 +916,7 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
               {/* Subtle background glow for the table container */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[100px] -z-0"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/5 blur-[100px] -z-0"></div>
             </div>
           )}
         </motion.div>
@@ -980,14 +980,14 @@ export const AdminDashboard: React.FC = () => {
                initial={{ opacity: 0, scale: 0.95 }}
                animate={{ opacity: 1, scale: 1 }}
                exit={{ opacity: 0, scale: 0.95 }}
-               className="bg-[#1E293B] border border-indigo-500/30 p-8 rounded-[2rem] shadow-2xl max-w-xl w-full text-white relative max-h-[90vh] overflow-y-auto"
+               className="bg-[#1E293B] border border-primary-500/30 p-8 rounded-[2rem] shadow-2xl max-w-xl w-full text-white relative max-h-[90vh] overflow-y-auto"
                dir="rtl"
              >
                 <div className="absolute top-4 left-4 p-2 bg-white/5 rounded-full cursor-pointer hover:bg-white/10" onClick={() => setAiBriefing(null)}>
                    <XCircle size={24} className="text-slate-400" />
                 </div>
                 <h2 className="text-2xl font-black mb-6 flex items-center gap-3">
-                   <Sparkles className="text-indigo-400" size={28} />
+                   <Sparkles className="text-primary-400" size={28} />
                    סיכום מנהלים AI
                 </h2>
                 <div className="text-slate-300 leading-relaxed whitespace-pre-wrap font-medium">

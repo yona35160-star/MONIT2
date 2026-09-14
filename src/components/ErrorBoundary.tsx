@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+﻿import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { logger } from '../utils/logger';
 
@@ -47,7 +47,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
                         <button
                             onClick={this.handleReset}
-                            className="flex items-center justify-center gap-2 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95"
+                            className="flex items-center justify-center gap-2 w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold transition-all shadow-lg active:scale-95"
                         >
                             <RefreshCw className="w-5 h-5" />
                             טען מחדש את המערכת

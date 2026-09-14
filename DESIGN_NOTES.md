@@ -15,3 +15,6 @@
 ```tsx
 import { Button, Badge, Card, Input, Spinner } from '../components/ui';
 ```
+
+## QA-3 (2026-09-14)
+הוחלפו כל מופעי `indigo-*` ב-`src/` בטוקני `primary-*` לפי `design-system.json`. מסלול קריטי (Login / StationOrder / AdminDashboard / DriverPortal / PassengerApp) + רכיבים נלווים + `btn-premium` ב-CSS.

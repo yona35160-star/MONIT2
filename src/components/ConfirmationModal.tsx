@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { AlertTriangle, CheckCircle, X, Loader2 } from 'lucide-react';
 import { Button } from './ui/Button';
 
@@ -24,7 +24,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     const colors = {
         danger: 'bg-rose-500/10 text-rose-400 border border-rose-500/20',
         warning: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-        info: 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20',
+        info: 'bg-primary-500/10 text-primary-400 border border-primary-500/20',
         success: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
     };
 
@@ -61,9 +61,9 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                     <button
                         onClick={onConfirm}
                         disabled={isLoading}
-                        className={`flex-1 py-4 px-6 rounded-2xl font-black text-white transition-all shadow-xl shadow-indigo-500/10 flex items-center justify-center gap-2 ${type === 'danger' ? 'bg-rose-600 hover:bg-rose-500' :
+                        className={`flex-1 py-4 px-6 rounded-2xl font-black text-white transition-all shadow-xl shadow-primary-500/10 flex items-center justify-center gap-2 ${type === 'danger' ? 'bg-rose-600 hover:bg-rose-500' :
                             type === 'success' ? 'bg-emerald-600 hover:bg-emerald-500' :
-                                'bg-indigo-600 hover:bg-indigo-500'
+                                'bg-primary-600 hover:bg-primary-500'
                             }`}
                     >
                         {isLoading && <Loader2 size={18} className="animate-spin" />}

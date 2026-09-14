@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import isEqual from 'lodash/isEqual';
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl, Polyline, Tooltip } from 'react-leaflet';
 import * as L from 'leaflet';
@@ -238,7 +238,7 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
                                         {(o.status === 'pending' || o.status === 'waiting_assignment') && onSmartAssignClick && (
                                             <button
                                                 onClick={() => onSmartAssignClick(o.orderId)}
-                                                className="bg-indigo-600 text-white px-3 py-1.5 rounded-lg w-full text-xs font-bold shadow hover:bg-indigo-700 transition-colors"
+                                                className="bg-primary-600 text-white px-3 py-1.5 rounded-lg w-full text-xs font-bold shadow hover:bg-primary-700 transition-colors"
                                             >
                                                 שיבוץ נהג חכם 🚀
                                             </button>

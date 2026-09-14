@@ -9,7 +9,7 @@
 ## Wave 1 — יציבות ובסיס (היום)
 - [x] עיצוב: Design System + בדיקת עקביות UI ב-3 האפליקציות (passenger/driver/admin)
 - [x] מתכנת: תיקון typecheck/build, מסלול קריטי הזמנה→שיוך→מעקב, חיבורי Firebase/GAS בטוחים
-- [ ] QA: smoke E2E על 3 האפליקציות + דוח `QA-REPORT.md`
+- [x] QA: smoke E2E על 3 האפליקציות + דוח `QA-REPORT.md`
 - [x] תיעוד: יישור README/GUIDE לריפו + microcopy במקומות שבורים
 - [x] DevOps: תסריטי הרצה/פריסה (Vercel front + Render bridge) + env template
 

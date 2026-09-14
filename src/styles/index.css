@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -196,7 +196,7 @@
   }
 
   .btn-premium {
-    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-br from-primary-500 via-primary-600 to-indigo-700 text-white font-bold rounded-2xl px-8 py-4 hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 text-white font-bold rounded-2xl px-8 py-4 hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-300;
     box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
   }
 

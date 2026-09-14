@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { MessageSquare, Save, Send, X, Loader2, Calculator } from 'lucide-react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
@@ -183,7 +183,7 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                     </button>
                     )}
                     {/* Header accent */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[100px] -z-0"></div>
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 blur-[100px] -z-0"></div>
                 </header>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-8 overflow-y-auto space-y-10 bg-[#1E293B]">
@@ -191,12 +191,12 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">שם הלקוח</label>
-                            <input {...register('customerName')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-600" placeholder="ישראל ישראלי" />
+                            <input {...register('customerName')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-600" placeholder="ישראל ישראלי" />
                             {errors.customerName && <p className="text-rose-400 text-[10px] font-black uppercase tracking-wider px-1">{errors.customerName.message}</p>}
                         </div>
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">טלפון ליצירת קשר</label>
-                            <input {...register('customerPhone')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-mono font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-600" type="tel" placeholder="050-000-0000" />
+                            <input {...register('customerPhone')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-mono font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-600" type="tel" placeholder="050-000-0000" />
                             {errors.customerPhone && <p className="text-rose-400 text-[10px] font-black uppercase tracking-wider px-1">{errors.customerPhone.message}</p>}
                         </div>
                     </div>
@@ -298,11 +298,11 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">תאריך איסוף</label>
-                            <input {...register('pickupDate')} type="date" className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer" />
+                            <input {...register('pickupDate')} type="date" className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all cursor-pointer" />
                         </div>
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">שעת איסוף</label>
-                            <input {...register('pickupTime')} type="time" className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer" />
+                            <input {...register('pickupTime')} type="time" className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all cursor-pointer" />
                         </div>
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">תעריף משוער (₪)</label>
@@ -310,13 +310,13 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                                 <input
                                     {...register('price', { valueAsNumber: true })}
                                     type="number"
-                                    className="w-full bg-indigo-500/10 border border-indigo-500/30 rounded-2xl p-4 text-indigo-400 font-black text-xl outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                                    className="w-full bg-primary-500/10 border border-primary-500/30 rounded-2xl p-4 text-primary-400 font-black text-xl outline-none focus:ring-2 focus:ring-primary-500 transition-all"
                                     disabled={isCalculating}
                                 />
                                 <button
                                     type="button"
                                     onClick={calculatePriceExplicit}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-indigo-500 text-white p-2 rounded-xl shadow-lg hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-50"
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-primary-500 text-white p-2 rounded-xl shadow-lg hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-50"
                                     disabled={isCalculating}
                                     title="חשב מחיר חכם"
                                 >
@@ -332,19 +332,19 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">נוסעים</label>
-                                <input {...register('passengers')} type="number" min="1" max="8" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-indigo-500" />
+                                <input {...register('passengers')} type="number" min="1" max="8" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-primary-500" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">מזוודות</label>
-                                <input {...register('luggage')} type="number" min="0" max="10" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-indigo-500" />
+                                <input {...register('luggage')} type="number" min="0" max="10" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-primary-500" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">טיסה</label>
-                                <input {...register('flightNumber')} type="text" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-indigo-500 uppercase placeholder:text-slate-700" placeholder="LY123" />
+                                <input {...register('flightNumber')} type="text" className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-primary-500 uppercase placeholder:text-slate-700" placeholder="LY123" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest px-1">תשלום</label>
-                                <select {...register('paymentMethod')} className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer appearance-none">
+                                <select {...register('paymentMethod')} className="w-full bg-[#0F172A] border border-white/5 rounded-xl p-3 text-white font-bold text-sm outline-none focus:ring-1 focus:ring-primary-500 cursor-pointer appearance-none">
                                     <option value="cash">מזומן (Cash)</option>
                                     <option value="credit">אשראי (Card)</option>
                                     <option value="bit">ביט (Bit)</option>
@@ -354,7 +354,7 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
 
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">הערות תפעוליות</label>
-                            <textarea {...register('notes')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white text-sm h-24 outline-none focus:ring-2 focus:ring-indigo-500/50 resize-none transition-all" placeholder="הערות חשובות לנהג..." />
+                            <textarea {...register('notes')} className="w-full bg-[#0F172A] border border-white/5 rounded-2xl p-4 text-white text-sm h-24 outline-none focus:ring-2 focus:ring-primary-500/50 resize-none transition-all" placeholder="הערות חשובות לנהג..." />
                         </div>
 
                         {/* Channels Selection */}
@@ -389,9 +389,9 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                                                     const newValue = checked ? [...field.value, 'telegram'] : field.value.filter(c => c !== 'telegram');
                                                     field.onChange(newValue);
                                                 }}
-                                                className="w-6 h-6 rounded-lg bg-indigo-500/10 border-white/10 text-indigo-500 focus:ring-indigo-500/50"
+                                                className="w-6 h-6 rounded-lg bg-primary-500/10 border-white/10 text-primary-500 focus:ring-primary-500/50"
                                             />
-                                            <span className="text-sm font-black text-slate-400 group-hover:text-indigo-400 transition-colors flex items-center gap-2 italic">
+                                            <span className="text-sm font-black text-slate-400 group-hover:text-primary-400 transition-colors flex items-center gap-2 italic">
                                                 <Send size={16} /> Telegram
                                             </span>
                                         </label>
@@ -406,7 +406,7 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                         <button
                             type="submit"
                             disabled={isSubmitting || isCalculating}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white px-12 py-4 rounded-2xl font-black text-lg tracking-tight shadow-[0_20px_40px_rgba(79,70,229,0.3)] transition-all flex items-center gap-3 disabled:opacity-50 disabled:scale-95"
+                            className="bg-primary-600 hover:bg-primary-500 text-white px-12 py-4 rounded-2xl font-black text-lg tracking-tight shadow-[0_20px_40px_rgba(79,70,229,0.3)] transition-all flex items-center gap-3 disabled:opacity-50 disabled:scale-95"
                         >
                             {isSubmitting ? (
                                 <>

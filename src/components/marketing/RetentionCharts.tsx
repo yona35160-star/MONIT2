@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { MessageSquare, Calendar, Star, Users, Lightbulb } from 'lucide-react';
 
 interface RetentionData {
@@ -56,13 +56,13 @@ export const RetentionCharts: React.FC<RetentionChartsProps> = ({ retention, ins
             </div>
 
             {/* Insights Panel */}
-            <div className="bg-gradient-to-br from-indigo-50 to-white p-5 rounded-xl shadow border border-indigo-100">
-                <h3 className="font-bold mb-4 flex items-center text-indigo-800 gap-2">
+            <div className="bg-gradient-to-br from-primary-50 to-white p-5 rounded-xl shadow border border-primary-100">
+                <h3 className="font-bold mb-4 flex items-center text-primary-800 gap-2">
                     <Lightbulb className="text-yellow-500 fill-yellow-500" size={20} /> תובנות חכמות
                 </h3>
                 <ul className="space-y-3">
                     {insights.map((insight, idx) => (
-                        <li key={idx} className="text-sm bg-white/80 p-3 rounded-lg shadow-sm border border-indigo-50 leading-relaxed text-slate-700">
+                        <li key={idx} className="text-sm bg-white/80 p-3 rounded-lg shadow-sm border border-primary-50 leading-relaxed text-slate-700">
                             {insight}
                         </li>
                     ))}

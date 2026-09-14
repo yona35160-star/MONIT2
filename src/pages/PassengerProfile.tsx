@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { sendToBackend } from '../api/passengerApi';
 import { Order } from '../types';
@@ -144,7 +144,7 @@ export const PassengerProfile: React.FC = () => {
         const map: Record<string, { label: string; color: string }> = {
             pending: { label: 'ממתין', color: 'bg-amber-100 text-amber-700' },
             broadcasted: { label: 'מחפש נהג', color: 'bg-blue-100 text-blue-700' },
-            assigned: { label: 'נהג שובץ', color: 'bg-indigo-100 text-indigo-700' },
+            assigned: { label: 'נהג שובץ', color: 'bg-primary-100 text-primary-700' },
             in_progress: { label: 'בנסיעה', color: 'bg-green-100 text-green-700' },
             completed: { label: 'הושלם', color: 'bg-emerald-100 text-emerald-700' },
             cancelled: { label: 'בוטל', color: 'bg-red-100 text-red-700' },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAdmin, testConnection } from '../api/adminApi';
@@ -105,7 +105,7 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#020617] p-4 relative overflow-hidden font-sans" dir="rtl">
       {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
       <div className="bg-[#1E293B] w-full max-w-md p-10 rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] border border-white/5 relative z-10 overflow-hidden group">
@@ -124,9 +124,9 @@ export const Login: React.FC = () => {
         </button>
 
         <div className="text-center mb-10 pt-4">
-          <div className="w-20 h-20 bg-indigo-500/10 border border-indigo-500/20 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 shadow-2xl relative group-hover:scale-110 transition-transform duration-500">
-            <Lock className="text-indigo-400 w-10 h-10" />
-            <div className="absolute -inset-2 bg-indigo-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div className="w-20 h-20 bg-primary-500/10 border border-primary-500/20 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 shadow-2xl relative group-hover:scale-110 transition-transform duration-500">
+            <Lock className="text-primary-400 w-10 h-10" />
+            <div className="absolute -inset-2 bg-primary-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
           <h1 className="text-4xl font-black text-white tracking-tight mb-2">מרכז שליטה</h1>
           <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">למורשים בלבד</p>
@@ -143,7 +143,7 @@ export const Login: React.FC = () => {
             <div className="flex gap-3 items-center">
               <input
                 type="url"
-                className="flex-1 p-4 bg-[#0F172A] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-mono"
+                className="flex-1 p-4 bg-[#0F172A] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all font-mono"
                 placeholder="https://script.google.com/..."
                 dir="ltr"
                 value={scriptUrl}
@@ -152,7 +152,7 @@ export const Login: React.FC = () => {
                   setTestStatus('idle');
                 }}
               />
-              <button type="button" onClick={handleTestConnection} className="p-4 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50" disabled={testStatus === 'testing'}>
+              <button type="button" onClick={handleTestConnection} className="p-4 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all shadow-lg shadow-primary-500/20 disabled:opacity-50" disabled={testStatus === 'testing'}>
                 {testStatus === 'testing' ? <Loader2 size={18} className="animate-spin" /> : <Zap size={18} />}
               </button>
             </div>
@@ -171,13 +171,13 @@ export const Login: React.FC = () => {
           <div className="space-y-3">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">מזהה משתמש</label>
             <div className="relative group/input">
-              <Mail className="absolute right-4 top-4 text-slate-600 group-focus-within/input:text-indigo-400 transition-colors w-5 h-5" />
+              <Mail className="absolute right-4 top-4 text-slate-600 group-focus-within/input:text-primary-400 transition-colors w-5 h-5" />
               <ShakeInput
                 isInvalid={!!error && error.includes('אימייל')}
                 type="email"
                 required
                 autoComplete="email"
-                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-700"
+                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700"
                 placeholder="name@taxi-pro.ai"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -188,13 +188,13 @@ export const Login: React.FC = () => {
           <div className="space-y-3">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">סיסמת אבטחה</label>
             <div className="relative group/input">
-              <Lock className="absolute right-4 top-4 text-slate-600 group-focus-within/input:text-indigo-400 transition-colors w-5 h-5" />
+              <Lock className="absolute right-4 top-4 text-slate-600 group-focus-within/input:text-primary-400 transition-colors w-5 h-5" />
               <ShakeInput
                 isInvalid={!!error && error.includes('סיסמה')}
                 type="password"
                 required
                 autoComplete="current-password"
-                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-700 font-mono"
+                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700 font-mono"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -212,7 +212,7 @@ export const Login: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-indigo-600/20 flex items-center justify-center gap-3 relative overflow-hidden group/btn"
+            className="w-full bg-primary-600 hover:bg-primary-500 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-primary-600/20 flex items-center justify-center gap-3 relative overflow-hidden group/btn"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_2s_infinite]"></div>
             {isLoading ? <Loader2 className="animate-spin" size={24} /> : (
@@ -227,7 +227,7 @@ export const Login: React.FC = () => {
         <div className="mt-10 space-y-4">
           <WhatsAppConnect />
           <div className="text-center space-y-3">
-          <Link to="/station-order" className="block text-indigo-400 text-sm font-black hover:text-indigo-300">
+          <Link to="/station-order" className="block text-primary-400 text-sm font-black hover:text-primary-300">
             טופס הזמנה לתחנה (בלי התחברות)
           </Link>
           <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em]">

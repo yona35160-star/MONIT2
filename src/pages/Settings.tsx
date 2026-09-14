@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getSystemSettingsRaw, saveSettings, getSystemHealth, sendToBackend } from '../api/adminApi';
 import { Toast } from '../components/Toast';
@@ -174,7 +174,7 @@ export const Settings: React.FC = () => {
                   setToast({ message: 'שגיאה בהתקנה: ' + res.error, type: 'error' });
                 }
               }
-            }} className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition text-indigo-600" title="הרץ התקנת מערכת (setupSystem)">
+            }} className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition text-primary-600" title="הרץ התקנת מערכת (setupSystem)">
               <Zap size={20} />
             </button>
             <button onClick={handleSave} disabled={status === 'saving'} className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition">

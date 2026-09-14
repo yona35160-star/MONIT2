@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { RefreshCw, Plus, Clipboard as ClipboardIcon } from 'lucide-react';
 import { ServerStatusWidget } from './ServerStatusWidget';
 import { SystemStatusIndicator } from './SystemStatusIndicator';
@@ -25,7 +25,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     return (
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
             <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center text-white font-black text-3xl shadow-2xl shadow-indigo-500/20 rotate-3">TX</div>
+                <div className="w-16 h-16 bg-primary-600 rounded-[1.5rem] flex items-center justify-center text-white font-black text-3xl shadow-2xl shadow-primary-500/20 rotate-3">TX</div>
                 <div>
                     <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter">ניהול תחנה</h1>
                     <p className="text-slate-500 text-sm md:text-lg font-medium leading-none mt-1">לוח בקרה אופרטיבי • {new Date().toLocaleDateString('he-IL')}</p>
@@ -38,7 +38,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                             key={p}
                             onClick={() => setStatsPeriod(p)}
                             className={`px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${statsPeriod === p
-                                ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
+                                ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/20'
                                 : 'text-slate-500 hover:text-slate-300'
                                 }`}
                         >
@@ -53,20 +53,20 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
                 <div className="flex-grow md:flex-grow-0"></div>
 
-                <button onClick={handleDailyReport} className="p-3 bg-[#1E293B] rounded-full shadow-sm border border-[#334155] text-indigo-400 hover:bg-[#334155] transition" title="דוח יומי">
+                <button onClick={handleDailyReport} className="p-3 bg-[#1E293B] rounded-full shadow-sm border border-[#334155] text-primary-400 hover:bg-[#334155] transition" title="דוח יומי">
                     <ClipboardIcon size={20} />
                 </button>
 
                 <button
                     onClick={handleRefresh}
                     disabled={isLoading}
-                    className="p-4 bg-[#1E293B] hover:bg-slate-800 text-slate-400 hover:text-indigo-400 rounded-[1.25rem] transition-all border border-white/5 shadow-2xl disabled:opacity-50 group"
+                    className="p-4 bg-[#1E293B] hover:bg-slate-800 text-slate-400 hover:text-primary-400 rounded-[1.25rem] transition-all border border-white/5 shadow-2xl disabled:opacity-50 group"
                     title="רענון נתונים"
                 >
                     <RefreshCw size={22} className={isLoading ? 'animate-spin' : 'group-active:rotate-180 transition-transform duration-500'} />
                 </button>
 
-                <button onClick={() => setIsCreateOrderModalOpen(true)} className="px-8 py-4 bg-indigo-600 text-white rounded-[1.25rem] font-black flex items-center gap-3 hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-500/30 active:scale-95 text-lg">
+                <button onClick={() => setIsCreateOrderModalOpen(true)} className="px-8 py-4 bg-primary-600 text-white rounded-[1.25rem] font-black flex items-center gap-3 hover:bg-primary-500 transition-all shadow-2xl shadow-primary-500/30 active:scale-95 text-lg">
                     <Plus size={24} /> <span>הזמנה חדשה</span>
                 </button>
             </div>

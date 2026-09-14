@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+﻿import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from '../components/ErrorBoundary';
@@ -203,7 +203,7 @@ const PassengerLanding: React.FC = () => {
                 {/* Secondary Section */}
                 <div className="px-6 mt-8">
                     <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">מבצעים בשבילך</h3>
-                    <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-6 text-white relative overflow-hidden shadow-lg shadow-indigo-500/20">
+                    <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-6 text-white relative overflow-hidden shadow-lg shadow-primary-500/20">
                         <div className="relative z-10">
                             <h4 className="text-xl font-black mb-1">הפץ את הבשורה!</h4>
                             <p className="text-white/70 text-sm font-medium mb-4">שתף את האפליקציה עם חברים וקבל 20% הנחה בנסיעה הבאה</p>

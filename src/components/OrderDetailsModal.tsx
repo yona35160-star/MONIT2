@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Button } from './ui/Button';
 import { getOrderStatus, markPaymentCompleted, resendOrderDetails, unassignDriver, updateOrder, compareIds, getDrivers, assignDriver } from '../api/adminApi';
@@ -314,7 +314,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ orderId, o
                     <h2 id="order-details-title" className="text-2xl font-bold flex items-center gap-2">
                         {order.orderId}
                         <span className={`text-xs px-2 py-1 rounded-full text-slate-900 ${order.status === 'assigned' || order.status === 'confirmed' ? 'bg-blue-300' :
-                            order.status === 'paid' ? 'bg-indigo-300' :
+                            order.status === 'paid' ? 'bg-primary-300' :
                                 order.status === 'waiting_approval' ? 'bg-orange-300' :
                                     order.status === 'in_progress' || order.status === 'on_route' ? 'bg-blue-400' :
                                         order.status === 'broadcasted' ? 'bg-purple-300' :
@@ -633,7 +633,7 @@ export const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ orderId, o
                 )}
 
                 {!editMode && order.driverId && order.status !== 'completed' && order.status !== 'cancelled' && (!order.paymentCompleted || String(order.paymentCompleted) === 'WAITING_APPROVAL') && (
-                    <button type="button" onClick={handleApprovePayment} className={`md:flex-1 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition w-full md:w-auto ${String(order.paymentCompleted) === 'WAITING_APPROVAL' ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md transform hover:scale-105' : 'bg-indigo-50 text-indigo-600 border border-indigo-100 hover:bg-indigo-100'}`}>
+                    <button type="button" onClick={handleApprovePayment} className={`md:flex-1 px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition w-full md:w-auto ${String(order.paymentCompleted) === 'WAITING_APPROVAL' ? 'bg-orange-500 text-white hover:bg-orange-600 shadow-md transform hover:scale-105' : 'bg-primary-50 text-primary-600 border border-primary-100 hover:bg-primary-100'}`}>
                         <CheckCircle size={18} /> {String(order.paymentCompleted) === 'WAITING_APPROVAL' ? 'אשר תשלום (ממתין)' : 'אישור תשלום'}
                     </button>
                 )}

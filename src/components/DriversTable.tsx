@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Loader2, ShieldCheck, Phone, Car, Ban, Unlock, RefreshCw, HandCoins } from 'lucide-react';
 import { Driver } from '../types';
 import { TableSkeleton, CardSkeleton } from './Skeleton';
@@ -83,7 +83,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                 <tr key={d.driverId} className="transition-all hover:bg-white/[0.02]">
                                     <td className="px-6 py-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-[1.25rem] bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-black text-xl shadow-xl">
+                                            <div className="w-12 h-12 rounded-[1.25rem] bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 font-black text-xl shadow-xl">
                                                 {d.driverName?.[0]}
                                             </div>
                                             <div className="flex flex-col">
@@ -146,7 +146,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                             <button
                                                 onClick={() => onDownloadReport(d.driverId)}
                                                 disabled={isGeneratingReport === d.driverId}
-                                                className="w-10 h-10 flex items-center justify-center bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl transition-all shadow-xl disabled:opacity-50"
+                                                className="w-10 h-10 flex items-center justify-center bg-primary-500/10 text-primary-400 hover:bg-primary-500 hover:text-white rounded-xl transition-all shadow-xl disabled:opacity-50"
                                                 title="הפק דוח חודשי"
                                             >
                                                 {isGeneratingReport === d.driverId ? <Loader2 size={16} className="animate-spin" /> : <ShieldCheck size={16} />}
@@ -166,7 +166,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                         {/* Driver Info */}
                         <div className="flex items-center justify-between mb-8 relative z-10">
                             <div className="flex items-center gap-5">
-                                <div className="w-16 h-16 rounded-[1.5rem] bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-black text-2xl shadow-xl shadow-indigo-500/5">
+                                <div className="w-16 h-16 rounded-[1.5rem] bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 font-black text-2xl shadow-xl shadow-primary-500/5">
                                     {d.driverName?.[0]}
                                 </div>
                                 <div>
@@ -182,7 +182,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                             <button
                                 onClick={() => onDownloadReport(d.driverId)}
                                 disabled={isGeneratingReport === d.driverId}
-                                className="w-14 h-14 bg-white/5 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-2xl transition-all shadow-xl disabled:opacity-50 flex items-center justify-center"
+                                className="w-14 h-14 bg-white/5 text-primary-400 hover:bg-primary-500 hover:text-white rounded-2xl transition-all shadow-xl disabled:opacity-50 flex items-center justify-center"
                             >
                                 {isGeneratingReport === d.driverId ? <Loader2 size={24} className="animate-spin" /> : <ShieldCheck size={24} />}
                             </button>
@@ -195,7 +195,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                     <Phone size={18} className="text-slate-500" />
                                     <span className="text-slate-300 font-black tracking-widest" dir="ltr">{d.phone}</span>
                                 </div>
-                                <a href={`tel:${d.phone}`} className="text-indigo-400 font-black text-xs uppercase tracking-widest">חייג</a>
+                                <a href={`tel:${d.phone}`} className="text-primary-400 font-black text-xs uppercase tracking-widest">חייג</a>
                             </div>
                             <div className="bg-[#0F172A]/50 p-5 rounded-[1.5rem] border border-white/5 text-center transition-all hover:bg-white/5">
                                 <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mb-1">פעילות היום</p>
@@ -228,7 +228,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                     <button
                                         onClick={() => onDownloadReport(d.driverId)}
                                         disabled={isGeneratingReport === d.driverId}
-                                        className="w-10 h-10 flex items-center justify-center bg-indigo-500/10 text-indigo-400 rounded-xl transition-all shadow-xl disabled:opacity-50"
+                                        className="w-10 h-10 flex items-center justify-center bg-primary-500/10 text-primary-400 rounded-xl transition-all shadow-xl disabled:opacity-50"
                                     >
                                         {isGeneratingReport === d.driverId ? <Loader2 size={16} className="animate-spin" /> : <ShieldCheck size={16} />}
                                     </button>
@@ -236,7 +236,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                             </div>
                         </div>
                         {/* Card background decoration */}
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl -z-0"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/5 blur-3xl -z-0"></div>
                     </div>
                 ))}
             </div>

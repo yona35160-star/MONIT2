@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CreateOrderModal } from '../components/CreateOrderModal';
 import { WhatsAppConnect } from '../components/WhatsAppConnect';
@@ -24,7 +24,7 @@ export const StationOrder: React.FC = () => {
       <div className="max-w-3xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white">
+            <div className="w-12 h-12 bg-primary-600 rounded-2xl flex items-center justify-center text-white">
               <Car size={24} />
             </div>
             <div>
@@ -43,7 +43,7 @@ export const StationOrder: React.FC = () => {
             <button
               type="button"
               onClick={() => { setDone(false); setOpen(true); }}
-              className="block mt-4 bg-indigo-600 text-white px-5 py-3 rounded-2xl font-black"
+              className="block mt-4 bg-primary-600 text-white px-5 py-3 rounded-2xl font-black"
             >
               הזמנה נוספת
             </button>

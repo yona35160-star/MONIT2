@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { RadarScanner } from '../components/RadarScanner';
 import { PredictiveHeatmap } from '../components/PredictiveHeatmap';
 import { LiquidSwipe } from '../components/LiquidSwipe';
@@ -27,7 +27,7 @@ export const SmartUIPreview: React.FC = () => {
 
       <div className="max-w-4xl mx-auto space-y-12">
         <header className="mb-8 border-b border-slate-800 pb-4">
-          <h1 className="text-3xl font-black bg-gradient-to-l from-primary-400 to-indigo-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-black bg-gradient-to-l from-primary-400 to-primary-500 bg-clip-text text-transparent">
             Smart UI Preview (10x Edition)
           </h1>
           <p className="text-slate-400 mt-2">בדיקת הרכיבים החדשים מחוץ להקשר האפליקציה</p>

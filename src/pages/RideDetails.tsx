@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { sendToBackend, markPaymentCompleted, toCamelCase, compareIds } from '../api/adminApi'; // Added markPaymentCompleted
 import { RideDetailsData } from '../types';
@@ -899,7 +899,7 @@ export const RideDetails: React.FC = () => {
 
                         {/* PayPal Link */}
                         <a href={getPaypalLink()} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 border border-slate-100 rounded-2xl hover:bg-slate-50 transition">
-                            <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center"><CreditCard size={20} /></div>
+                            <div className="w-10 h-10 bg-primary-50 text-primary-600 rounded-full flex items-center justify-center"><CreditCard size={20} /></div>
                             <div className="text-right flex-1">
                                 <h4 className="font-bold text-slate-800">אשראי / PayPal</h4>
                                 <p className="text-[10px] text-slate-400">תשלום מהיר ומאובטח</p>

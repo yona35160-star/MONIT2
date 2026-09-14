@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Pencil, CheckCircle, Clock, Check, MapPin, User, Phone, Car, DollarSign } from 'lucide-react';
 import { Order } from '../types';
 import { Toast } from './Toast';
@@ -134,7 +134,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({ orders, isLoading, onE
                                 const statusConfig = getStatusConfig(order.status);
 
                                 return (
-                                    <tr key={order.orderId} className={`transition-colors hover:bg-white/[0.02] ${completed ? 'bg-indigo-500/5' : ''}`}>
+                                    <tr key={order.orderId} className={`transition-colors hover:bg-white/[0.02] ${completed ? 'bg-primary-500/5' : ''}`}>
                                         <td className="px-6 py-6 font-mono text-xs">
                                             <div className="flex flex-col gap-2">
                                                 <span className="text-slate-400 font-black" dir="ltr">#{order.orderId}</span>
@@ -182,7 +182,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({ orders, isLoading, onE
                                                         <CheckCircle size={18} />
                                                     </button>
                                                 )}
-                                                {completed && <div className="w-10 h-10 flex items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-xl"><Check size={20} /></div>}
+                                                {completed && <div className="w-10 h-10 flex items-center justify-center text-primary-400 bg-primary-500/10 rounded-xl"><Check size={20} /></div>}
                                             </div>
                                         </td>
                                     </tr>
@@ -205,9 +205,9 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({ orders, isLoading, onE
                             key={order.orderId}
                             onSwipeRight={() => onEdit(order.orderId)}
                             rightActionText="ניהול נסיעה"
-                            className={`mb-4 relative overflow-hidden ${completed ? 'border-indigo-500/20' : ''}`}
+                            className={`mb-4 relative overflow-hidden ${completed ? 'border-primary-500/20' : ''}`}
                         >
-                            <div className={`p-8 bg-[#1E293B] rounded-[2.5rem] border border-white/5 ${completed ? 'bg-indigo-500/5' : ''}`}>
+                            <div className={`p-8 bg-[#1E293B] rounded-[2.5rem] border border-white/5 ${completed ? 'bg-primary-500/5' : ''}`}>
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between mb-8">
                                     <div className="flex flex-col gap-2">
@@ -274,7 +274,7 @@ export const OrdersTable: React.FC<OrdersTableProps> = ({ orders, isLoading, onE
                                             onClick={() => setConfirmModalOrder(order)}
                                             className={`flex-1 py-4 rounded-2xl font-black text-sm flex items-center justify-center gap-3 transition-all shadow-2xl ${waiting
                                                 ? 'bg-amber-500 text-slate-900 shadow-amber-500/20'
-                                                : 'bg-indigo-600 text-white shadow-indigo-600/20'
+                                                : 'bg-primary-600 text-white shadow-primary-600/20'
                                                 }`}
                                         >
                                             <CheckCircle size={18} /> {waiting ? 'אשר תשלום' : 'אישור'}
