@@ -30,7 +30,7 @@ export const ServerStatusWidget: React.FC<ServerStatusWidgetProps> = ({ serverSp
             setError(null);
         } else {
             setStatus(null);
-            setError(res.error || 'Server Unreachable');
+            setError(res.error || 'השרת לא זמין');
         }
         if (!silent) setIsLoading(false);
     };
@@ -86,7 +86,7 @@ export const ServerStatusWidget: React.FC<ServerStatusWidgetProps> = ({ serverSp
                                     </span>
                                     {error && (
                                         <span className="text-[10px] text-red-400 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full right-0 mt-1 bg-white p-1 shadow border rounded whitespace-nowrap z-50">
-                                            {error.includes('Bridge Unreachable') ? 'השרת לא זמין בכתובת המוגדרת' : error}
+                                            {(error.includes('Bridge Unreachable') || error.includes('הגשר המקומי לא מגיב') || error.includes('השרת לא זמין')) ? 'השרת לא זמין בכתובת המוגדרת' : error}
                                         </span>
                                     )}
                                 </div>

@@ -27,7 +27,7 @@ export const SystemStatusIndicator: React.FC = () => {
             {status === 'OFFLINE' && <XCircle size={12} className="text-red-500" />}
 
             <span className={status === 'ONLINE' ? 'text-slate-700' : 'text-slate-400'}>
-                {status === 'ONLINE' ? 'SYSTEM ONLINE' : status === 'OFFLINE' ? 'SYSTEM OFFLINE' : 'CONNECTING...'}
+                {status === 'ONLINE' ? 'מערכת מחוברת' : status === 'OFFLINE' ? 'מערכת מנותקת' : 'מתחבר...'}
             </span>
         </div>
     );

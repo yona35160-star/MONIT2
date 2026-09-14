@@ -206,7 +206,7 @@ export const sendToBackend = async <T>(
     if (error.name === 'TimeoutError' || error.name === 'AbortError') {
       return { ok: false, error: 'הבקשה ארכה מדי. אנא בדוק את החיבור לאינטרנט.' };
     }
-    const errMsg = error.message || 'Error occurred';
+    const errMsg = error.message || 'אירעה שגיאה';
     if (!errMsg.includes('AbortError')) {
        sendToTelegram(`🔌 שגיאת תקשורת קריטית: ${errMsg}`);
     }
@@ -234,7 +234,7 @@ export const searchAddress = (q: string, lat?: number, lon?: number) =>
   sendToBackend<{ display_name: string, lat: string, lon: string }[]>('searchAddress', { q, lat, lon });
 
 export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
-  if (!bridgeUrl) return { ok: false, error: 'No Bridge URL' };
+  if (!bridgeUrl) return { ok: false, error: 'כתובת הגשר לא הוגדרה' };
 
   const cleanUrl = bridgeUrl.replace(/\/$/, '');
 
@@ -257,9 +257,9 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
     });
 
     if (!response.ok) {
-      if (response.status === 401) return { ok: false, error: 'Unauthorized: Missing API Key' };
-      if (response.status === 403) return { ok: false, error: 'Unauthorized: Invalid API Key' };
-      return { ok: false, error: `Bridge Error: ${response.status}` };
+      if (response.status === 401) return { ok: false, error: 'אין הרשאה: חסר מפתח API' };
+      if (response.status === 403) return { ok: false, error: 'אין הרשאה: מפתח API שגוי' };
+      return { ok: false, error: `שגיאת גשר: ${response.status}` };
     }
 
     const json: any = await response.json();
@@ -267,7 +267,7 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
       if (json.ok === true && json.data) return json;
       if (json.success === true) return { ok: true, data: json };
     }
-    return { ok: false, error: 'Invalid Bridge response' };
+    return { ok: false, error: 'תשובת גשר לא תקינה' };
   } catch (error) {
     console.error("API Call Error:", error);
     return { ok: false, error: 'שגיאת תקשורת עם השרת' };
@@ -318,13 +318,13 @@ export const notifyLocalWhatsApp = async (opts: {
 }): Promise<{ ok: boolean; queued?: boolean; error?: string }> => {
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
   const isLocalHost = host === 'localhost' || host === '127.0.0.1';
-  if (!isLocalHost) return { ok: false, error: 'Local bridge is only used on localhost' };
+  if (!isLocalHost) return { ok: false, error: 'הגשר המקומי זמין רק ב-localhost' };
 
   const { discoverLocalBridgeUrl, getLocalBridgeKey } = await import('./localBridge');
   const jid = opts.jid || LOCAL_GROUP_JID;
   const key = getLocalBridgeKey();
   const bridgeUrl = await discoverLocalBridgeUrl();
-  if (!jid || !key) return { ok: false, error: 'Bridge not configured' };
+  if (!jid || !key) return { ok: false, error: 'הגשר לא הוגדר' };
   if (!bridgeUrl) return { ok: false, error: 'הגשר המקומי לא רץ — הפעל START-ALL.bat' };
   try {
     const res = await fetch(`${bridgeUrl}/new-order`, {
@@ -339,7 +339,7 @@ export const notifyLocalWhatsApp = async (opts: {
     if (res.ok && json.success && (!first || first.ok !== false)) return { ok: true };
     return { ok: false, error: first?.error || json.error || `HTTP ${res.status}` };
   } catch (e: any) {
-    return { ok: false, error: e.message || 'Local bridge unreachable' };
+    return { ok: false, error: e.message || 'הגשר המקומי לא מגיב' };
   }
 };
 

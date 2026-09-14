@@ -39,3 +39,9 @@ Wave 2 DevOps review (local copy `C:\Users\Pc\MONIT2-sync`).
 - Remote: `origin` → `https://github.com/yona35160-star/MONIT2.git`
 - Do **not** push until QA Wave 1 green (PM gate) unless noma overrides
 - Pre-push checklist: `git status` clean of secrets, `npm run typecheck`, prefer `build:all` green
+
+## Local run (2026-09-15 02:14)
+- `npm run typecheck`: PASS
+- `.gitignore`: blocks `.env`, `.env.local`, `bridge/.env`, `node_modules`, `dist`, `.vercel`
+- Only template envs present: `.env.example`, `bridge/.env.example` (no secrets on disk in sync copy)
+- Bridge `GET /health`: see STATUS for live probe result this run

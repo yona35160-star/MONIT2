@@ -36,4 +36,12 @@ import { Button, Badge, Card, Input, Spinner } from '../components/ui';
 ## תיקוני QA (Wave 1/2)
 - QA-1: Admin Login — `מרכז שליטה` / `למורשים בלבד` (מקור מעודכן; נדרש rebuild לבדיקה)
 - QA-6: `Smart Dispatch Hub` → `מרכז שיגור חכם` (CreateOrderModal / station-order)
-- Login: `כתובת תשתית (Endpoint)` → `כתובת שרת` 
+- Login: `כתובת תשתית (Endpoint)` → `כתובת שרת`
+
+## תיקוני Wave 2 המשך (מקומי)
+- SystemStatusIndicator: מערכת מחוברת / מנותקת / מתחבר...
+- DriversTable: מחובר / מנותק
+- ServerStatusWidget: השרת לא זמין
+- ErrorBoundary: שגיאה לא ידועה
+- CreateOrderModal / OrderDetailsModal: חישוב מחיר נכשל
+- api.ts: הודעות גשר/הרשאה בעברית

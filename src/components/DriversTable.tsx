@@ -95,7 +95,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                     <td className="px-6 py-6 font-mono text-slate-400 font-bold" dir="ltr">{d.phone}</td>
                                     <td className="px-6 py-6">
                                         <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${d.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-slate-800 text-slate-500 border border-white/5'}`}>
-                                            {d.status === 'active' ? 'ONLINE' : 'OFFLINE'}
+                                            {d.status === 'active' ? 'מחובר' : 'מנותק'}
                                         </span>
                                     </td>
                                     <td className="px-6 py-6 text-slate-300 font-black text-lg">{d.todayRides || 0}</td>
@@ -174,7 +174,7 @@ export const DriversTable: React.FC<DriversTableProps> = ({ drivers, onDownloadR
                                     <div className="flex items-center gap-2 mt-1">
                                         <span className={`w-2 h-2 rounded-full ${d.status === 'active' ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-slate-600'}`}></span>
                                         <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">
-                                            {d.status === 'active' ? 'Online' : 'Offline'}
+                                            {d.status === 'active' ? 'מחובר' : 'מנותק'}
                                         </span>
                                     </div>
                                 </div>

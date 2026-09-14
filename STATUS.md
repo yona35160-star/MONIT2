@@ -1,16 +1,18 @@
-# Status
+﻿# Status
 
 ## מצב נוכחי
 - פרויקט: **TAXIPRO / MONIT2**
-- ריפו: https://github.com/yona35160-star/MONIT2 — `ea652a9` על main
-- Wave 1: Done
-- Wave 2 P2: **verified** (re-smoke PASS)
+- עותק: `C:\Users\Pc\MONIT2-sync`
+- ריפו: https://github.com/yona35160-star/MONIT2
+- הוראת noma: ממשיכים מקומית בלי לחכות ל-Vercel
 
 ## עדכון אחרון
-- **QA re-smoke:** PASS — QA-1/2/4/6 סגורים; indigo במסלול קריטי נקי; favicon 200
-- ממתין ל-Vercel preview מ-noma
+- **תיעוד:** microcopy סטטוס/ErrorBoundary/api — נדחף עם DevOps
+- **DevOps:** `typecheck` ירוק; `.gitignore`/`.env.example` מאומתים (אין secrets בעותק); bridge `localhost:3000/health` = down (לא רץ כרגע — תקין אם לא הופעל); עודכן `docs/HEALTH_CHECKS.md`
+- **מתכנת:** Wave 2 ביצועים In Progress
+- **QA:** ממתין למסירת מתכנת
 
 ## הצעד הבא
-1. @noma — 3 פרויקטי Vercel לפי `DEPLOY.md` + `VITE_*` ב-Dashboard
-2. @סוכן DevOps — אימות URLs אחרי חיבור
-3. @סוכן בדיקות — re-smoke על preview חי
+1. @סוכן מתכנת — Wave 2/3 + `build:all`
+2. @סוכן בדיקות — smoke מלא מקומי אחרי מסירה
+3. להפעלת bridge מקומית: `npm run bridge` ואז `curl http://localhost:3000/health`
