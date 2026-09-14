@@ -1,0 +1,25 @@
+{
+  "name": "whatsapp-taxi-bridge-multi",
+  "version": "2.0.0",
+  "description": "Multi-role WhatsApp bridge for Taxi dispatch — Render free tier with MongoDB session persistence",
+  "main": "multi-bot.js",
+  "scripts": {
+    "start": "node multi-bot.js",
+    "dev": "node --watch multi-bot.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.2.1",
+    "mongodb": "^6.5.0",
+    "pino": "^8.19.0",
+    "qrcode": "^1.5.3",
+    "qrcode-terminal": "^0.12.0"
+  }
+}

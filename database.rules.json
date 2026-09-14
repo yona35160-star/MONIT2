@@ -1,0 +1,53 @@
+{
+    "rules": {
+        ".read": false,
+        ".write": false,
+        "active_orders": {
+            ".read": "auth != null",
+            ".indexOn": [
+                "status"
+            ],
+            "$orderId": {
+                ".write": "auth != null && auth.token.admin === true",
+                "driver_location": {
+                    ".write": "auth != null && (data.parent().child('driver_id').val() === auth.uid || auth.token.admin === true)"
+                }
+            }
+        },
+        "drivers": {
+            ".read": "auth != null",
+            "$driverId": {
+                ".write": "auth != null && ($driverId === auth.uid || auth.token.admin === true)",
+                "location": {
+                    ".write": "auth != null && ($driverId === auth.uid || auth.token.admin === true)"
+                }
+            }
+        },
+        "notifications": {
+            "$driverId": {
+                ".read": "auth != null && ($driverId === auth.uid || auth.token.admin === true)",
+                ".write": "auth != null && auth.token.admin === true"
+            }
+        },
+        "order_messages": {
+            "$orderId": {
+                ".read": "auth != null",
+                ".write": "auth != null && auth.token.admin === true"
+            }
+        },
+        "dashboard_stats": {
+            ".read": "auth != null",
+            ".write": "auth != null && auth.token.admin === true"
+        },
+        "system": {
+            "health": {
+                ".read": "auth != null",
+                ".write": "auth != null && auth.token.admin === true"
+            }
+        },
+        "admin_config": {
+            ".read": "auth != null && auth.token.admin === true",
+            ".write": "auth != null && auth.token.admin === true"
+        }
+    }
+}

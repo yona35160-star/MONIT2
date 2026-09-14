@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TAXIPRO - פורטל נהגים" />
+    <meta name="theme-color" content="#0F172A" />
+    <link rel="manifest" href="/manifest.driver.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <title>TAXIPRO | פורטל נהג</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Telegram Web App Script -->
+    <script>
+        (function () {
+            var isTelegramContext = (
+                (window.Telegram && window.Telegram.WebApp) ||
+                window.location.search.includes('tgWebAppData') ||
+                window.parent !== window
+            );
+            if (isTelegramContext) {
+                var s = document.createElement('script');
+                s.src = 'https://telegram.org/js/telegram-web-app.js';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/entries/driver.tsx"></script>
+</body>
+
+</html>

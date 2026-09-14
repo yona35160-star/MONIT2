@@ -1,0 +1,7 @@
+{
+  "name": "TaxiDispatchPro",
+  "description": "מערכת ניהול מוניות מתקדמת עם אינטגרציית טלגרם וטופס רישום נהגים חכם",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

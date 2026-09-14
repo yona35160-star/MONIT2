@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Security: Environment Variables (CRITICAL)
+.env
+.env.*
+!.env.example
+
+# WhatsApp Bridge Session & Secrets
+whatsapp-taxi-bridge/.env
+whatsapp-taxi-bridge/auth_info_baileys/
+whatsapp-taxi-bridge/tokens/
+whatsapp-taxi-bridge/session/
+
+# Firebase build caches
+.firebase/
+
+# Local AI / editor configs (optional, not needed in CI)
+.agents/
+.cursor/
+
+# Backups
+*.backup
+*.bak
+code.gs.pre_cleanup_backup

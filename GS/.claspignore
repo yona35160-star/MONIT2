@@ -1,0 +1,28 @@
+
+# Valid JSONs
+**/**/tsconfig.json
+**/**/package.json
+**/**/package-lock.json
+
+# Hidden files
+.*
+!appsscript.json
+
+# Dependencies
+node_modules/
+
+# Backups and Archives
+*.backup
+*.zip
+*.tar.gz
+*.rar
+
+# Docs
+*.md
+docs/
+
+# Tests
+test/
+tests/
+*.test.js
+*.spec.js

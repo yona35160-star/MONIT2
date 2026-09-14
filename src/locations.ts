@@ -1,0 +1,80 @@
+// locations.ts
+export interface City {
+  hebrew: string;
+  english: string;
+  lat?: number;
+  lng?: number;
+}
+
+export const ISRAEL_CITIES: City[] = [
+  { hebrew: "תל אביב-יפו", english: "Tel Aviv-Yafo", lat: 32.0853, lng: 34.7818 },
+  { hebrew: "ירושלים", english: "Jerusalem", lat: 31.7683, lng: 35.2137 },
+  { hebrew: "חיפה", english: "Haifa", lat: 32.7940, lng: 34.9896 },
+  { hebrew: "ראשון לציון", english: "Rishon LeZion", lat: 31.9730, lng: 34.7925 },
+  { hebrew: "פתח תקווה", english: "Petah Tikva", lat: 32.0840, lng: 34.8878 },
+  { hebrew: "אשדוד", english: "Ashdod", lat: 31.8044, lng: 34.6553 },
+  { hebrew: "נתניה", english: "Netanya", lat: 32.3215, lng: 34.8532 },
+  { hebrew: "באר שבע", english: "Be'er Sheva", lat: 31.2518, lng: 34.7913 },
+  { hebrew: "בני ברק", english: "Bnei Brak", lat: 32.0849, lng: 34.8352 },
+  { hebrew: "חולון", english: "Holon", lat: 32.0158, lng: 34.7874 },
+  { hebrew: "רמת גן", english: "Ramat Gan", lat: 32.0684, lng: 34.8248 },
+  { hebrew: "אשקלון", english: "Ashkelon", lat: 31.6693, lng: 34.5715 },
+  { hebrew: "רחובות", english: "Rehovot", lat: 31.8928, lng: 34.8113 },
+  { hebrew: "בת ים", english: "Bat Yam", lat: 32.0162, lng: 34.7518 },
+  { hebrew: "בית שמש", english: "Beit Shemesh", lat: 31.7456, lng: 34.9966 },
+  { hebrew: "כפר סבא", english: "Kfar Saba", lat: 32.1750, lng: 34.9069 },
+  { hebrew: "הרצליה", english: "Herzliya", lat: 32.1663, lng: 34.8433 },
+  { hebrew: "חדרה", english: "Hadera", lat: 32.4340, lng: 34.9207 },
+  { hebrew: "מודיעין-מכבים-רעות", english: "Modi'in-Maccabim-Re'ut", lat: 31.8903, lng: 35.0104 },
+  { hebrew: "נצרת", english: "Nazareth", lat: 32.6996, lng: 35.3035 },
+  { hebrew: "לוד", english: "Lod", lat: 31.9453, lng: 34.8969 },
+  { hebrew: "רמלה", english: "Ramla", lat: 31.9318, lng: 34.8736 },
+  { hebrew: "רעננה", english: "Ra'anana", lat: 32.1848, lng: 34.8713 },
+  { hebrew: "מודיעין עילית", english: "Modi'in Illit", lat: 31.9333, lng: 35.0417 },
+  { hebrew: "הוד השרון", english: "Hod HaSharon", lat: 32.1500, lng: 34.8833 },
+  { hebrew: "גבעתיים", english: "Givatayim", lat: 32.0722, lng: 34.8089 },
+  { hebrew: "נהריה", english: "Nahariya", lat: 33.0114, lng: 35.0925 },
+  { hebrew: "קריית אתא", english: "Kiryat Ata", lat: 32.8022, lng: 35.1097 },
+  { hebrew: "אילת", english: "Eilat", lat: 29.5581, lng: 34.9482 },
+  { hebrew: "עכו", english: "Acre", lat: 32.9108, lng: 35.0818 },
+  { hebrew: "עפולה", english: "Afula", lat: 32.6106, lng: 35.2950 },
+  { hebrew: "כרמיאל", english: "Karmiel", lat: 32.9136, lng: 35.2955 },
+  { hebrew: "טבריה", english: "Tiberias", lat: 32.7944, lng: 35.5311 },
+  { hebrew: "נס ציונה", english: "Ness Ziona", lat: 31.9283, lng: 34.8014 },
+  { hebrew: "אלעד", english: "Elad", lat: 32.0519, lng: 34.9575 },
+  { hebrew: "ראש העין", english: "Rosh HaAyin", lat: 32.0956, lng: 34.9566 },
+  { hebrew: "רמת השרון", english: "Ramat HaSharon", lat: 32.1472, lng: 34.8406 },
+  { hebrew: "קריית מוצקין", english: "Kiryat Motzkin", lat: 32.8361, lng: 35.0758 },
+  { hebrew: "קריית ים", english: "Kiryat Yam", lat: 32.8339, lng: 35.0711 },
+  { hebrew: "מעלה אדומים", english: "Ma'ale Adumim", lat: 31.7778, lng: 35.2953 },
+  { hebrew: "קריית ביאליק", english: "Kiryat Bialik", lat: 32.8400, lng: 35.0800 },
+  { hebrew: "אור יהודה", english: "Or Yehuda", lat: 32.0286, lng: 34.8561 },
+  { hebrew: "דימונה", english: "Dimona", lat: 31.0667, lng: 35.0333 },
+  { hebrew: "יבנה", english: "Yavne", lat: 31.8792, lng: 34.7394 },
+  { hebrew: "שדרות", english: "Sderot", lat: 31.5247, lng: 34.5953 },
+  { hebrew: "נתיבות", english: "Netivot", lat: 31.4167, lng: 34.5833 },
+  { hebrew: "צפת", english: "Safed", lat: 32.9644, lng: 35.4950 },
+  { hebrew: "אופקים", english: "Ofakim", lat: 31.3130, lng: 34.6210 },
+  { hebrew: "גבעת שמואל", english: "Givat Shmuel", lat: 32.0722, lng: 34.8472 },
+  { hebrew: "ערד", english: "Arad", lat: 31.2608, lng: 35.2136 },
+  { hebrew: "מגדל העמק", english: "Migdal HaEmek", lat: 32.6736, lng: 35.2411 },
+  { hebrew: "קריית אונו", english: "Kiryat Ono", lat: 32.0622, lng: 34.8633 },
+  { hebrew: "קריית שמונה", english: "Kiryat Shmona", lat: 33.2081, lng: 35.5683 },
+  { hebrew: "טירת כרמל", english: "Tirat Carmel", lat: 32.7667, lng: 34.9667 },
+  { hebrew: "יקנעם עילית", english: "Yokneam Illit", lat: 32.6594, lng: 35.1050 },
+  { hebrew: "אריאל", english: "Ariel", lat: 32.1039, lng: 35.1747 },
+  { hebrew: "אור עקיבא", english: "Or Akiva", lat: 32.5028, lng: 34.9200 }
+];
+
+export const ISRAEL_DISTRICTS = [
+  "תל אביב והמרכז",
+  "גוש דן",
+  "השרון",
+  "ירושלים והסביבה",
+  "צפון - חיפה והקריות",
+  "צפון - גליל ועמקים",
+  "דרום - באר שבע והנגב",
+  "דרום - אילת והערבה",
+  "השפלה",
+  "יהודה ושומרון"
+];

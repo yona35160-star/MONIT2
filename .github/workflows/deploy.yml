@@ -1,0 +1,107 @@
+name: Deploy Taxi Dispatch System
+
+on:
+  push:
+    branches:
+      - main         # Merge to main = Deploy to Production
+      - dev          # Push to dev = Build check only
+  release:
+    types: [published]
+
+jobs:
+  # ──────────────────────────────────────────────────────────
+  # 1. FRONTEND BUILD VERIFICATION
+  # ──────────────────────────────────────────────────────────
+  build-frontend:
+    name: 🔨 Build Frontend (Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build (Production)
+        env:
+          VITE_WEBAPP_URL: ${{ secrets.VITE_WEBAPP_URL }}
+        run: npm run build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+          retention-days: 5
+
+  # ──────────────────────────────────────────────────────────
+  # 2. GOOGLE APPS SCRIPT DEPLOYMENT (GAS via Clasp)
+  # Only runs on push to 'main' or a published release
+  # ──────────────────────────────────────────────────────────
+  deploy-gas:
+    name: 🚀 Deploy GAS Backend (Clasp)
+    runs-on: ubuntu-latest
+    needs: build-frontend
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Clasp CLI
+        run: npm install -g @google/clasp
+
+      - name: Authenticate Clasp
+        # Store the OAuth token JSON as a GitHub Secret named CLASP_TOKEN
+        # Generate via: clasp login --no-localhost, then copy ~/.clasprc.json
+        run: |
+          echo '${{ secrets.CLASP_TOKEN }}' > ~/.clasprc.json
+
+      - name: Push GAS Files to Google Apps Script
+        working-directory: ./GS
+        run: |
+          clasp push --force
+
+      - name: Deploy New GAS Version (Production)
+        working-directory: ./GS
+        # Only create a new versioned deployment on production releases
+        if: github.event_name == 'release'
+        run: |
+          VERSION=$(clasp deploy --description "Release ${{ github.ref_name }}" | grep -oP 'v\d+' | head -1)
+          echo "✅ Deployed GAS Version: $VERSION"
+
+  # ──────────────────────────────────────────────────────────
+  # 3. FRONTEND DEPLOY TO FIREBASE HOSTING (if configured)
+  # ──────────────────────────────────────────────────────────
+  deploy-frontend:
+    name: 🌐 Deploy Frontend (Firebase Hosting)
+    runs-on: ubuntu-latest
+    needs: build-frontend
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          channelId: live
+          projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'

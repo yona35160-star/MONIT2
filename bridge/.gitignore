@@ -1,0 +1,7 @@
+node_modules/
+.env
+cloudflared.exe
+wa-sessions/
+sessions/
+auth_info*/
+*.log

@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: whatsapp-taxi-bridge
+    env: node
+    region: frankfurt  # קרוב לישראל
+    plan: free         # מגבלה: נרדם אחרי 15 דקות ללא פעילות (נפתר ע"י self-ping + UptimeRobot)
+    buildCommand: npm install
+    startCommand: node multi-bot.js
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false         # ← חובה: URI של MongoDB Atlas (חינמי)
+      - key: BRIDGE_API_KEY
+        sync: false         # ← תמלא ידנית ב-Render dashboard
+      - key: GAS_SCRIPT_URL
+        sync: false         # ← תמלא ידנית ב-Render dashboard
+      - key: CORS_ORIGINS
+        sync: false         # ← הכתובת של GAS שלך
+      - key: RENDER_URL
+        sync: false         # ← הכתובת של ה-Bridge ב-Render (עבור self-ping)
+
+  # --- Cron Job: גיבוי Ping כל 10 דקות (במידה וה-plan מאפשר זאת בחינם) ---
+  - type: cron
+    name: keep-alive-ping
+    env: node
+    plan: free
+    schedule: "*/10 * * * *"
+    buildCommand: echo "no build needed"
+    startCommand: >
+      node -e "
+        const https = require('https');
+        const url = process.env.BRIDGE_URL + '/health';
+        https.get(url, (r) => { console.log('ping ok:', r.statusCode); })
+             .on('error', (e) => { console.error('ping failed:', e.message); });
+      "
+    envVars:
+      - key: BRIDGE_URL
+        sync: false   # ← הכנס את ה-URL של השירות שלך
+
