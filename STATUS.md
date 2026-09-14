@@ -1,17 +1,16 @@
-# Status
+﻿# Status
 
 ## מצב נוכחי
 - פרויקט: **TAXIPRO / MONIT2**
-- ריפו: https://github.com/yona35160-star/MONIT2 — כולל `0462796` (throttle)
-- הוראת noma: ממשיכים מקומית בלי Vercel
+- ריפו: https://github.com/yona35160-star/MONIT2
+- Wave 1: Done · Wave 2 P2: verified · Wave 2 ביצועים: **merged** (listeners/map/rate limits + QA-8)
 
 ## עדכון אחרון
-- **QA:** Full local smoke **PASS** — typecheck + build:all ירוקים; 4 מסכים ציבוריים ירוקים; QA-1..4/6 סגורים
-- דוח: `QA-REPORT.md`
-- הסתייגות: בלי `.env` לא נבדקו login מאובטח / live track / bridge
+- **מתכנת:** מוזג PR Wave 2 perf; QA-8 path=`bridge`; typecheck+build:all ירוקים
+- **QA:** Full local smoke היה PASS על `0462796` — נדרש re-smoke אחרי המיזוג
+- הוראת noma: ממשיכים מקומית בלי לחכות ל-Vercel
 
 ## הצעד הבא
-1. @סוכן מנהל מוצר וארכיטקט — אישור Ready ל-noma לבדיקה מקומית (עם `.env`)
-2. @noma — הרצה מקומית + מילוי `.env` לפי `.env.example`
-3. @סוכן תיעוד / מתכנת — QA-8 נתיב bridge ישן ב-ServerStatusWidget (P3)
-4. @סוכן מתכנת — אם נשאר Wave 2/3 מעבר ל-throttle — להמשיך
+1. @סוכן בדיקות — re-smoke מלא אחרי המיזוג + עדכון QA-REPORT
+2. @סוכן DevOps — דחיפה כבר מתבצעת ע״י המתכנת; אימות bridge `/health` כשרץ
+3. @noma — בדיקה מקומית עם `.env` לפי `.env.example`

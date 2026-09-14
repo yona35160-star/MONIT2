@@ -1,6 +1,6 @@
 ﻿
-import React, { useState, useEffect, useCallback } from 'react';
-import { throttle } from '../utils/throttle';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createDeferredCleanup, shouldPublishLocation, LOCATION_MIN_INTERVAL_MS, LOCATION_MIN_DISTANCE_M, MAP_UI_MIN_INTERVAL_MS, MAP_UI_MIN_DISTANCE_M } from '../utils/perf';
 import { useNavigate } from 'react-router-dom';
 import { getDriverPortalData, sendToBackend, acceptRideByPhone, updateDriverProfile } from '../api/driverApi';
 import { Toast } from '../components/Toast';
@@ -94,18 +94,19 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
     if (!isOnline || !data?.driver?.driverId) return;
 
     fetchQueue();
-    const poll = setInterval(fetchQueue, 15000);
+    // Firebase is the live source; GAS poll is a slow fallback only
+    const poll = setInterval(fetchQueue, 45000);
+    const deferred = createDeferredCleanup();
 
-    let unsub = () => {};
     import('../services/firebase').then(({ listenToPendingRides }) => {
-      unsub = listenToPendingRides((rides) => {
-        if (rides && rides.length > 0) setPendingRides(rides);
-      });
+      deferred.attach(listenToPendingRides((rides) => {
+        setPendingRides(rides || []);
+      }));
     });
 
     return () => {
       clearInterval(poll);
-      unsub();
+      deferred.flush();
     };
   }, [isOnline, data?.driver?.driverId, fetchQueue]);
 
@@ -157,76 +158,80 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
     }
   }, [data?.driver?.driverId, isOnline]);
 
+  const lastUiLocation = useRef<{ lat: number; lng: number; t: number } | null>(null);
+  const lastSyncLocation = useRef<{ lat: number; lng: number; t: number } | null>(null);
+
   useEffect(() => {
     if (!data?.driver?.driverId) return;
 
     let watchId: number | undefined;
-    let heartbeatTimer: ReturnType<typeof setTimeout> | undefined;
-
-    // Throttle Firebase location writes — watchPosition can fire many times/sec
-    const throttledSync = throttle((loc?: { lat: number; lng: number }) => {
-      void syncStatus(loc);
-    }, 5000);
-
-    const startHeartbeat = () => {
-      if (heartbeatTimer) clearTimeout(heartbeatTimer);
-      heartbeatTimer = setTimeout(async () => {
-        if (isOnline) {
-          await syncStatus(lastLocation.current || undefined);
-          startHeartbeat();
-        }
-      }, 30000);
-    };
+    let heartbeatTimer: ReturnType<typeof setInterval> | undefined;
 
     if (isOnline) {
       if ("geolocation" in navigator) {
         watchId = navigator.geolocation.watchPosition(
           (pos) => {
             const newLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-            setLocation(newLoc);
             lastLocation.current = newLoc;
             setGpsStatus('active');
-            throttledSync(newLoc);
+
+            if (shouldPublishLocation(lastUiLocation.current, newLoc, {
+              minIntervalMs: MAP_UI_MIN_INTERVAL_MS,
+              minDistanceM: MAP_UI_MIN_DISTANCE_M
+            })) {
+              lastUiLocation.current = { ...newLoc, t: Date.now() };
+              setLocation(newLoc);
+            }
+
+            if (shouldPublishLocation(lastSyncLocation.current, newLoc, {
+              minIntervalMs: LOCATION_MIN_INTERVAL_MS,
+              minDistanceM: LOCATION_MIN_DISTANCE_M
+            })) {
+              lastSyncLocation.current = { ...newLoc, t: Date.now() };
+              syncStatus(newLoc);
+            }
           },
           (err) => {
             console.warn("Loc failed:", err.message);
             setGpsStatus('error');
-            void syncStatus();
+            syncStatus();
           },
-          { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
+          { enableHighAccuracy: true, maximumAge: LOCATION_MIN_INTERVAL_MS, timeout: 15000 }
         );
       }
 
-      startHeartbeat();
+      heartbeatTimer = setInterval(() => {
+        syncStatus(lastLocation.current || undefined);
+      }, 30000);
+      syncStatus(lastLocation.current || undefined);
 
       const handleVisibility = () => {
         if (document.visibilityState === 'visible') {
-          void syncStatus(lastLocation.current || undefined);
+           syncStatus(lastLocation.current || undefined);
         }
       };
       document.addEventListener('visibilitychange', handleVisibility);
 
       return () => {
         if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
-        if (heartbeatTimer) clearTimeout(heartbeatTimer);
-        throttledSync.cancel();
+        if (heartbeatTimer) clearInterval(heartbeatTimer);
         document.removeEventListener('visibilitychange', handleVisibility);
       };
-    } else {
-      void syncStatus();
     }
+
+    syncStatus();
   }, [data?.driver?.driverId, isOnline, syncStatus]);
 
   // Active Ride Listener
   useEffect(() => {
     if (!data?.driver?.phone) return;
-    let unsub = () => {};
+    const deferred = createDeferredCleanup();
     import('../services/firebase').then(({ listenToActiveRideForDriver }) => {
-      unsub = listenToActiveRideForDriver(data.driver.phone, (order) => {
+      deferred.attach(listenToActiveRideForDriver(data.driver.phone, (order) => {
         setActiveRide(order);
-      });
+      }));
     });
-    return () => unsub();
+    return () => deferred.flush();
   }, [data?.driver?.phone]);
 
   // Connection Status (Offline/Online)
@@ -234,50 +239,52 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
 
   // Connection Listener
   useEffect(() => {
-    let unsub = () => { };
+    const deferred = createDeferredCleanup();
     import('../services/firebase').then(({ listenToConnectionStatus }) => {
-      unsub = listenToConnectionStatus((connected) => {
+      deferred.attach(listenToConnectionStatus((connected) => {
         setIsConnected(connected);
         if (!connected) {
           setToast({ message: 'חיבור לרשת נותק 🔌', type: 'error' });
-        } else {
-          // Optional: setToast({ message: 'מחובר מחדש 🟢', type: 'success' });
         }
-      });
+      }));
     });
-    return () => unsub();
+    return () => deferred.flush();
   }, []);
 
   // Notifications Listener
   useEffect(() => {
     if (!data?.driver?.driverId) return;
 
-    let unsub = () => { };
+    const deferred = createDeferredCleanup();
+    const dismissTimers: ReturnType<typeof setTimeout>[] = [];
     import('../services/firebase').then(({ listenToNotifications }) => {
-      unsub = listenToNotifications(data.driver.driverId, (notifs) => {
+      deferred.attach(listenToNotifications(data.driver.driverId, (notifs) => {
         if (notifs.length > 0) {
           const latest = notifs[0];
           const now = Date.now();
           // Only toast if created in the last 15 seconds to avoid spam on load
           if (latest.createdAt && now - latest.createdAt < 15000) {
             setToast({ message: `${latest.title || 'הודעה'}: ${latest.body || ''}`, type: 'success' });
+            const alertId = latest.id || Math.random().toString();
             setDynamicAlerts(prev => [...prev, {
-              id: Math.random().toString(),
+              id: alertId,
               type: latest.title?.includes('נסיעה') ? 'new_order' : 'info',
               title: latest.title || 'הודעה',
               subtitle: latest.body
             }]);
-            
-            // Auto dismiss dynamic alert
-            setTimeout(() => {
-              setDynamicAlerts(prev => prev.filter(a => a.id !== latest.id));
-            }, 5000);
+
+            dismissTimers.push(setTimeout(() => {
+              setDynamicAlerts(prev => prev.filter(a => a.id !== alertId));
+            }, 5000));
           }
         }
-      });
+      }));
     });
 
-    return () => unsub();
+    return () => {
+      deferred.flush();
+      dismissTimers.forEach(clearTimeout);
+    };
   }, [data?.driver?.driverId]);
 
   const handleLogout = () => {

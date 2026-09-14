@@ -1,10 +1,11 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { sendToBackend, markPaymentCompleted, toCamelCase, compareIds } from '../api/adminApi'; // Added markPaymentCompleted
 import { RideDetailsData } from '../types';
 import { hapticFeedback } from '../utils/haptics';
 import { ImpactStyle } from '@capacitor/haptics';
 import { startBackgroundTracking, stopBackgroundTracking } from '../services/location';
+import { createDeferredCleanup } from '../utils/perf';
 
 import {
     MapPin,
@@ -122,33 +123,23 @@ export const RideDetails: React.FC = () => {
     useEffect(() => {
         if (!orderId) return;
         let isMounted = true;
-        let unsubFunc: (() => void) | undefined;
+        const deferred = createDeferredCleanup();
+        let sawFirebase = false;
 
-        // Subscribe to Firebase updates
         import('../services/firebase').then(({ listenToOrder }) => {
-            if (!isMounted) return;
-            unsubFunc = listenToOrder(orderId, (updatedOrder) => {
+            const unsub = listenToOrder(orderId, (updatedOrder) => {
                 if (!isMounted) return;
 
                 if (updatedOrder) {
+                    sawFirebase = true;
                     const val = toCamelCase(updatedOrder);
-                    console.log("Firebase Update:", val.status, val.paymentCompleted);
-                    // [GUARD] Logic: Do not let older Firebase data overwrite state if we just updated it locally
-                    // We check if the incoming status is "behind" or older than our current local state's updatedAt
                     setData(prev => {
                         const incomingUpdateTime = val.updatedAt ? new Date(val.updatedAt).getTime() : 0;
                         const currentUpdateTime = prev?.updatedAt ? new Date(prev.updatedAt).getTime() : 0;
-
-                        // If Firebase data is strictly older than what we already have, ignore the status/payment fields
                         const isStale = incomingUpdateTime > 0 && currentUpdateTime > 0 && incomingUpdateTime < currentUpdateTime;
-
-                        // Also, if we are 'waiting_approval' locally and Firebase says 'assigned', it's likely a race condition
                         const isStatusRegression = (prev?.status === 'waiting_approval' && val.status === 'assigned');
 
-                        if (isStale || isStatusRegression) {
-                            console.log("Ignoring stale Firebase update to prevent UI flip-back");
-                            return prev;
-                        }
+                        if (isStale || isStatusRegression) return prev;
 
                         return ({
                             ...(prev || {}),
@@ -161,23 +152,16 @@ export const RideDetails: React.FC = () => {
                     });
                     setLoading(false);
                     setError(null);
-                } else {
-                    // Only show error if we aren't initially loading
-                    if (!loading && data) setError('ההזמנה לא נמצאה או נמחקה.');
                 }
             });
+            deferred.attach(unsub);
         });
 
-        // [FALLBACK] Polling for cases where Firebase might disconnect or fail
+        // Slow GAS fallback only while assignment/payment is pending
         const pollInterval = setInterval(() => {
-            // Use logical check to see if we still need to wait
             const currentPhone = getDriverPhone();
-
-            // We use the stale data check only to see if we should fetch
             setData(currentData => {
                 if (currentData && (currentData.status === 'assigned' || currentData.status === 'waiting_approval')) {
-                    // Since we can't cleanly do async inside setState without a stale closure
-                    // We just trigger a re-fetch and set it in the next tick
                     setTimeout(() => {
                         if (!isMounted) return;
                         sendToBackend<RideDetailsData>('getOrderDetails', { orderId: orderId!, phone: currentPhone })
@@ -190,33 +174,26 @@ export const RideDetails: React.FC = () => {
                 }
                 return currentData;
             });
-        }, 10000); // 10 seconds fallback
+        }, 20000);
 
-        // Initial Fetch for non-firebase fields (Payment Config)
-        if (!data) {
-            sendToBackend<RideDetailsData>('getOrderDetails', { orderId, phone: getDriverPhone() })
-                .then(res => {
-                    if (res.ok && res.data) {
-                        if (isMounted) {
-                            setData(res.data);
-                            setLoading(false);
-                            // Check if paying reported already via URL
-                            if (searchParams.get('paymentReported')) setPaymentReported(true);
-                        }
-                    } else {
-                        if (isMounted) {
-                            if (res.error?.includes('Unauthorized')) setError('אין לך הרשאה לצפות בהזמנה זו.');
-                            else if (!unsubFunc) setError(res.error || 'שגיאה בטעינת הנתונים'); // Only set error if firebase hasn't kicked in
-                            setLoading(false);
-                        }
+        sendToBackend<RideDetailsData>('getOrderDetails', { orderId, phone: getDriverPhone() })
+            .then(res => {
+                if (res.ok && res.data) {
+                    if (isMounted) {
+                        setData(prev => (prev ? { ...prev, ...res.data } : res.data) as RideDetailsData);
+                        setLoading(false);
+                        if (searchParams.get('paymentReported')) setPaymentReported(true);
                     }
-                });
-        }
+                } else if (isMounted && !sawFirebase) {
+                    if (res.error?.includes('Unauthorized')) setError('אין לך הרשאה לצפות בהזמנה זו.');
+                    else setError(res.error || 'שגיאה בטעינת הנתונים');
+                    setLoading(false);
+                }
+            });
 
-        // Cleanup
         return () => {
             isMounted = false;
-            if (unsubFunc) unsubFunc();
+            deferred.flush();
             clearInterval(pollInterval);
         };
     }, [orderId]);
@@ -226,15 +203,22 @@ export const RideDetails: React.FC = () => {
         const shouldTrack = data && (data.status === 'assigned' || data.status === 'arrived' || data.status === 'in_progress' || data.status === 'on_route' || data.status === 'paid');
         if (!shouldTrack || !orderId) return;
 
+        let cancelled = false;
         let watcherId: string | undefined;
 
         const start = async () => {
-            watcherId = await startBackgroundTracking(orderId, data?.driverId);
+            const id = await startBackgroundTracking(orderId, data?.driverId);
+            if (cancelled) {
+                if (id) stopBackgroundTracking(id);
+                return;
+            }
+            watcherId = id;
         };
 
         start();
 
         return () => {
+            cancelled = true;
             if (watcherId) stopBackgroundTracking(watcherId);
         };
     }, [data?.status, orderId, data?.driverId]);

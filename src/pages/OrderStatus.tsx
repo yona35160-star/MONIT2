@@ -92,30 +92,41 @@ export const OrderStatus: React.FC = () => {
         }
     }, [urlOrderId]);
 
-    // Real-time Updates
+    // Real-time Updates — bind once per orderId (do not re-subscribe on fetch status)
     useEffect(() => {
-        if (!orderId || status === 'error') return;
+        if (!orderId) return;
+        let cancelled = false;
 
-        // Subscribe to Firebase
         const unsubscribe = listenToOrder(orderId, (updatedOrder) => {
-            if (updatedOrder) {
-                // Merge firebase data with existing data
-                setData((prev: any) => ({
+            if (cancelled || !updatedOrder) return;
+            setData((prev: any) => {
+                const nextLoc = updatedOrder.driverLocation || (updatedOrder as any).driver_location;
+                const prevLoc = prev?.driverLocation || prev?.driver_location;
+                const locUnchanged = prevLoc && nextLoc &&
+                    Math.abs(Number(prevLoc.lat) - Number(nextLoc.lat)) < 0.00008 &&
+                    Math.abs(Number(prevLoc.lng) - Number(nextLoc.lng)) < 0.00008;
+                const statusUnchanged = prev?.status === updatedOrder.status;
+                const stampUnchanged = (prev?.updatedAt || '') === (updatedOrder.updatedAt || '');
+                if (prev && locUnchanged && statusUnchanged && stampUnchanged) return prev;
+
+                return {
                     ...prev,
                     ...updatedOrder,
-                    // Ensure lat/lngs are preserved if missing in update
                     pickupLat: updatedOrder.pickupLat || prev?.pickupLat,
                     pickupLng: updatedOrder.pickupLng || prev?.pickupLng,
                     destinationLat: updatedOrder.destinationLat || prev?.destinationLat,
                     destinationLng: updatedOrder.destinationLng || prev?.destinationLng,
-                    driver: { ...prev?.driver, ...updatedOrder.driver }, // Merge driver details
-                    driverLocation: updatedOrder.driverLocation || (updatedOrder as any).driver_location || prev?.driverLocation || prev?.driver_location
-                }));
-            }
+                    driver: { ...prev?.driver, ...updatedOrder.driver },
+                    driverLocation: nextLoc || prevLoc
+                };
+            });
         });
 
-        return () => unsubscribe();
-    }, [orderId, status]);
+        return () => {
+            cancelled = true;
+            unsubscribe();
+        };
+    }, [orderId]);
 
     const handleManualSearch = (e: React.FormEvent) => {
         e.preventDefault();

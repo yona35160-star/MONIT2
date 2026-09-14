@@ -16,7 +16,7 @@
 ## Wave 2 — ביצועים וחיבורים
 - [x] מתכנת: QA-2 באנר Script URL חסר ב-DriverLogin (הודעת setup עברית)
 - [x] מתכנת: QA-4 favicon 404 — `public/favicon.ico` + קישורי HTML
-- [ ] מתכנת: ביצועי מפה/listeners, ניקוי memory leaks, rate limits
+- [x] מתכנת: ביצועי מפה/listeners, ניקוי memory leaks, rate limits
 - [ ] DevOps: health checks (bridge `/health`, Firebase rules review)
 - [x] QA: smoke מלא מקומי (מסכים ציבוריים) אחרי throttle — רגרסיית WhatsApp/Telegram עדיין ממתינה ל-.env
 - [ ] QA: רגרסיה על חיבורי WhatsApp/Telegram (אם זמין) + אבטחה בסיסית

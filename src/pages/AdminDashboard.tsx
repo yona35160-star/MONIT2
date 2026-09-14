@@ -54,8 +54,7 @@ const CreateOrderModal = React.lazy(() => import('../components/CreateOrderModal
 const OrderDetailsModal = React.lazy(() => import('../components/OrderDetailsModal').then(m => ({ default: m.OrderDetailsModal })));
 
 
-import { db } from '../firebase-config';
-import { ref, onValue, off } from 'firebase/database';
+import { createDeferredCleanup, createLatestThrottler } from '../utils/perf';
 
 const TabButton: React.FC<{ active: boolean; onClick: () => void; label: string; icon: LucideIcon }> = ({ active, onClick, label, icon: Icon }) => (
   <button
@@ -375,9 +374,18 @@ export const AdminDashboard: React.FC = () => {
   }, [activeTab, heatmapData.length, fetchHeatmap]);
 
     const unsubs = useRef<Record<string, (() => void) | undefined>>({});
+  const fetchDataRef = useRef(fetchData);
+  fetchDataRef.current = fetchData;
 
   useEffect(() => {
     let isMounted = true;
+    const deferred = createDeferredCleanup();
+    const mapDriversThrottle = createLatestThrottler((drivers: Driver[]) => {
+      setMapData(prev => ({ ...prev, drivers }));
+    }, 1500);
+    const passengerThrottle = createLatestThrottler((locs: Record<string, any>) => {
+      setPassengerLocations(locs);
+    }, 1500);
     
     // Sync tab with URL if needed
     const currentHash = window.location.hash.replace('#', '');
@@ -388,56 +396,47 @@ export const AdminDashboard: React.FC = () => {
     else if (currentHash === 'admin/drivers' || currentHash === 'drivers') setActiveTab('drivers');
     
     // Initial Fetch (History + State)
-    fetchData(true);
+    fetchDataRef.current(true);
 
-    // Load listeners via dynamic import
-    import('../services/firebase').then(({ listenToDrivers, listenToActiveOrders, listenToAllOrderMessages, listenToSystemHealth, listenToStats, listenToSettings }) => {
+    // Load listeners via dynamic import — once per mount, not when fetchData identity changes
+    import('../services/firebase').then(({ listenToDrivers, listenToActiveOrders, listenToAllOrderMessages, listenToSystemHealth, listenToStats, listenToSettings, listenToPassengerLocations }) => {
       if (!isMounted) return;
 
-      // Stats
       unsubs.current.stats = listenToStats((apiStats) => {
         if (!isMounted) return;
         dispatch(setStatsData(apiStats));
       });
 
-      // Settings
       unsubs.current.settings = listenToSettings((apiSettings) => {
         if (!isMounted) return;
         dispatch(setSettingsData(apiSettings));
       });
 
-      // Drivers
       unsubs.current.drivers = listenToDrivers((loadedDrivers) => {
         if (!isMounted) return;
         
         const now = Date.now();
-        const HEARTBEAT_THRESHOLD = 2 * 60 * 1000; // 2 minutes stale limit
+        const HEARTBEAT_THRESHOLD = 2 * 60 * 1000;
 
-        // Filter out "ghost" drivers who are marked online but haven't sent a heartbeat recently
         const activeOnly = loadedDrivers.filter(d => {
           if (!d.isOnline) return false;
-          // Support both timestamp and ISO string formats
           const lastActive = d.lastHeartbeat ? new Date(d.lastHeartbeat).getTime() : 0;
           return (now - lastActive) < HEARTBEAT_THRESHOLD;
         });
 
         dispatch(setActiveDrivers(activeOnly));
-        setMapData(prev => ({ ...prev, drivers: activeOnly }));
+        mapDriversThrottle.push(activeOnly);
       });
 
-      // Active Orders
       unsubs.current.activeOrders = listenToActiveOrders((activeOrders) => {
         if (!isMounted) return;
 
         const now = Date.now();
-        const CUTOFF_MS = 5 * 60 * 1000; // 5 minutes
+        const CUTOFF_MS = 5 * 60 * 1000;
 
-        // 1. Update Orders Table (O(N) Merge)
-        // Use latest orders from ref to avoid stale closures
         const nowOrders = [...ordersRef.current];
         const indexedOrders = new Map();
 
-        // Index current orders by normalized ID for O(1) lookup
         nowOrders.forEach(o => {
           const clean = String(o.orderId).trim().replace(/^TAXI-/, '').toLowerCase();
           indexedOrders.set(clean, o);
@@ -449,10 +448,8 @@ export const AdminDashboard: React.FC = () => {
           const clean = String(order.orderId).trim().replace(/^TAXI-/, '').toLowerCase();
 
           const existing = indexedOrders.get(clean);
-          // Deep compare or just check basic fields
           if (!existing || existing.status !== order.status || existing.updatedAt !== order.updatedAt || existing.paymentCompleted !== order.paymentCompleted) {
 
-            // [REAL-TIME TOAST NOTIFICATION FOR PAYMENTS]
             if (existing && existing.status !== 'waiting_approval' && order.status === 'waiting_approval') {
               const driverName = (order as any).driverName || 'נהג';
               const amount = (order as any).price || 'סכום לא ידוע';
@@ -481,7 +478,6 @@ export const AdminDashboard: React.FC = () => {
           dispatch(setActiveOrders(merged));
         }
 
-        // 2. Update Live Map Data (Filter out old completed orders)
         const mapOrders = activeOrders
           .map(o => toCamelCase(o))
           .filter(o => {
@@ -496,7 +492,6 @@ export const AdminDashboard: React.FC = () => {
         setMapData(prev => ({ ...prev, orders: mapOrders }));
       });
 
-      // [PHASE II] Listen to Message ACK Statuses
       unsubs.current.messages = listenToAllOrderMessages((data) => {
         if (!isMounted) return;
         setMessageStatuses(data);
@@ -507,13 +502,16 @@ export const AdminDashboard: React.FC = () => {
         setBridgeStatus(status);
       });
 
-      // [PHASE III] Listen to Passenger Live Locations
-      const passengersRef = ref(db, 'passenger_locations');
-      const passengersListener = onValue(passengersRef, (snapshot) => {
+      unsubs.current.passengers = listenToPassengerLocations((data) => {
         if (!isMounted) return;
-        const data = snapshot.val();
-        if (data) setPassengerLocations(data);
+        passengerThrottle.push(data || {});
       });
+
+      Object.values(unsubs.current).forEach((unsub) => {
+        if (typeof unsub === 'function') deferred.attach(unsub);
+      });
+
+      if (!isMounted) deferred.flush();
 
     }).catch(err => {
       console.error("Firebase Sync Error:", err);
@@ -521,12 +519,12 @@ export const AdminDashboard: React.FC = () => {
 
     return () => {
       isMounted = false;
-      off(ref(db, 'passenger_locations'), 'value');
-      Object.values(unsubs.current).forEach(unsub => {
-        if (typeof unsub === 'function') unsub();
-      });
+      mapDriversThrottle.flush();
+      passengerThrottle.flush();
+      deferred.flush();
+      unsubs.current = {};
     };
-  }, [fetchData]);
+  }, [dispatch]);
 
 
 

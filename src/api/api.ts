@@ -1,6 +1,32 @@
 import { ApiResponse, Order, Driver, LoginPayload, DashboardStats, SystemSettings } from '../types';
 import { normalizeResponseKeys, toSnakeCaseLite } from '../utils/apiUtils';
 
+/** Chatty GAS reads / location pings — coalesce in-flight + skip if a fresh OK is cached. Mutations are not limited. */
+const CHATTY_ACTION_MIN_MS: Record<string, number> = {
+  getOrders: 8000,
+  getOrderStatus: 4000,
+  getOrderDetails: 8000,
+  getDashboardBundle: 10000,
+  getMapData: 15000,
+  getDriverPortalData: 15000,
+  getOrdersDelta: 8000,
+  updateDriverLocation: 10000,
+  getSystemHealth: 15000,
+  proxyBridgeStatus: 8000,
+  getCustomerOrders: 10000,
+};
+
+const inflightGasCalls = new Map<string, Promise<ApiResponse<any>>>();
+const lastGasOk = new Map<string, { at: number; result: ApiResponse<any> }>();
+
+const gasCallKey = (action: string, payload: any) => {
+  try {
+    return `${action}:${JSON.stringify(payload ?? {})}`;
+  } catch {
+    return action;
+  }
+};
+
 export const DEFAULT_WEBAPP_URL = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_WEBAPP_URL) || '';
 
 let cachedScriptsUrl: string | null = null;
@@ -114,7 +140,7 @@ export interface SendOptions {
  * [FIX IMP-001] Auto-refreshes admin token on 401 Unauthorized responses
  */
 let _isRefreshingToken = false; // Guard to prevent infinite refresh loops
-export const sendToBackend = async <T>(
+const sendToBackendUnthrottled = async <T>(
   action: string,
   payload: any = {},
   options: SendOptions | boolean = false // support old 'raw' boolean for compat
@@ -212,6 +238,34 @@ export const sendToBackend = async <T>(
     }
     return { ok: false, error: 'בעיה בתקשורת לשרת.' };
   }
+};
+
+export const sendToBackend = async <T>(
+  action: string,
+  payload: any = {},
+  options: SendOptions | boolean = false
+): Promise<ApiResponse<T>> => {
+  const minMs = CHATTY_ACTION_MIN_MS[action];
+  if (!minMs) return sendToBackendUnthrottled<T>(action, payload, options);
+
+  const key = gasCallKey(action, payload);
+  const existing = inflightGasCalls.get(key);
+  if (existing) return existing as Promise<ApiResponse<T>>;
+
+  const cached = lastGasOk.get(key);
+  if (cached && Date.now() - cached.at < minMs) {
+    return cached.result as ApiResponse<T>;
+  }
+
+  const pending = sendToBackendUnthrottled<T>(action, payload, options).then((result) => {
+    if (result?.ok) lastGasOk.set(key, { at: Date.now(), result });
+    return result;
+  }).finally(() => {
+    inflightGasCalls.delete(key);
+  });
+
+  inflightGasCalls.set(key, pending);
+  return pending;
 };
 
 export const sendToBackendWithRetry = async <T>(action: string, payload: any = {}, maxRetries = 3, retryDelay = 1000): Promise<ApiResponse<T>> => {

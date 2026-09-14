@@ -170,40 +170,40 @@ export const CompleteRide: React.FC = () => {
         }
     };
 
-    // REALTIME: Listen for Order Updates (replaces polling)
+    // REALTIME: Listen for Order Updates (bind once per order — status lives in a ref)
+    const statusRef = React.useRef(status);
+    statusRef.current = status;
+
     useEffect(() => {
         if (!orderId) return;
 
-        let unsubscribe: (() => void) | undefined;
         let isMounted = true;
+        let unsubscribe: (() => void) | undefined;
 
         import('../services/firebase').then(({ listenToOrder }) => {
-            if (!isMounted) return;
+            const unsub = listenToOrder(orderId, (updatedOrder) => {
+                if (!isMounted || !updatedOrder) return;
 
-            unsubscribe = listenToOrder(orderId, (updatedOrder) => {
-                if (!updatedOrder) return;
-
-                // Sync Status
                 if (updatedOrder.status) {
                     setOrderStatus(updatedOrder.status);
                 }
 
-                // Auto-advance if payment completed
-                if (status === 'waiting_approval') {
-                    // Check if status changed to 'paid' or 'completed'
+                if (statusRef.current === 'waiting_approval') {
                     if (updatedOrder.paymentCompleted || updatedOrder.status === 'paid' || updatedOrder.status === 'completed') {
                         setStatus('success');
-                        setCompletionData(updatedOrder); // Assuming order has finance data attached now
+                        setCompletionData(updatedOrder);
                     }
                 }
             });
+            if (!isMounted) unsub();
+            else unsubscribe = unsub;
         });
 
         return () => {
             isMounted = false;
             if (unsubscribe) unsubscribe();
         };
-    }, [orderId, status]);
+    }, [orderId]);
 
     const handleCopyPhone = () => {
         if (financeData?.paymentPhone) {
