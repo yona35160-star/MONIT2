@@ -70,6 +70,19 @@ Firebase fail-safe: `src/services/firebase.ts` מדלג על listeners כשאי�
 3. **עיצוב:** ניקוי indigo במסלול קריטי (QA-3) — Wave 2 polish.  
 4. **QA Wave 2:** רגרסיה עם `.env` אמיתי + bridge.
 
-## עדכון תיעוד
 
-**QA-1/QA-6 נסגרו** ע״י סוכן תיעוד (מקור ב-C:\Users\Pc\MONIT2-sync): Login בעברית; מרכז שיגור חכם ב-CreateOrderModal. נדרש rebuild לאימות בבילד.
+---
+
+## Re-smoke Wave 2 — 2026-09-14
+
+**פסק דין:** PASS — QA-1, QA-2, QA-4, QA-6 נסגרו בבילד הנוכחי. QA-3 indigo במסלול Login/StationOrder/AdminDashboard = 0.
+
+| בדיקה | תוצאה |
+|---|---|
+| Admin `מרכז שליטה` / `למורשים בלבד` | PASS |
+| Station `מרכז שיגור חכם` (לא SMART DISPATCH) | PASS |
+| Driver באנר setup בעברית (לא שגיאה קריפטית) | PASS |
+| favicon.ico = 200 בשלוש האפליקציות | PASS |
+| pageerror | 0 |
+
+ממתין ל-preview Vercel מ-noma ל-re-smoke על URLs חיים.
