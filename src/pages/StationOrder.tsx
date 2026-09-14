@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CreateOrderModal } from '../components/CreateOrderModal';
 import { WhatsAppConnect } from '../components/WhatsAppConnect';
 import { Car } from 'lucide-react';
+import { EmptyState, AlertBanner } from '../components/ui';
 
 export const StationOrder: React.FC = () => {
   const [open, setOpen] = useState(true);
@@ -38,7 +39,7 @@ export const StationOrder: React.FC = () => {
         <WhatsAppConnect />
 
         {done && (
-          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-6 rounded-3xl font-bold">
+          <AlertBanner tone="success" dark className="rounded-3xl p-6">
             ההזמנה נקלטה. אם ווטסאפ מחובר — היא כבר בקבוצה.
             <button
               type="button"
@@ -47,7 +48,7 @@ export const StationOrder: React.FC = () => {
             >
               הזמנה נוספת
             </button>
-          </div>
+          </AlertBanner>
         )}
 
         {open && (
@@ -56,6 +57,17 @@ export const StationOrder: React.FC = () => {
             googleMapsApiKey={mapsKey}
             onClose={() => setOpen(false)}
             onSuccess={() => { setDone(true); setOpen(false); }}
+          />
+        )}
+
+        {!open && !done && (
+          <EmptyState
+            dark
+            tone="empty"
+            title="אין טופס פתוח"
+            description="פתחו טופס הזמנה חדש לתחנה — בלי התחברות."
+            actionLabel="פתח טופס הזמנה"
+            onAction={() => setOpen(true)}
           />
         )}
       </div>

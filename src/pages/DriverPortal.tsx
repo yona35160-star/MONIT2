@@ -9,6 +9,7 @@ import { LiquidSwipe } from '../components/LiquidSwipe';
 import { DynamicIslandAlert, AlertData } from '../components/DynamicIslandAlert';
 import { PredictiveHeatmap } from '../components/PredictiveHeatmap';
 import { DriverMap } from '../components/DriverMap';
+import { Spinner, EmptyState } from '../components/ui';
 import { LogOut, User, DollarSign, List, Check, Shield, BarChart, Edit3, Loader2, Star, AlertCircle, Bell, Clock, TrendingUp, FileText, MapPin, Calendar, Download, Send, Settings, Headset, Menu, Home, ChevronLeft, Briefcase, UserCircle, Car, Zap } from 'lucide-react';
 
 interface DriverPortalProps {
@@ -332,11 +333,7 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
   };
 
   if (isLoading || !data) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-100">
-        <Loader2 className="animate-spin text-blue-600" size={48} />
-      </div>
-    );
+    return <Spinner role="driver" label="טוען פורטל נהג..." />;
   }
 
   const { driver, stats, recentRides } = data;
@@ -540,15 +537,15 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
             </div>
 
             {isLoadingQueue ? (
-              <div className="flex justify-center py-24"><Loader2 className="animate-spin text-primary-500" size={48} /></div>
+              <div className="flex justify-center py-24"><Spinner role="driver" fullScreen={false} label="טוען תור נסיעות..." /></div>
             ) : pendingRides.length === 0 ? (
-              <div className="text-center p-20 glass-dark rounded-[3.5rem] border border-dashed border-white/5 mt-4 group">
-                <div className="w-20 h-20 rounded-full bg-slate-800/50 flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover:scale-110 transition-transform duration-500">
-                  <Clock size={40} className="text-slate-600" />
-                </div>
-                <p className="font-black uppercase text-sm text-slate-400 tracking-widest">אין נסיעות ממתינות</p>
-                <p className="text-[11px] mt-2 text-slate-600 font-bold">נסיעות חדשות יופיעו כאן אוטומטית</p>
-              </div>
+              <EmptyState
+                dark
+                tone="empty"
+                className="mt-4 p-20 rounded-[3.5rem]"
+                title="אין נסיעות ממתינות"
+                description="נסיעות חדשות יופיעו כאן אוטומטית"
+              />
             ) : (
               <div className="grid grid-cols-1 gap-5">
                 {pendingRides.map(ride => (

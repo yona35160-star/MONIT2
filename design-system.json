@@ -2,10 +2,20 @@
   "name": "TAXIPRO / MONIT2 Design System",
   "version": "1.0.0",
   "direction": "rtl",
-  "apps": ["passenger", "driver", "admin"],
+  "apps": [
+    "passenger",
+    "driver",
+    "admin"
+  ],
   "typography": {
     "fontFamily": {
-      "sans": ["Rubik", "Heebo", "Inter", "system-ui", "sans-serif"]
+      "sans": [
+        "Rubik",
+        "Heebo",
+        "Inter",
+        "system-ui",
+        "sans-serif"
+      ]
     },
     "scale": {
       "xs": "0.75rem",
@@ -16,26 +26,75 @@
       "2xl": "1.5rem",
       "3xl": "1.875rem"
     },
-    "weights": { "regular": 400, "medium": 500, "semibold": 600, "bold": 700 }
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    }
   },
   "colors": {
     "brand": {
-      "primary": { "hex": "#0EA5E9", "tailwind": "primary-500", "usage": "CTA ראשי, קישורים, פוקוס" },
-      "primaryDark": { "hex": "#0284C7", "tailwind": "primary-600" },
-      "accent": { "hex": "#FACC15", "tailwind": "accent-400", "usage": "מוטיב מונית / דגש חם" },
-      "accentStrong": { "hex": "#EAB308", "tailwind": "accent-500" },
-      "taxiYellow": { "hex": "#FFD60A", "tailwind": "taxi-yellow" },
-      "taxiBlack": { "hex": "#1A1A1A", "tailwind": "taxi-black" }
+      "primary": {
+        "hex": "#0EA5E9",
+        "tailwind": "primary-500",
+        "usage": "CTA ראשי, קישורים, פוקוס"
+      },
+      "primaryDark": {
+        "hex": "#0284C7",
+        "tailwind": "primary-600"
+      },
+      "accent": {
+        "hex": "#FACC15",
+        "tailwind": "accent-400",
+        "usage": "מוטיב מונית / דגש חם"
+      },
+      "accentStrong": {
+        "hex": "#EAB308",
+        "tailwind": "accent-500"
+      },
+      "taxiYellow": {
+        "hex": "#FFD60A",
+        "tailwind": "taxi-yellow"
+      },
+      "taxiBlack": {
+        "hex": "#1A1A1A",
+        "tailwind": "taxi-black"
+      }
     },
     "semantic": {
-      "success": { "hex": "#10B981", "tailwind": "success-500" },
-      "warning": { "hex": "#F59E0B", "tailwind": "warning-500" },
-      "danger": { "hex": "#EF4444", "tailwind": "danger-500" },
-      "info": { "hex": "#3B82F6", "tailwind": "primary-500" }
+      "success": {
+        "hex": "#10B981",
+        "tailwind": "success-500"
+      },
+      "warning": {
+        "hex": "#F59E0B",
+        "tailwind": "warning-500"
+      },
+      "danger": {
+        "hex": "#EF4444",
+        "tailwind": "danger-500"
+      },
+      "info": {
+        "hex": "#3B82F6",
+        "tailwind": "primary-500"
+      }
     },
     "surface": {
-      "light": { "bg": "#F8FAFC", "card": "#FFFFFF", "border": "#E2E8F0", "text": "#0F172A", "muted": "#64748B" },
-      "dark": { "bg": "#0F172A", "panel": "#1E293B", "border": "#334155", "text": "#F1F5F9", "muted": "#94A3B8" }
+      "light": {
+        "bg": "#F8FAFC",
+        "card": "#FFFFFF",
+        "border": "#E2E8F0",
+        "text": "#0F172A",
+        "muted": "#64748B"
+      },
+      "dark": {
+        "bg": "#0F172A",
+        "panel": "#1E293B",
+        "border": "#334155",
+        "text": "#F1F5F9",
+        "muted": "#94A3B8"
+      }
     }
   },
   "roles": {
@@ -66,7 +125,11 @@
     "input": "0.75rem",
     "card": "1.5rem",
     "badge": "9999px",
-    "tailwind": { "button": "rounded-xl", "card": "rounded-3xl", "badge": "rounded-full" }
+    "tailwind": {
+      "button": "rounded-xl",
+      "card": "rounded-3xl",
+      "badge": "rounded-full"
+    }
   },
   "shadow": {
     "card": "shadow-card",
@@ -81,19 +144,101 @@
     "section": "1.5rem"
   },
   "components": {
-    "Button": { "path": "src/components/ui/Button.tsx", "variants": ["primary", "secondary", "accent", "danger", "ghost", "outline"], "sizes": ["xs", "sm", "md", "lg"] },
-    "Badge": { "path": "src/components/ui/Badge.tsx", "variants": ["primary", "success", "warning", "danger", "neutral", "status"] },
-    "Card": { "path": "src/components/ui/Card.tsx", "variants": ["default", "glass", "dark"] },
-    "Input": { "path": "src/components/ui/Input.tsx", "sizes": ["md", "lg"] },
-    "Spinner": { "path": "src/components/ui/Spinner.tsx", "roles": ["passenger", "driver", "admin"] }
+    "Button": {
+      "path": "src/components/ui/Button.tsx",
+      "variants": [
+        "primary",
+        "secondary",
+        "accent",
+        "danger",
+        "ghost",
+        "outline"
+      ],
+      "sizes": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    "Badge": {
+      "path": "src/components/ui/Badge.tsx",
+      "variants": [
+        "primary",
+        "success",
+        "warning",
+        "danger",
+        "neutral",
+        "status"
+      ]
+    },
+    "Card": {
+      "path": "src/components/ui/Card.tsx",
+      "variants": [
+        "default",
+        "glass",
+        "dark"
+      ]
+    },
+    "Input": {
+      "path": "src/components/ui/Input.tsx",
+      "sizes": [
+        "md",
+        "lg"
+      ]
+    },
+    "Spinner": {
+      "path": "src/components/ui/Spinner.tsx",
+      "roles": [
+        "passenger",
+        "driver",
+        "admin"
+      ]
+    },
+    "EmptyState": {
+      "path": "src/components/ui/EmptyState.tsx",
+      "tones": [
+        "empty",
+        "error",
+        "offline",
+        "search"
+      ]
+    },
+    "AlertBanner": {
+      "path": "src/components/ui/AlertBanner.tsx",
+      "tones": [
+        "error",
+        "success",
+        "warning",
+        "info"
+      ]
+    }
   },
   "statusTokens": {
     "source": "src/utils/statusConfig.ts",
-    "keys": ["pending", "confirmed", "on_route", "completed", "waiting_approval", "cancelled"]
+    "keys": [
+      "pending",
+      "confirmed",
+      "on_route",
+      "completed",
+      "waiting_approval",
+      "cancelled"
+    ]
   },
   "cssUtilities": {
     "source": "src/styles/index.css",
-    "classes": ["btn-primary", "btn-accent", "btn-ghost", "btn-outline", "card", "card-hover", "input", "badge", "bg-customer", "bg-driver"]
+    "classes": [
+      "btn-primary",
+      "btn-accent",
+      "btn-ghost",
+      "btn-outline",
+      "card",
+      "card-hover",
+      "input",
+      "badge",
+      "bg-customer",
+      "bg-driver"
+    ]
   },
   "rules": [
     "לא להשתמש ב-indigo/gray אד-הוק בכפתורים — רק טוקני primary/accent/danger/surface",
@@ -104,6 +249,12 @@
   ],
   "handoff": {
     "for": "Lead Developer",
-    "use": ["design-system.json", "src/components/ui/*", "tailwind.config.js colors", "src/styles/index.css", "src/utils/statusConfig.ts"]
+    "use": [
+      "design-system.json",
+      "src/components/ui/*",
+      "tailwind.config.js colors",
+      "src/styles/index.css",
+      "src/utils/statusConfig.ts"
+    ]
   }
 }

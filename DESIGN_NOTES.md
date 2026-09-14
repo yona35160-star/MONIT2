@@ -18,3 +18,7 @@ import { Button, Badge, Card, Input, Spinner } from '../components/ui';
 
 ## QA-3 (2026-09-14)
 הוחלפו כל מופעי `indigo-*` ב-`src/` בטוקני `primary-*` לפי `design-system.json`. מסלול קריטי (Login / StationOrder / AdminDashboard / DriverPortal / PassengerApp) + רכיבים נלווים + `btn-premium` ב-CSS.
+
+## Wave 2 polish — empty/loading/error (2026-09-14)
+- רכיבים חדשים: `EmptyState`, `AlertBanner` ב-`src/components/ui/`
+- שולבו במסלול קריטי: DriverPortal (Spinner+EmptyState), StationOrder (EmptyState+AlertBanner), OrderStatus/DriverLogin/CustomerOrder (AlertBanner)

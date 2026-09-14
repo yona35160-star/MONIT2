@@ -7,6 +7,7 @@ import { sendToBackend } from '../api/api';
 import { Car, Phone, Loader2, AlertCircle, ArrowRight } from 'lucide-react';
 import { normalizePhone, isValidPhone } from '../utils/phone';
 import { GoogleProfile } from '../types';
+import { AlertBanner } from '../components/ui';
 
 declare global {
   interface Window {
@@ -184,7 +185,7 @@ export const DriverLogin: React.FC<{ onLogin?: () => void }> = ({ onLogin }) => 
                 </div>
               </div>
 
-              {error && <div className="text-red-500 text-sm bg-red-50 p-2 rounded-lg flex items-center gap-2"><AlertCircle size={16} />{error}</div>}
+              {error && <AlertBanner tone="error" compact>{error}</AlertBanner>}
 
               <button
                 type="submit"
@@ -217,7 +218,7 @@ export const DriverLogin: React.FC<{ onLogin?: () => void }> = ({ onLogin }) => 
               />
             </div>
 
-            {error && <div className="text-red-500 text-sm bg-red-50 p-2 rounded-lg flex items-center gap-2"><AlertCircle size={16} />{error}</div>}
+            {error && <AlertBanner tone="error" compact>{error}</AlertBanner>}
 
             <button
               type="submit"

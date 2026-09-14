@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { sendToBackend, calculatePrice, getSystemSettings } from '../api/passengerApi';
 import { CreateOrderPayload, SystemSettings } from '../types';
@@ -11,7 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button, Card } from '../components/ui';
+import { Button, Card, AlertBanner } from '../components/ui';
 
 const customerOrderSchema = z.object({
     customerName: z.string().min(2, 'שם מלא חייב להכיל לפחות 2 תווים'),
@@ -559,10 +559,8 @@ export const CustomerOrder: React.FC = () => {
                                 </motion.div>
 
                                 {status === 'error' && (
-                                    <div className="bg-red-50 text-red-600 p-5 rounded-2xl text-sm text-center border border-red-100 font-bold flex items-center justify-center gap-2">
-                                        <CheckCircle size={18} className="rotate-45" /> {errorMessage || 'אירעה שגיאה. נסו שוב.'}
-                                    </div>
-                                )}
+                                <AlertBanner tone="error">{errorMessage || 'שגיאה בשליחה. נסו שוב.'}</AlertBanner>
+                            )}
 
                                 <div className="flex gap-4 mt-8">
                                     <Button type="button" variant="outline" size="lg" className="w-1/4 rounded-[1.5rem] py-5" onClick={prevStep}>

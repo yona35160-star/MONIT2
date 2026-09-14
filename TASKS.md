@@ -20,7 +20,7 @@
 - [ ] DevOps: health checks (bridge `/health`, Firebase rules review)
 - [x] QA: smoke מלא מקומי (מסכים ציבוריים) אחרי throttle — רגרסיית WhatsApp/Telegram עדיין ממתינה ל-.env
 - [ ] QA: רגרסיה על חיבורי WhatsApp/Telegram (אם זמין) + אבטחה בסיסית
-- [ ] עיצוב: polish למצבי שגיאה/טעינה/ריק
+- [x] עיצוב: polish למצבי שגיאה/טעינה/ריק
 
 ## Wave 3 — מוכן לייצור
 - [ ] QA: E2E מלא + רשימת חסימות

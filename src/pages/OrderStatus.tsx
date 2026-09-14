@@ -8,7 +8,7 @@ import { LiveMap } from '../components/LiveMap';
 import { Loader2, Car, User, Clock, CheckCircle, Search, MapPin, XCircle, Home, Phone, Shield, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { RadarScanner } from '../components/RadarScanner';
-import { Button, Card, Input, Spinner } from '../components/ui';
+import { Button, Card, Input, Spinner, AlertBanner } from '../components/ui';
 
 const RideTimeline = ({ status }: { status: string }) => {
     const steps = [
@@ -190,7 +190,7 @@ export const OrderStatus: React.FC = () => {
                             </Button>
                         </form>
                         )}
-                        {status === 'error' && <p className="text-danger mt-4 text-center font-bold bg-danger/5 p-2 rounded-lg">{errorMsg}</p>}
+                        {status === 'error' && <AlertBanner tone="error" compact className="mt-4 text-center justify-center">{errorMsg}</AlertBanner>}
                     </Card>
                 </div>
             )}
