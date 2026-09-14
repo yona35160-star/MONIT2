@@ -71,10 +71,18 @@ export const WhatsAppConnect: React.FC = () => {
   };
 
   useEffect(() => {
-    check();
-    const id = setInterval(check, 8000);
-    return () => clearInterval(id);
-  }, []);
+    let cancelled = false;
+    const tick = async () => {
+      if (cancelled) return;
+      await check();
+    };
+    tick();
+    const id = setInterval(tick, connected ? 20000 : 8000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [connected]);
 
   // Do not auto-request pairing codes. Repeated requestPairingCode()
   // closes the Baileys socket (408 → 401) and wipes the session.

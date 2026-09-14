@@ -1,6 +1,7 @@
 import { registerPlugin } from '@capacitor/core';
 import { BackgroundGeolocationPlugin } from '@capacitor-community/background-geolocation';
 import { updateOrderDriverLocation } from './firebase';
+import { LOCATION_MIN_DISTANCE_M, LOCATION_MIN_INTERVAL_MS } from '../utils/perf';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>('BackgroundGeolocation');
 
@@ -15,7 +16,7 @@ export const startBackgroundTracking = async (orderId: string, driverId?: string
                 backgroundTitle: "מעקב נסיעה פעיל",
                 requestPermissions: true,
                 stale: false,
-                distanceFilter: 50 // 50 meters
+                distanceFilter: LOCATION_MIN_DISTANCE_M
             },
             async (location, error) => {
                 if (error) {
@@ -28,7 +29,6 @@ export const startBackgroundTracking = async (orderId: string, driverId?: string
                 }
 
                 if (location) {
-                    console.log("Background Geolocation Update", location);
                     await updateOrderDriverLocation(orderId, {
                         lat: location.latitude,
                         lng: location.longitude,
@@ -53,7 +53,11 @@ export const startBackgroundTracking = async (orderId: string, driverId?: string
                     }, driverId);
                 },
                 (err) => console.error("Web Geolocation error", err),
-                { enableHighAccuracy: true }
+                {
+                    enableHighAccuracy: true,
+                    maximumAge: LOCATION_MIN_INTERVAL_MS,
+                    timeout: 15000
+                }
             );
             return `web-${id}`;
         }

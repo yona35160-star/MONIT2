@@ -73,6 +73,8 @@ const createPassengerIcon = () => L.divIcon({
     iconAnchor: [12, 12]
 });
 
+const passengerIcon = createPassengerIcon();
+
 // Car Icon for Driver
 const createCarIcon = (heading: number) => L.divIcon({
     html: `
@@ -89,6 +91,24 @@ const createCarIcon = (heading: number) => L.divIcon({
     iconSize: [32, 32],
     iconAnchor: [16, 16]
 });
+
+const carIconCache = new Map<number, L.DivIcon>();
+const getCarIcon = (heading?: number) => {
+    const bucket = Math.round(((heading || 0) % 360) / 15) * 15;
+    let icon = carIconCache.get(bucket);
+    if (!icon) {
+        icon = createCarIcon(bucket);
+        carIconCache.set(bucket, icon);
+    }
+    return icon;
+};
+
+const heatmapSignature = (data?: number[][]) => {
+    if (!data || data.length === 0) return '0';
+    const first = data[0];
+    const last = data[data.length - 1];
+    return `${data.length}:${first?.[0]}:${first?.[1]}:${last?.[0]}:${last?.[1]}`;
+};
 
 interface Location {
     lat: number;
@@ -120,6 +140,7 @@ interface LiveMapProps {
 // Heatmap Layer Component for Leaflet
 const HeatmapLayer: React.FC<{ data: number[][] }> = ({ data }) => {
     const map = useMap();
+    const signature = heatmapSignature(data);
 
     useEffect(() => {
         if (!data || data.length === 0) return;
@@ -135,16 +156,20 @@ const HeatmapLayer: React.FC<{ data: number[][] }> = ({ data }) => {
         return () => {
             map.removeLayer(heatLayer);
         };
-    }, [data, map]);
+    }, [signature, map]);
 
     return null;
 };
 
-const MapController: React.FC<{ bounds: L.LatLngBoundsExpression | null }> = ({ bounds }) => {
+const MapController: React.FC<{ bounds: L.LatLngBoundsExpression | null; fitKey: string }> = ({ bounds, fitKey }) => {
     const map = useMap();
+    const lastFitKey = React.useRef<string>('');
     useEffect(() => {
-        if (bounds) map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
-    }, [bounds, map]);
+        if (!bounds) return;
+        if (fitKey && fitKey === lastFitKey.current) return;
+        lastFitKey.current = fitKey;
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16 });
+    }, [bounds, map, fitKey]);
     return null;
 };
 
@@ -184,7 +209,15 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
 
         if (points.length === 0) return null;
         return L.latLngBounds(points);
-    }, [pickup, destination, driver, orders, drivers, heatmapData, showHeatmap]);
+    }, [pickup, destination, driver, orders, drivers, passengers, heatmapData, showHeatmap]);
+
+    // Fit once on route/order set — not on every driver GPS tick
+    const fitKey = React.useMemo(() => {
+        const orderIds = (orders || []).map(o => o.orderId || o.id).join(',');
+        const pickupKey = pickup ? `${pickup.lat.toFixed(3)},${pickup.lng.toFixed(3)}` : '';
+        const destKey = destination ? `${destination.lat.toFixed(3)},${destination.lng.toFixed(3)}` : '';
+        return `${orderIds}|${pickupKey}|${destKey}|${showHeatmap ? heatmapSignature(heatmapData) : ''}`;
+    }, [orders, pickup, destination, heatmapData, showHeatmap]);
 
     // Calculate center fallback
     const center: L.LatLngExpression = (pickup && pickup.lat) ? [pickup.lat, pickup.lng] : [32.0853, 34.7818];
@@ -212,7 +245,7 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
                     </Marker>
                 )}
                 {driver && driver.lat && (
-                    <Marker position={[driver.lat, driver.lng]} icon={createCarIcon(driver.heading || 0)}>
+                    <Marker position={[driver.lat, driver.lng]} icon={getCarIcon(driver.heading)}>
                         <Popup>Driver</Popup>
                         <Tooltip permanent direction="top" offset={[0, -20]}>
                             <div className="font-black text-[10px] bg-[#1E293B] px-3 py-1.5 rounded-xl shadow-2xl border border-white/5 text-amber-400 uppercase tracking-widest">
@@ -279,7 +312,7 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
                 {drivers?.map((d, idx) => {
                     const isOnline = d.status === 'online' || d.status === 'in_progress';
                     return d.lat && (
-                        <Marker key={`driver-${idx}`} position={[Number(d.lat), Number(d.lng)]} icon={createCarIcon(d.heading || 0)}>
+                        <Marker key={`driver-${idx}`} position={[Number(d.lat), Number(d.lng)]} icon={getCarIcon(d.heading)}>
                             <Popup>
                                 <div className="text-right font-sans min-w-[120px]" dir="rtl">
                                     <strong className="text-slate-800 text-sm block mb-1">{d.driverName}</strong>
@@ -295,7 +328,7 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
                 })}
 
                 {passengers?.map((p, idx) => (
-                    <Marker key={`passenger-${idx}`} position={[Number(p.lat), Number(p.lng)]} icon={createPassengerIcon()}>
+                    <Marker key={`passenger-${idx}`} position={[Number(p.lat), Number(p.lng)]} icon={passengerIcon}>
                         <Popup>
                             <div className="text-right font-sans" dir="rtl">
                                 <strong className="text-slate-800 text-sm block mb-1">נוסע בזמן אמת</strong>
@@ -307,7 +340,7 @@ export const LiveMapComponent: React.FC<LiveMapProps> = ({ pickup, destination, 
                     </Marker>
                 ))}
 
-                <MapController bounds={bounds} />
+                <MapController bounds={bounds} fitKey={fitKey} />
             </MapContainer>
 
             <div className="absolute bottom-4 left-4 text-[9px] font-mono text-slate-500 bg-[#0F172A]/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/5 z-[1000] tracking-widest uppercase">

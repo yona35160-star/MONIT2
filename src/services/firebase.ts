@@ -2,6 +2,7 @@ import { db } from '../firebase-config';
 import { ref, onValue, off, set, update, get, DataSnapshot, query, limitToLast, orderByChild, startAt, endAt } from "firebase/database";
 import { Order, Driver } from '../types';
 import { toCamelCase } from '../api/api';
+import { allowLocationWrite } from '../utils/perf';
 
 const noop = () => {};
 
@@ -124,6 +125,7 @@ export const getOrderSnapshot = async (orderId: string): Promise<Order | null> =
  */
 export const updateDriverLocationDirect = async (driverId: string, lat: number, lng: number) => {
     if (!driverId) return;
+    if (!allowLocationWrite(`driver:${driverId}`, lat, lng)) return;
     const database = getDbOrWarn('updateDriverLocationDirect');
     if (!database) return;
     const updates: any = {};
@@ -160,6 +162,20 @@ export const listenToSystemHealth = (callback: (status: { online: boolean, last_
 
     onValue(healthRef, listener);
     return () => off(healthRef, 'value', listener);
+};
+
+/**
+ * Listen to passenger live-share pins (admin live map).
+ */
+export const listenToPassengerLocations = (callback: (locations: Record<string, any>) => void) => {
+    const database = getDbOrWarn('listenToPassengerLocations');
+    if (!database) { callback({}); return noop; }
+    const locRef = ref(database, 'passenger_locations');
+    const listener = (snapshot: DataSnapshot) => {
+        callback(snapshot.val() || {});
+    };
+    onValue(locRef, listener);
+    return () => off(locRef, 'value', listener);
 };
 
 /**
@@ -223,7 +239,10 @@ export const updateDriverStatus = async (driverId: string, isOnline: boolean, lo
     updates[`drivers/${driverId}/online`] = isOnline;
     updates[`drivers/${driverId}/last_heartbeat`] = Date.now();
 
-    if (location) {
+    if (location && allowLocationWrite(`status:${driverId}`, location.lat, location.lng, {
+        minIntervalMs: 25000,
+        minDistanceM: 20
+    })) {
         updates[`drivers/${driverId}/location`] = {
             ...location,
             timestamp: Date.now()
@@ -241,6 +260,8 @@ export const updateDriverStatus = async (driverId: string, isOnline: boolean, lo
 
 export const updateOrderDriverLocation = async (orderId: string, location: { lat: number; lng: number; heading?: number }, driverId?: string) => {
     if (!orderId) return;
+    const writeKey = driverId ? `order:${orderId}:driver:${driverId}` : `order:${orderId}`;
+    if (!allowLocationWrite(writeKey, location.lat, location.lng)) return;
     const database = getDbOrWarn('updateOrderDriverLocation');
     if (!database) return;
     try {
