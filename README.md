@@ -82,6 +82,9 @@ cd bridge && npm install && cd ..
 | [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | מבט מוצר וארכיטקטורה |
 | [`GUIDE.md`](./GUIDE.md) | התקנה, הרצה, פתרון בעיות |
 | [`DEPLOY.md`](./DEPLOY.md) | פריסת Vercel ×3 + Render Bridge |
+| [`design-system.json`](./design-system.json) | טוקני עיצוב ל-3 האפליקציות |
+| [`DESIGN_NOTES.md`](./DESIGN_NOTES.md) | הערות מסירת עיצוב Wave 1 |
+| [`MICROCOPY.md`](./MICROCOPY.md) | קול מותג + מילון טקסטים |
 | [`TASKS.md`](./TASKS.md) | גלים ומשימות צוות |
 | [`STATUS.md`](./STATUS.md) | סטטוס שוטף (חובה לעדכן בסיום משימה) |
 | [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) | חוק מסירה בין סוכנים |

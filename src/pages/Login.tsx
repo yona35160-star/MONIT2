@@ -128,8 +128,8 @@ export const Login: React.FC = () => {
             <Lock className="text-indigo-400 w-10 h-10" />
             <div className="absolute -inset-2 bg-indigo-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
-          <h1 className="text-4xl font-black text-white tracking-tight mb-2">Smart Central</h1>
-          <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">Authorized Personnel Only</p>
+          <h1 className="text-4xl font-black text-white tracking-tight mb-2">מרכז שליטה</h1>
+          <p className="text-slate-500 text-xs font-black uppercase tracking-[0.2em]">למורשים בלבד</p>
           {!scriptUrl && !showUrlInput && (
             <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-500 text-[10px] font-bold animate-pulse">
               ⚠️ שגיאה: כתובת שרת לא מוגדרת. יש ללחוץ על גלגל השיניים ולהגדיר כתובת.

@@ -15,7 +15,7 @@
 
 ## Wave 2 — ביצועים וחיבורים
 - [ ] מתכנת: ביצועי מפה/listeners, ניקוי memory leaks, rate limits
-- [ ] DevOps: health checks (bridge `/health`, Firebase rules review)
+- [x] DevOps: health checks (bridge `/health`, Firebase rules review)
 - [ ] QA: רגרסיה על חיבורי WhatsApp/Telegram (אם זמין) + אבטחה בסיסית
 - [ ] עיצוב: polish למצבי שגיאה/טעינה/ריק
 

@@ -223,11 +223,11 @@ export const CustomerOrder: React.FC = () => {
                 setOrderId(res.data.orderId || 'חדשה');
             } else {
                 setStatus('error');
-                setErrorMessage(res.error || 'אירעה שגיאה בשליחת ההזמנה, אנא נסה שנית.');
+                setErrorMessage(res.error || 'אירעה שגיאה בשליחת ההזמנה. נסו שוב.');
             }
         } catch (e) {
             setStatus('error');
-            setErrorMessage('שגיאת תקשורת, אנא נסה שוב מאוחר יותר.');
+            setErrorMessage('שגיאת תקשורת. נסו שוב מאוחר יותר.');
         } finally {
             setIsLoading(false);
         }
@@ -358,7 +358,7 @@ export const CustomerOrder: React.FC = () => {
                                                         setIsLoading(false);
                                                     }, (err) => {
                                                         console.error(err);
-                                                        setErrorMessage('לא הצלחנו לזהות את המיקום שלך. וודא שהרשאות המיקום מאושרות.');
+                                                        setErrorMessage('לא הצלחנו לזהות את המיקום שלך. ודאו שהרשאות המיקום מאושרות.');
                                                         setIsLoading(false);
                                                     });
                                                 }}
@@ -560,7 +560,7 @@ export const CustomerOrder: React.FC = () => {
 
                                 {status === 'error' && (
                                     <div className="bg-red-50 text-red-600 p-5 rounded-2xl text-sm text-center border border-red-100 font-bold flex items-center justify-center gap-2">
-                                        <CheckCircle size={18} className="rotate-45" /> {errorMessage || 'אירעה שגיאה, נסה שוב.'}
+                                        <CheckCircle size={18} className="rotate-45" /> {errorMessage || 'אירעה שגיאה. נסו שוב.'}
                                     </div>
                                 )}
 

@@ -140,7 +140,7 @@ MONIT2 / TAXIPRO
 ├── src/
 │   ├── api/                 # שכבת API
 │   ├── apps/                # Passenger / Driver / Admin shells
-│   ├── components/          # UI משותף (+ ui/)
+│   ├── components/          # UI משותף (+ ui/: Button, Badge, Card, Input, Spinner)
 │   ├── pages/               # דפים
 │   ├── store/               # Redux Toolkit
 │   ├── services/            # Firebase, AI, Push
@@ -154,6 +154,8 @@ MONIT2 / TAXIPRO
 ├── passenger.html · driver.html · admin.html
 ├── START-ALL.bat
 ├── vercel.json
+├── design-system.json     # טוקני עיצוב (מקור אמת)
+├── DESIGN_NOTES.md         # הערות מסירת עיצוב
 ├── DEPLOY.md              # פריסת Vercel + Render
 ├── netlify.toml           # אופציה משנית
 ├── .env.example             # תבנית בלבד — לא סודות בריפו
