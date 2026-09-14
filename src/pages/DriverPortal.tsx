@@ -1,5 +1,6 @@
 ﻿
 import React, { useState, useEffect, useCallback } from 'react';
+import { throttle } from '../utils/throttle';
 import { useNavigate } from 'react-router-dom';
 import { getDriverPortalData, sendToBackend, acceptRideByPhone, updateDriverProfile } from '../api/driverApi';
 import { Toast } from '../components/Toast';
@@ -159,24 +160,25 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
   useEffect(() => {
     if (!data?.driver?.driverId) return;
 
-    let watchId: number;
-    let heartbeatTimer: any;
+    let watchId: number | undefined;
+    let heartbeatTimer: ReturnType<typeof setTimeout> | undefined;
+
+    // Throttle Firebase location writes — watchPosition can fire many times/sec
+    const throttledSync = throttle((loc?: { lat: number; lng: number }) => {
+      void syncStatus(loc);
+    }, 5000);
 
     const startHeartbeat = () => {
-      // Clear any existing timer
       if (heartbeatTimer) clearTimeout(heartbeatTimer);
-      
-      // Heartbeat loop (30s)
       heartbeatTimer = setTimeout(async () => {
         if (isOnline) {
-          await syncStatus(location || undefined);
-          startHeartbeat(); // Recursive call
+          await syncStatus(lastLocation.current || undefined);
+          startHeartbeat();
         }
       }, 30000);
     };
 
     if (isOnline) {
-      // 1. Continuous Tracking
       if ("geolocation" in navigator) {
         watchId = navigator.geolocation.watchPosition(
           (pos) => {
@@ -184,38 +186,36 @@ export const DriverPortal: React.FC<DriverPortalProps> = ({ onLogout }) => {
             setLocation(newLoc);
             lastLocation.current = newLoc;
             setGpsStatus('active');
-            syncStatus(newLoc);
+            throttledSync(newLoc);
           },
           (err) => {
             console.warn("Loc failed:", err.message);
             setGpsStatus('error');
-            syncStatus();
+            void syncStatus();
           },
           { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 }
         );
       }
 
-      // 2. Start Heartbeat Loop
       startHeartbeat();
 
-      // 3. Visibility Change Handler (Immediate sync on wake)
       const handleVisibility = () => {
         if (document.visibilityState === 'visible') {
-           syncStatus(location || undefined);
+          void syncStatus(lastLocation.current || undefined);
         }
       };
       document.addEventListener('visibilitychange', handleVisibility);
 
       return () => {
-        if (watchId) navigator.geolocation.clearWatch(watchId);
+        if (watchId !== undefined) navigator.geolocation.clearWatch(watchId);
         if (heartbeatTimer) clearTimeout(heartbeatTimer);
+        throttledSync.cancel();
         document.removeEventListener('visibilitychange', handleVisibility);
       };
     } else {
-      // Mark as offline immediately
-      syncStatus();
+      void syncStatus();
     }
-  }, [data?.driver?.driverId, isOnline, location, syncStatus]);
+  }, [data?.driver?.driverId, isOnline, syncStatus]);
 
   // Active Ride Listener
   useEffect(() => {
