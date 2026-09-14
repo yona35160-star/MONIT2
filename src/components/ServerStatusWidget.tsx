@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Zap, XCircle, RefreshCw, X, FolderOpen } from 'lucide-react';
 import { Toast } from './Toast';
 import { getSystemHealth, openBridgeFolder } from '../api/adminApi';
@@ -145,11 +145,11 @@ export const ServerStatusWidget: React.FC<ServerStatusWidgetProps> = ({ serverSp
                             <ol className="list-decimal list-inside space-y-2 text-gray-700 text-sm">
                                 <li>גש למחשב הראשי.</li>
                                 <li>פתח את התיקייה: <span dir="ltr" className="font-mono bg-gray-100 px-2 rounded select-all cursor-pointer hover:bg-gray-200" onClick={(e) => {
-                                    const path = serverSpot || 'f:\\AVODOT\\TAXI-WORK\\whatsapp-taxi-bridge';
+                                    const path = serverSpot || 'bridge';
                                     navigator.clipboard.writeText(path);
                                     (e.target as HTMLElement).innerText = 'הועתק!';
                                     setTimeout(() => (e.target as HTMLElement).innerText = path, 1500);
-                                }}>{serverSpot || 'f:\\AVODOT\\TAXI-WORK\\whatsapp-taxi-bridge'}</span> (לחץ להעתקה)</li>
+                                }}>{serverSpot || 'bridge'}</span> (לחץ להעתקה)</li>
                                 <li>הפעל את <b>restart.bat</b></li>
                             </ol>
                         </div>
