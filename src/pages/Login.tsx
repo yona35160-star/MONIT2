@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAdmin, testConnection } from '../api/adminApi';
@@ -139,7 +139,7 @@ export const Login: React.FC = () => {
 
         {showUrlInput && (
           <div className="mb-8 p-6 bg-[#0F172A]/50 rounded-[1.5rem] border border-white/5 animate-in slide-in-from-top-4 duration-500">
-            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 px-1">כתובת תשתית (Endpoint)</label>
+            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 px-1">כתובת שרת</label>
             <div className="flex gap-3 items-center">
               <input
                 type="url"

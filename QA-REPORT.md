@@ -70,3 +70,6 @@ Firebase fail-safe: `src/services/firebase.ts` מדלג על listeners כשאי�
 3. **עיצוב:** ניקוי indigo במסלול קריטי (QA-3) — Wave 2 polish.  
 4. **QA Wave 2:** רגרסיה עם `.env` אמיתי + bridge.
 
+## עדכון תיעוד
+
+**QA-1/QA-6 נסגרו** ע״י סוכן תיעוד (מקור ב-C:\Users\Pc\MONIT2-sync): Login בעברית; מרכז שיגור חכם ב-CreateOrderModal. נדרש rebuild לאימות בבילד.

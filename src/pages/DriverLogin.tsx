@@ -153,9 +153,15 @@ export const DriverLogin: React.FC<{ onLogin?: () => void }> = ({ onLogin }) => 
           <h1 className="text-3xl font-bold text-slate-900">פורטל נהגים</h1>
           <p className="text-slate-500 mt-2 text-sm">הזדהות מאובטחת באמצעות וואטסאפ או גוגל</p>
           {!isApiReady && isApiReady !== null && (
-            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center gap-2 text-amber-800 text-xs text-right">
-              <AlertCircle size={16} className="shrink-0" />
-              <span>שגיאה: הגדרת שרת (Script URL) חסרה. אנא פנה למנהל המערכת.</span>
+            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2 text-amber-800 text-xs text-right">
+              <AlertCircle size={16} className="shrink-0 mt-0.5" />
+              <span>
+                ⚙️ כתובת שרת (Script URL) לא מוגדרת. להפעלה מקומית: העתיקו את{' '}
+                <span className="font-mono" dir="ltr">.env.example</span> ל־
+                <span className="font-mono" dir="ltr">.env</span>, מלאו את{' '}
+                <span className="font-mono" dir="ltr">VITE_WEBAPP_URL</span> והפעילו מחדש —
+                או הזינו כתובת בגלגל השיניים במסך המנהל.
+              </span>
             </div>
           )}
         </div>

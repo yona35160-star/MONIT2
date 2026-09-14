@@ -3,15 +3,16 @@
 ## מצב נוכחי
 - פרויקט: **TAXIPRO / MONIT2**
 - עותק: `C:\Users\Pc\MONIT2-sync`
-- ריפו: https://github.com/yona35160-star/MONIT2
+- ריפו: https://github.com/yona35160-star/MONIT2 (`main`)
 
 ## עדכון אחרון
-- **QA:** Wave 1 Done — smoke PASS (`QA-REPORT.md`); בלי `.env` לא נבדקו live/GAS/bridge
-- **עיצוב:** QA-3 Done — ניקוי indigo → primary
-- **DevOps:** דוחף ל-`origin/main` את QA-REPORT + תיקוני UI (QA-3) + STATUS/TASKS. Preview Vercel ממתין להגדרת env בפלטפורמה.
-- **מתכנת:** Wave 2 — QA-2/QA-4 In Progress
+- **מתכנת:** QA-2 + QA-4 Done (DriverLogin setup HE + favicon)
+- **תיעוד:** QA-1 + QA-6 Done (Login/station-order HE)
+- **עיצוב:** QA-3 Done (נדחף ב-`7e2caf9`)
+- **DevOps:** דוחף עכשיו את תיקוני QA-2/4 + microcopy ל-`origin/main`
+- **Preview:** ממתין ל-@noma — 3 פרויקטי Vercel + `VITE_*` ב-Dashboard (`DEPLOY.md`)
 
 ## הצעד הבא
-1. @סוכן מתכנת — לסיים QA-2/QA-4
-2. DevOps — חיווי Vercel×3 לפי `DEPLOY.md` אחרי שיש secrets בלוח Vercel (לא בריפו)
-3. @noma — לחבר פרויקטי Vercel / למלא `VITE_*` ב-Dashboard
+1. @noma — חיבור Vercel×3 / מילוי env
+2. @סוכן בדיקות — re-smoke אופציונלי על favicon + DriverLogin
+3. DevOps — אחרי env ב-Vercel: אימות preview URLs

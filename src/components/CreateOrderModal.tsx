@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
 import { MessageSquare, Save, Send, X, Loader2, Calculator } from 'lucide-react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
@@ -175,7 +175,7 @@ export const CreateOrderModal: React.FC<CreateOrderModalProps> = ({ onClose, onS
                 <header className="p-8 bg-[#0F172A] border-b border-white/5 flex justify-between items-center relative overflow-hidden">
                     <div className="relative z-10">
                         <h2 id="modal-title" className="text-3xl font-black text-white tracking-tight">הזמנה חדשה</h2>
-                        <p className="text-slate-500 font-bold text-xs uppercase tracking-[0.2em] mt-1">Smart Dispatch Hub</p>
+                        <p className="text-slate-500 font-bold text-xs uppercase tracking-[0.2em] mt-1">מרכז שיגור חכם</p>
                     </div>
                     {!embedded && (
                     <button onClick={onClose} className="bg-white/5 hover:bg-white/10 p-3 rounded-2xl text-slate-400 hover:text-white transition-all relative z-10" aria-label="סגור">

@@ -32,3 +32,8 @@
 ```tsx
 import { Button, Badge, Card, Input, Spinner } from '../components/ui';
 ```
+
+## תיקוני QA (Wave 1/2)
+- QA-1: Admin Login — `מרכז שליטה` / `למורשים בלבד` (מקור מעודכן; נדרש rebuild לבדיקה)
+- QA-6: `Smart Dispatch Hub` → `מרכז שיגור חכם` (CreateOrderModal / station-order)
+- Login: `כתובת תשתית (Endpoint)` → `כתובת שרת` 

@@ -14,8 +14,10 @@
 - [x] DevOps: תסריטי הרצה/פריסה (Vercel front + Render bridge) + env template
 
 ## Wave 2 — ביצועים וחיבורים
+- [x] מתכנת: QA-2 באנר Script URL חסר ב-DriverLogin (הודעת setup עברית)
+- [x] מתכנת: QA-4 favicon 404 — `public/favicon.ico` + קישורי HTML
 - [ ] מתכנת: ביצועי מפה/listeners, ניקוי memory leaks, rate limits
-- [x] DevOps: health checks (bridge `/health`, Firebase rules review)
+- [ ] DevOps: health checks (bridge `/health`, Firebase rules review)
 - [ ] QA: רגרסיה על חיבורי WhatsApp/Telegram (אם זמין) + אבטחה בסיסית
 - [ ] עיצוב: polish למצבי שגיאה/טעינה/ריק
 
