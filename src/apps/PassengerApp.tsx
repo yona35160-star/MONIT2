@@ -6,6 +6,7 @@ import { requestOTP, verifyOTP } from '../api/passengerApi';
 import { normalizePhone, isValidPhone } from '../utils/phone';
 import { Car, User, MapPin, Bell, ArrowLeft, Loader2, LogIn, UserPlus, AlertCircle, LogOut, RefreshCw, Star, Clock, ShieldCheck, MapIcon, ChevronLeft } from 'lucide-react';
 import { RateRide } from '../pages/RateRide';
+import { Spinner } from '../components/ui';
 
 // Lazy-loaded pages
 const CustomerOrder = lazy(() => import('../pages/CustomerOrder').then(m => ({ default: m.CustomerOrder })));
@@ -19,14 +20,7 @@ const FAQ = lazy(() => import('../pages/FAQ').then(m => ({ default: m.FAQ })));
 const Blog = lazy(() => import('../pages/Blog').then(m => ({ default: m.Blog })));
 const BlogPost = lazy(() => import('../pages/BlogPost').then(m => ({ default: m.BlogPost })));
 const About = lazy(() => import('../pages/About').then(m => ({ default: m.About })));
-const LoadingSpinner = () => (
-    <div className="flex h-screen w-screen items-center justify-center bg-white fixed inset-0 z-50">
-        <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-400 font-bold animate-pulse">טוען...</p>
-        </div>
-    </div>
-);
+const LoadingSpinner = () => <Spinner role="passenger" label="טוען..." />;
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isLoggedIn = !!localStorage.getItem('taxi_passenger_phone');
@@ -213,7 +207,7 @@ const PassengerLanding: React.FC = () => {
                         <div className="relative z-10">
                             <h4 className="text-xl font-black mb-1">הפץ את הבשורה!</h4>
                             <p className="text-white/70 text-sm font-medium mb-4">שתף את האפליקציה עם חברים וקבל 20% הנחה בנסיעה הבאה</p>
-                            <button className="bg-white text-indigo-600 px-5 py-2 rounded-xl text-sm font-black shadow-lg">שתף עכשיו</button>
+                            <button className="bg-white text-primary-600 px-5 py-2 rounded-xl text-sm font-black shadow-lg">שתף עכשיו</button>
                         </div>
                         <ShieldCheck className="absolute -bottom-6 -left-6 w-32 h-32 text-white/10 rotate-12" />
                     </div>

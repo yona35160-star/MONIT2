@@ -5,6 +5,7 @@ import { AdminLayout } from '../components/AdminLayout';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { setAdminLogout } from '../store/slices/authSlice';
 import { RootState } from '../store';
+import { Spinner } from '../components/ui';
 
 // Lazy-loaded pages
 const Login = lazy(() => import('../pages/Login').then(m => ({ default: m.Login })));
@@ -17,14 +18,7 @@ const AdminAnalytics = lazy(() => import('../pages/AdminAnalytics').then(m => ({
 const AdminPublisher = lazy(() => import('../pages/AdminPublisher').then(m => ({ default: m.AdminPublisher })));
 const StationOrder = lazy(() => import('../pages/StationOrder').then(m => ({ default: m.StationOrder })));
 
-const LoadingSpinner = () => (
-    <div className="flex h-screen w-screen items-center justify-center bg-[#0F172A] fixed inset-0 z-50">
-        <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-500 font-bold animate-pulse">טוען מערכת ניהול...</p>
-        </div>
-    </div>
-);
+const LoadingSpinner = () => <Spinner role="admin" label="טוען מערכת ניהול..." />;
 
 export const AdminApp: React.FC = () => {
     const dispatch = useDispatch();

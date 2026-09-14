@@ -1,4 +1,4 @@
-# Logs
+﻿# Logs
 logs
 *.log
 npm-debug.log*
@@ -7,12 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependencies & build
+node_modules/
+dist/
+dist-ssr/
+dist-*/
 *.local
 
-# Editor directories and files
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -23,21 +25,37 @@ dist-ssr
 *.sln
 *.sw?
 
-# Security: Environment Variables (CRITICAL)
+# Security: env (CRITICAL) — never commit secrets
 .env
 .env.*
 !.env.example
+!**/.env.example
 
-# WhatsApp Bridge Session & Secrets
+# WhatsApp Bridge sessions & binaries
+bridge/node_modules/
+bridge/.env
+bridge/sessions/
+bridge/wa-sessions/
+bridge/auth_info*/
+bridge/tokens/
+bridge/cloudflared.exe
 whatsapp-taxi-bridge/.env
 whatsapp-taxi-bridge/auth_info_baileys/
 whatsapp-taxi-bridge/tokens/
 whatsapp-taxi-bridge/session/
 
-# Firebase build caches
+# Firebase / deploy caches
 .firebase/
+.vercel/
+.netlify/
 
-# Local AI / editor configs (optional, not needed in CI)
+# Capacitor / mobile artifacts
+android/
+ios/
+*.apk
+*.aab
+
+# Local AI / editor configs
 .agents/
 .cursor/
 

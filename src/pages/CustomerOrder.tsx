@@ -11,6 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button, Card } from '../components/ui';
 
 const customerOrderSchema = z.object({
     customerName: z.string().min(2, 'שם מלא חייב להכיל לפחות 2 תווים'),
@@ -235,7 +236,7 @@ export const CustomerOrder: React.FC = () => {
     if (status === 'success') {
         return (
             <div className="bg-customer flex items-center justify-center p-6" dir="rtl">
-                <div className="glass-premium p-10 rounded-[3rem] max-w-md w-full text-center animate-in zoom-in duration-500">
+                <Card variant="glass" padding="lg" className="p-10 rounded-[3rem] max-w-md w-full text-center animate-in zoom-in duration-500">
                     <div className="w-28 h-28 bg-accent-500/20 rounded-full flex items-center justify-center mx-auto mb-8 ring-8 ring-accent-500/10 animate-pulse">
                         <CheckCircle className="text-slate-900 w-14 h-14" />
                     </div>
@@ -245,17 +246,17 @@ export const CustomerOrder: React.FC = () => {
                         הנסיעה שלך בדרכה לנהגים. ניצור איתך קשר תוך דקות ספורות.
                     </p>
                     <div className="flex flex-col gap-4">
-                        <button onClick={() => navigate(`/track-order?orderId=${orderId}`)} className="btn-premium w-full text-lg shadow-xl">
-                            <Search size={20} /> עקוב אחר הנהג
-                        </button>
-                        <button onClick={() => window.location.reload()} className="btn-premium-accent w-full text-lg shadow-xl">
+                        <Button size="lg" variant="primary" className="w-full text-lg shadow-xl" leftIcon={<Search size={20} />} onClick={() => navigate(`/track-order?orderId=${orderId}`)}>
+                            עקוב אחר הנהג
+                        </Button>
+                        <Button size="lg" variant="accent" className="w-full text-lg shadow-xl" onClick={() => window.location.reload()}>
                             הזמן נסיעה נוספת
-                        </button>
+                        </Button>
                         <Link to="/" className="w-full py-4 text-slate-400 font-bold hover:text-slate-900 transition text-center block">
                             חזור לדף הבית
                         </Link>
                     </div>
-                </div>
+                </Card>
             </div>
         );
     }
@@ -542,14 +543,18 @@ export const CustomerOrder: React.FC = () => {
                                             </button>
                                         </motion.div>
                                     ) : (
-                                        <button
+                                        <Button
                                             type="button"
+                                            size="lg"
+                                            variant="accent"
+                                            className="w-full text-xl shadow-[0_20px_40px_-5px_rgba(245,158,11,0.4)]"
                                             onClick={() => handleManualCompute(false)}
                                             disabled={isLoading}
-                                            className="btn-premium-accent w-full text-xl shadow-[0_20px_40px_-5px_rgba(245,158,11,0.4)]"
+                                            isLoading={isLoading || isCalculating}
+                                            leftIcon={<DollarSign size={28} />}
                                         >
-                                            {isLoading || isCalculating ? <><Loader2 className="animate-spin" size={28} /> מחשב נתונים...</> : <><DollarSign size={28} /> צפה במחיר סופי</>}
-                                        </button>
+                                            {isLoading || isCalculating ? 'מחשב נתונים...' : 'צפה במחיר סופי'}
+                                        </Button>
                                     )}
                                 </motion.div>
 
@@ -560,16 +565,20 @@ export const CustomerOrder: React.FC = () => {
                                 )}
 
                                 <div className="flex gap-4 mt-8">
-                                    <button type="button" onClick={prevStep} className="btn-outline w-1/4 rounded-[1.5rem] py-5">
+                                    <Button type="button" variant="outline" size="lg" className="w-1/4 rounded-[1.5rem] py-5" onClick={prevStep}>
                                         חזור
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
                                         type="submit"
+                                        size="lg"
+                                        variant="primary"
+                                        className={`w-3/4 text-xl ${price > 0 ? 'shadow-[0_20px_40px_-10px_rgba(37,99,235,0.3)]' : ''}`}
                                         disabled={isLoading || isCalculating || price <= 0}
-                                        className={`btn-premium w-3/4 text-xl ${isLoading || isCalculating || price <= 0 ? 'opacity-50 grayscale cursor-not-allowed' : 'shadow-[0_20px_40px_-10px_rgba(37,99,235,0.3)]'}`}
+                                        isLoading={isLoading}
+                                        leftIcon={price > 0 && !isLoading ? <CheckCircle size={28} /> : undefined}
                                     >
-                                        {isLoading ? 'שולח...' : price <= 0 ? 'נא לחשב מחיר' : <><CheckCircle size={28} /> הזמן מונית עכשיו</>}
-                                    </button>
+                                        {isLoading ? 'שולח...' : price <= 0 ? 'נא לחשב מחיר' : 'הזמן מונית עכשיו'}
+                                    </Button>
                                 </div>
                             </motion.div>
                         )}

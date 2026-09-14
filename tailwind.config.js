@@ -19,7 +19,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Heebo', 'Inter', 'system-ui', 'sans-serif'],
+                sans: ['Rubik', 'Heebo', 'Inter', 'system-ui', 'sans-serif'],
             },
             colors: {
                 // 2027 Light Vibrant Palette

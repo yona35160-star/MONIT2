@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-import { Loader2 } from 'lucide-react';
+import { Spinner } from '../components/ui';
 
 // Lazy-loaded pages
 const DriverLogin = lazy(() => import('../pages/DriverLogin').then(m => ({ default: m.DriverLogin })));
@@ -11,14 +11,7 @@ const AcceptRide = lazy(() => import('../pages/AcceptRide').then(m => ({ default
 const CompleteRide = lazy(() => import('../pages/CompleteRide').then(m => ({ default: m.CompleteRide })));
 const RideDetails = lazy(() => import('../pages/RideDetails').then(m => ({ default: m.RideDetails })));
 
-const LoadingSpinner = () => (
-    <div className="flex h-screen w-screen items-center justify-center bg-[#0F172A] fixed inset-0 z-50">
-        <div className="flex flex-col items-center gap-4">
-            <Loader2 className="w-10 h-10 text-[#FACC15] animate-spin" />
-            <p className="text-slate-500 font-bold animate-pulse">טוען פורטל נהג...</p>
-        </div>
-    </div>
-);
+const LoadingSpinner = () => <Spinner role="driver" label="טוען פורטל נהג..." />;
 
 export const DriverApp: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);

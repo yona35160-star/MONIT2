@@ -3,6 +3,18 @@ import { ref, onValue, off, set, update, get, DataSnapshot, query, limitToLast, 
 import { Order, Driver } from '../types';
 import { toCamelCase } from '../api/api';
 
+const noop = () => {};
+
+/** Fail closed when Firebase env is missing/placeholder — never crash listeners. */
+const getDbOrWarn = (op: string) => {
+    if (!db) {
+        console.warn(`[firebase] ${op} skipped: Firebase not configured`);
+        return null;
+    }
+    return db;
+};
+
+
 /**
  * Listen to a specific order updates in real-time
  * @param orderId ID of the order to listen to
@@ -10,11 +22,16 @@ import { toCamelCase } from '../api/api';
  * @returns Unsubscribe function
  */
 export const listenToOrder = (orderId: string, callback: (data: Order | null) => void) => {
-    if (!orderId) return () => { };
+    if (!orderId) return noop;
+    const database = getDbOrWarn('listenToOrder');
+    if (!database) {
+        callback(null);
+        return noop;
+    }
 
     // [FIX] Sanitize ID – remove TAXI- prefix if present to match backend keys
     const cleanId = String(orderId).trim().toUpperCase().replace(/^TAXI-/, '');
-    const orderRef = ref(db, `active_orders/${cleanId}`);
+    const orderRef = ref(database, `active_orders/${cleanId}`);
 
     // Listener
     const listener = (snapshot: DataSnapshot) => {
@@ -39,7 +56,9 @@ export const listenToOrder = (orderId: string, callback: (data: Order | null) =>
  * [OPTIMIZATION] Using limitToLast to prevent fetching gigabytes of historical active data if backend fails to purge.
  */
 export const listenToActiveOrders = (callback: (orders: Order[]) => void) => {
-    const activeQuery = query(ref(db, 'active_orders'), limitToLast(200));
+    const database = getDbOrWarn('listenToActiveOrders');
+    if (!database) { callback([]); return noop; }
+    const activeQuery = query(ref(database, 'active_orders'), limitToLast(200));
 
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -65,7 +84,9 @@ export const listenToActiveOrders = (callback: (orders: Order[]) => void) => {
  * Listen to Driver status (for Dashboard Map)
  */
 export const listenToDrivers = (callback: (drivers: Driver[]) => void) => {
-    const driversRef = ref(db, 'drivers');
+    const database = getDbOrWarn('listenToDrivers');
+    if (!database) { callback([]); return noop; }
+    const driversRef = ref(database, 'drivers');
 
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -87,9 +108,11 @@ export const listenToDrivers = (callback: (drivers: Driver[]) => void) => {
  */
 export const getOrderSnapshot = async (orderId: string): Promise<Order | null> => {
     try {
+        const database = getDbOrWarn('getOrderSnapshot');
+        if (!database) return null;
         const cleanId = String(orderId).trim().toUpperCase().replace(/^TAXI-/, '');
-        const snapshot = await get(ref(db, `active_orders/${cleanId}`));
-        return snapshot.exists() ? snapshot.val() : null;
+        const snapshot = await get(ref(database, `active_orders/${cleanId}`));
+        return snapshot.exists() ? toCamelCase(snapshot.val()) : null;
     } catch (e) {
         console.error("Firebase Read Error:", e);
         return null;
@@ -101,6 +124,8 @@ export const getOrderSnapshot = async (orderId: string): Promise<Order | null> =
  */
 export const updateDriverLocationDirect = async (driverId: string, lat: number, lng: number) => {
     if (!driverId) return;
+    const database = getDbOrWarn('updateDriverLocationDirect');
+    if (!database) return;
     const updates: any = {};
     updates[`drivers/${driverId}/location`] = {
         lat,
@@ -111,7 +136,7 @@ export const updateDriverLocationDirect = async (driverId: string, lat: number, 
     updates[`drivers/${driverId}/lng`] = lng;
 
     try {
-        await update(ref(db), updates);
+        await update(ref(database), updates);
     } catch (e) {
         console.error("Loc Update Fail:", e);
     }
@@ -120,7 +145,9 @@ export const updateDriverLocationDirect = async (driverId: string, lat: number, 
  * Listen to System Health (Bridge Status)
  */
 export const listenToSystemHealth = (callback: (status: { online: boolean, last_heartbeat?: string }) => void) => {
-    const healthRef = ref(db, 'system/health');
+    const database = getDbOrWarn('listenToSystemHealth');
+    if (!database) { callback({ online: false }); return noop; }
+    const healthRef = ref(database, 'system/health');
 
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -139,8 +166,10 @@ export const listenToSystemHealth = (callback: (status: { online: boolean, last_
  * Listen to Driver Notifications
  */
 export const listenToNotifications = (driverId: string, callback: (notifications: any[]) => void) => {
-    if (!driverId) return () => { };
-    const notifRef = ref(db, `notifications/${driverId}`);
+    if (!driverId) return noop;
+    const database = getDbOrWarn('listenToNotifications');
+    if (!database) { callback([]); return noop; }
+    const notifRef = ref(database, `notifications/${driverId}`);
 
     // Listen to changes (using onValue for simplicity)
     const listener = (snapshot: DataSnapshot) => {
@@ -166,7 +195,9 @@ export const listenToNotifications = (driverId: string, callback: (notifications
  * Listen to Connection Status (.info/connected)
  */
 export const listenToConnectionStatus = (callback: (connected: boolean) => void) => {
-    const connectedRef = ref(db, '.info/connected');
+    const database = getDbOrWarn('listenToConnectionStatus');
+    if (!database) { callback(false); return noop; }
+    const connectedRef = ref(database, '.info/connected');
     const listener = (snap: DataSnapshot) => {
         const connected = !!snap.val();
         callback(connected);
@@ -186,6 +217,8 @@ export const listenToConnectionStatus = (callback: (connected: boolean) => void)
  */
 export const updateDriverStatus = async (driverId: string, isOnline: boolean, location?: { lat: number, lng: number }) => {
     if (!driverId) return;
+    const database = getDbOrWarn('updateDriverStatus');
+    if (!database) return;
     const updates: any = {};
     updates[`drivers/${driverId}/online`] = isOnline;
     updates[`drivers/${driverId}/last_heartbeat`] = Date.now();
@@ -200,7 +233,7 @@ export const updateDriverStatus = async (driverId: string, isOnline: boolean, lo
     }
 
     try {
-        await update(ref(db), updates);
+        await update(ref(database), updates);
     } catch (e) {
         console.error("Heartbeat Fail:", e);
     }
@@ -208,6 +241,8 @@ export const updateDriverStatus = async (driverId: string, isOnline: boolean, lo
 
 export const updateOrderDriverLocation = async (orderId: string, location: { lat: number; lng: number; heading?: number }, driverId?: string) => {
     if (!orderId) return;
+    const database = getDbOrWarn('updateOrderDriverLocation');
+    if (!database) return;
     try {
         // Remove TAXI- prefix if present
         const cleanId = String(orderId).toUpperCase().replace(/^TAXI-/, '');
@@ -217,7 +252,7 @@ export const updateOrderDriverLocation = async (orderId: string, location: { lat
         };
 
         // 1. Write to active_orders/{id}/driver_location (Customer Tracking)
-        const orderLocRef = ref(db, `active_orders/${cleanId}/driver_location`);
+        const orderLocRef = ref(database, `active_orders/${cleanId}/driver_location`);
         await update(orderLocRef, locPayload);
 
         // 2. Also write to drivers/{driverId}/ (Admin Dashboard LiveMap)
@@ -226,7 +261,7 @@ export const updateOrderDriverLocation = async (orderId: string, location: { lat
             driverUpdates[`drivers/${driverId}/location`] = locPayload;
             driverUpdates[`drivers/${driverId}/lat`] = location.lat;
             driverUpdates[`drivers/${driverId}/lng`] = location.lng;
-            await update(ref(db), driverUpdates);
+            await update(ref(database), driverUpdates);
         }
     } catch (e) {
         console.error("Order Loc Update Fail:", e);
@@ -236,8 +271,10 @@ export const updateOrderDriverLocation = async (orderId: string, location: { lat
  * Listen to real-time message exchange logs for a specific order
  */
 export const listenToOrderMessages = (orderId: string, callback: (messages: Record<string, any>) => void) => {
-    if (!orderId) return () => { };
-    const messagesRef = ref(db, `order_messages/${orderId}`);
+    if (!orderId) return noop;
+    const database = getDbOrWarn('listenToOrderMessages');
+    if (!database) { callback({}); return noop; }
+    const messagesRef = ref(database, `order_messages/${orderId}`);
 
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -253,7 +290,9 @@ export const listenToOrderMessages = (orderId: string, callback: (messages: Reco
 export const listenToAllOrderMessages = (callback: (messages: Record<string, any>) => void) => {
     // [FIX IMP-007] Added limitToLast(50) to prevent reading unbounded data.
     // As orders accumulate, this node would grow to MBs without this limit.
-    const messagesRef = query(ref(db, 'order_messages'), limitToLast(50));
+    const database = getDbOrWarn('listenToAllOrderMessages');
+    if (!database) { callback({}); return noop; }
+    const messagesRef = query(ref(database, 'order_messages'), limitToLast(50));
 
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -268,7 +307,9 @@ export const listenToAllOrderMessages = (callback: (messages: Record<string, any
  * Listen to global system statistics (Revenue, Counts)
  */
 export const listenToStats = (callback: (stats: any) => void) => {
-    const statsRef = ref(db, 'system/stats');
+    const database = getDbOrWarn('listenToStats');
+    if (!database) { return noop; }
+    const statsRef = ref(database, 'system/stats');
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
         if (val) callback(val);
@@ -281,7 +322,9 @@ export const listenToStats = (callback: (stats: any) => void) => {
  * Listen to system settings (public ones)
  */
 export const listenToSettings = (callback: (settings: any) => void) => {
-    const settingsRef = ref(db, 'settings');
+    const database = getDbOrWarn('listenToSettings');
+    if (!database) { return noop; }
+    const settingsRef = ref(database, 'settings');
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
         if (val) callback(val);
@@ -294,7 +337,9 @@ export const listenToSettings = (callback: (settings: any) => void) => {
  * Listen to pending/broadcasted rides for driver queue
  */
 export const listenToPendingRides = (callback: (rides: any[]) => void) => {
-    const ordersRef = query(ref(db, 'active_orders'), limitToLast(80));
+    const database = getDbOrWarn('listenToPendingRides');
+    if (!database) { callback([]); return noop; }
+    const ordersRef = query(ref(database, 'active_orders'), limitToLast(80));
     
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();
@@ -318,11 +363,13 @@ export const listenToPendingRides = (callback: (rides: any[]) => void) => {
  * Used for auto-redirecting to the ride management view
  */
 export const listenToActiveRideForDriver = (driverPhone: string, callback: (order: Order | null) => void) => {
-    if (!driverPhone) return () => { };
+    if (!driverPhone) return noop;
+    const database = getDbOrWarn('listenToActiveRideForDriver');
+    if (!database) { callback(null); return noop; }
     
     // We listen to all active orders and filter locally for simplicity and speed
     // as the active_orders list is small (limit 200)
-    const activeQuery = query(ref(db, 'active_orders'), limitToLast(100));
+    const activeQuery = query(ref(database, 'active_orders'), limitToLast(100));
     
     const listener = (snapshot: DataSnapshot) => {
         const val = snapshot.val();

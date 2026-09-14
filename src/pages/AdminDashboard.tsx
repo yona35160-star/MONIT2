@@ -1,3 +1,4 @@
+import { Button } from '../components/ui';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -787,18 +788,17 @@ export const AdminDashboard: React.FC = () => {
                               )}
                             </div>
                             <div className="flex gap-2">
-                              <button
+                              <Button
+                                variant="accent"
+                                size="sm"
+                                className="font-black text-xs shadow-lg shadow-accent-400/10"
                                 onClick={() => handleSmartAssign(ride.orderId)}
                                 disabled={smartAssignLoading && smartAssignOrderId === ride.orderId}
-                                className="bg-[#FACC15] text-slate-900 px-5 py-2.5 rounded-xl font-black text-xs hover:bg-[#FDE047] active:scale-95 transition-all flex items-center gap-2 shadow-lg shadow-[#FACC15]/10 disabled:opacity-50"
+                                isLoading={smartAssignLoading && smartAssignOrderId === ride.orderId}
+                                leftIcon={<Sparkles size={14} />}
                               >
-                                {smartAssignLoading && smartAssignOrderId === ride.orderId ? (
-                                  <RefreshCw size={14} className="animate-spin" />
-                                ) : (
-                                  <Sparkles size={14} />
-                                )}
                                 שיבוץ חכם
-                              </button>
+                              </Button>
                               <button
                                 onClick={() => handleEditOrder(ride.orderId)}
                                 className="bg-slate-800 text-white px-4 py-2.5 rounded-xl font-black text-xs hover:bg-slate-700 transition-all border border-white/5 flex items-center gap-2"

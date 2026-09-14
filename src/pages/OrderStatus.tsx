@@ -8,6 +8,7 @@ import { LiveMap } from '../components/LiveMap';
 import { Loader2, Car, User, Clock, CheckCircle, Search, MapPin, XCircle, Home, Phone, Shield, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { RadarScanner } from '../components/RadarScanner';
+import { Button, Card, Input, Spinner } from '../components/ui';
 
 const RideTimeline = ({ status }: { status: string }) => {
     const steps = [
@@ -108,7 +109,7 @@ export const OrderStatus: React.FC = () => {
                     destinationLat: updatedOrder.destinationLat || prev?.destinationLat,
                     destinationLng: updatedOrder.destinationLng || prev?.destinationLng,
                     driver: { ...prev?.driver, ...updatedOrder.driver }, // Merge driver details
-                    driverLocation: updatedOrder.driverLocation || prev?.driverLocation
+                    driverLocation: updatedOrder.driverLocation || (updatedOrder as any).driver_location || prev?.driverLocation || prev?.driver_location
                 }));
             }
         });
@@ -128,7 +129,7 @@ export const OrderStatus: React.FC = () => {
             case 'assigned': return { text: 'נהג בדרך', color: 'bg-primary text-white', icon: Car, animate: false };
             case 'arrived': return { text: 'נהג ממתין', color: 'bg-orange-500 text-white', icon: MapPin, animate: true, pulse: true };
             case 'on_route':
-            case 'in_progress': return { text: 'בנסיעה', color: 'bg-indigo-600 text-white', icon: MapPin, animate: false };
+            case 'in_progress': return { text: 'בנסיעה', color: 'bg-primary-600 text-white', icon: MapPin, animate: false };
             case 'completed': return { text: 'הושלם', color: 'bg-success text-white', icon: CheckCircle, animate: false };
             case 'cancelled': return { text: 'בוטל', color: 'bg-danger text-white', icon: XCircle, animate: false };
             default: return { text: 'ממתין', color: 'bg-slate-500 text-white', icon: Clock, animate: false };
@@ -139,7 +140,10 @@ export const OrderStatus: React.FC = () => {
     const mapProps = data ? {
         pickup: (data.pickupLat && data.pickupLng) ? { lat: Number(data.pickupLat), lng: Number(data.pickupLng), address: data.pickupAddress } : undefined,
         destination: (data.destinationLat && data.destinationLng) ? { lat: Number(data.destinationLat), lng: Number(data.destinationLng), address: data.destinationAddress } : undefined,
-        driver: (data.driverLocation) ? { lat: data.driverLocation.lat, lng: data.driverLocation.lng, heading: data.driverLocation.heading } : undefined,
+        driver: (() => {
+            const loc = data.driverLocation || (data as any).driver_location;
+            return loc ? { lat: Number(loc.lat), lng: Number(loc.lng), heading: loc.heading } : undefined;
+        })(),
         status: data.status
     } : {};
 
@@ -151,26 +155,32 @@ export const OrderStatus: React.FC = () => {
             {/* Header / Search (only if no data) */}
             {!data && (
                 <div className="flex-1 flex flex-col items-center justify-center p-6">
-                    <div className="w-full max-w-md glass-premium rounded-3xl p-8">
+                    <Card variant="glass" padding="lg" className="w-full max-w-md rounded-3xl">
                         <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center text-white mb-6 mx-auto shadow-xl shadow-slate-200">
                             <Search size={32} />
                         </div>
                         <h1 className="text-2xl font-black text-center text-slate-800 mb-2">מעקב הזמנה</h1>
                         <p className="text-center text-slate-500 mb-8">הזן את מספר ההזמנה לצפייה בסטטוס</p>
 
+                        {status === 'loading' ? (
+                            <Spinner role="passenger" fullScreen={false} label="טוען הזמנה..." />
+                        ) : (
                         <form onSubmit={handleManualSearch} className="space-y-4">
-                            <input
-                                className="w-full px-5 py-4 bg-white/50 border border-slate-200 rounded-xl outline-none focus:ring-4 focus:ring-primary/10 transition font-black text-center text-lg"
+                            <Input
+                                inputSize="lg"
+                                className="font-black text-center"
                                 placeholder="מספר הזמנה (לדוגמה 1020)"
                                 value={orderId}
                                 onChange={e => setOrderId(e.target.value)}
+                                invalid={status === 'error'}
                             />
-                            <button type="submit" className="btn-premium w-full text-lg shadow-xl">
-                                {status === 'loading' ? <Loader2 className="animate-spin mx-auto" /> : 'חפש הזמנה'}
-                            </button>
+                            <Button type="submit" size="lg" variant="primary" className="w-full text-lg shadow-xl">
+                                חפש הזמנה
+                            </Button>
                         </form>
+                        )}
                         {status === 'error' && <p className="text-danger mt-4 text-center font-bold bg-danger/5 p-2 rounded-lg">{errorMsg}</p>}
-                    </div>
+                    </Card>
                 </div>
             )}
 

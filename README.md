@@ -1,77 +1,98 @@
-# 🚖 TAXIPRO — מערכת דיספאצ'ר חכמה לניהול צי מוניות (v2.0)
+# TAXIPRO / MONIT2 — דיספאצ'ר מוניות בזמן אמת
 
-מערכת אקו-סיסטם מלאה לניהול הזמנות מוניות בזמן אמת, משולבת **WhatsApp**, **Telegram**, **Firebase** ו-**AI**. המערכת עברה Audit מקיף (אפריל 2026) והיא מותאמת לייצור (Production) עם דגש על יציבות, אבטחה וחוויית משתמש פרימיום.
+מערכת לניהול הזמנות מוניות: **Passenger** · **Driver** · **Admin**  
+Stack: Vite + React + TypeScript + Tailwind · Firebase · Google Apps Script · WhatsApp Bridge (Baileys)
 
----
-
-## 🏗️ ארכיטקטורת המערכת (Post-Audit)
-
-המערכת מורכבת מ-4 רכיבים מרכזיים המסונכרנים ביניהם:
-
-1.  **Frontend (Vite + React + TS):** 
-    *   📱 **Passenger App**: הזמנה מהירה, מעקב חי ודירוג.
-    *   🚕 **Driver App**: קבלת נסיעות, ניווט וניהול רווחים.
-    *   🖥️ **Admin System**: שליטה מלאה, מפת נהגים חיה, וסיכומי מנהלים מבוססי AI.
-2.  **Backend (Google Apps Script):** "המוח" שמנהל את בסיס הנתונים (Google Sheets), הלוגיקה העסקית וחישובי המחיר.
-3.  **Real-time DB (Firebase):** סנכרון מיקומי נהגים ועדכוני סטטוס נסיעה בשידור חי.
-4.  **Messaging Bridge (Node.js):** מגשר ייעודי (מבוסס Baileys) לשליחת הודעות WhatsApp ודיווחי שגיאות ל-Telegram.
+ריפו: https://github.com/yona35160-star/MONIT2
 
 ---
 
-## 🚀 מדריך התקנה והרצה מהיר
+## מה במערכת
 
-### 1. דרישות קדם
-*   Node.js (גרסה 18 ומעלה)
-*   חשבון Firebase (מסלול חינמי)
-*   Google Sheets (עבור ה-Backend)
-*   חשבון MongoDB Atlas (עבור שמירת ה-Session של הוואטסאפ)
+| אפליקציה | תפקיד |
+|----------|--------|
+| Passenger | הזמנה, מעקב חי, דירוג |
+| Driver | קבלת נסיעות, ניווט, רווחים |
+| Admin | שליטה, מפת נהגים חיה, סיכומי AI |
 
-### 2. הגדרת בסיס הנתונים (Apps Script)
-1. צור קובץ Google Sheets חדש.
-2. העלה את הקבצים מתיקיית `GS/` לתוך ה-Apps Script.
-3. הרץ פעם אחת את פונקציית ה-`setupSystem`.
-4. בצע **Deployment** בתור Web App (חשוב: גישה ל-"Everyone") והעתק את ה-URL.
-
-### 3. הגדרת ה-Bridge (WhatsApp)
-ה-Bridge מאפשר למערכת "לדבר" בוואטסאפ.
-1. הכנס לתיקיית `bridge/`.
-2. הרץ `npm install`.
-3. הגדר בקובץ `.env` בתוך התיקייה את ה-`MONGO_URI` שלך.
-4. להרצה מקומית וסריקת QR: הרץ את `control-panel.bat` או `npm run dev`.
-5. לאחר הסריקה, ה-Session יישמר ב-Mongo וניתן להעלות את התיקייה ל-**Render**.
-
-### 4. הגדרת ממשק המשתמש (React)
-1. בשורש הפרויקט, הרץ `npm install`.
-2. העתק את `.env.example` ל-`.env` והזן את המפתחות (Firebase, Apps Script, Gemini AI, Telegram).
-3. **הרצה מקומית:**
-   *   אדמין: `npm run dev:admin`
-   *   נהג: `npm run dev:driver`
-   *   נוסע: `npm run dev:passenger`
+| רכיב | טכנולוגיה |
+|------|-----------|
+| Frontend | Vite + React + TS + Tailwind (3 entry points) |
+| Realtime | Firebase Realtime Database |
+| Backend | Google Apps Script + Sheets |
+| Messaging | Node bridge (`bridge/`) — WhatsApp + Telegram alerts |
+| Mobile | Capacitor (android/ios; לא בסנכרון הראשוני) |
 
 ---
 
-## 🛠️ פקודות חשובות (Scripts)
+## התחלה מהירה
+
+### דרישות
+- Node.js 18+ (מומלץ 20)
+- חשבון Firebase
+- Google Sheets + Apps Script
+- (אופציונלי) MongoDB Atlas ל-sessions של WhatsApp
+
+### התקנה
+
+```bash
+npm install
+cp .env.example .env   # מלא ערכים אמיתיים — אל תדחוף .env לריפו
+cd bridge && npm install && cd ..
+```
+
+### הרצה מקומית
+
+| אפליקציה | פקודה | כתובת טיפוסית |
+|----------|-------|----------------|
+| נוסע | `npm run dev:passenger` | http://localhost:5173/passenger.html |
+| נהג | `npm run dev:driver` | http://localhost:5174/driver.html |
+| אדמין | `npm run dev:admin` | http://localhost:5175/admin.html |
+
+ב-Windows אפשר גם: `START-ALL.bat`
+
+מדריך מפורט: [`GUIDE.md`](./GUIDE.md)
+
+---
+
+## פקודות עיקריות
 
 | פקודה | תיאור |
-| :--- | :--- |
-| `npm run dev` | הרצה של הדשבורד המרכזי |
-| `npm run build:all` | בנייה של כל 3 האפליקציות לתיקיית `dist/` |
-| `npm run bridge:multi` | הרצת מגשר הוואטסאפ (3 בוטים במקביל) |
-| `npm run build:apps:admin` | בנייה ייעודית רק למערכת הניהול |
+|--------|--------|
+| `npm run dev` | אדמין (כניסה מהירה ל-station-order) |
+| `npm run dev:passenger` / `dev:driver` / `dev:admin` | הרצת אפליקציה בודדת |
+| `npm run build:all` | בניית שלוש האפליקציות ל-`dist/` |
+| `npm run typecheck` | בדיקת TypeScript בלי emit |
+| `npm run bridge` | הרצת WhatsApp Bridge (`bridge/multi-bot.js`) |
 
 ---
 
-## 🤖 יכולות AI משולבות
-המערכת משתמשת ב-**Gemini 1.5 Flash** (חינמי) עבור:
-*   **Smart Command Box:** יצירת הזמנות מטקסט חופשי (NLP).
-*   **Executive Briefing:** הפקת דוחות סיכום יומיים למנהל התחנה.
-*   **Smart Assigner:** המלצה על הנהג המתאים ביותר לפי מרחק והקשר.
+## אבטחה
+
+- **אל תדחפו** `.env` / `.env.local` / מפתחות לריפו
+- עבדו מול `.env.example` בלבד כתבנית
+- ראו גם: [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md), [`STATUS.md`](./STATUS.md)
 
 ---
 
-## 🏥 ניטור ותקינות (Health Monitoring)
-*   **Telegram Alerts:** המערכת מדווחת אוטומטית לבוט הטלגרם על ניתוקי וואטסאפ או שגיאות שרת קריטיות.
-*   **Audit Compliance:** הקוד כולל ניקוי זיכרון (Cleanup) ל-Listeners והגבלת כמות נתונים (Rate Limiting) למניעת עומס.
+## מסמכים
+
+| קובץ | תוכן |
+|------|------|
+| [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | מבט מוצר וארכיטקטורה |
+| [`GUIDE.md`](./GUIDE.md) | התקנה, הרצה, פתרון בעיות |
+| [`DEPLOY.md`](./DEPLOY.md) | פריסת Vercel ×3 + Render Bridge |
+| [`TASKS.md`](./TASKS.md) | גלים ומשימות צוות |
+| [`STATUS.md`](./STATUS.md) | סטטוס שוטף (חובה לעדכן בסיום משימה) |
+| [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) | חוק מסירה בין סוכנים |
+| [`docs/`](./docs/) | מדריכי התקנה ותפעול נוספים |
 
 ---
-**נבנה עבור מערך הדיספאצ'ינג המתקדם בישראל.** 🚕✨
+
+## AI (אופציונלי)
+
+עם `VITE_GEMINI_API_KEY`: Smart Command Box, Executive Briefing, Smart Assigner.
+
+---
+
+*TAXIPRO / MONIT2 — Israeli taxi dispatch*
