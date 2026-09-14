@@ -180,7 +180,7 @@ export const RideDetails: React.FC = () => {
             .then(res => {
                 if (res.ok && res.data) {
                     if (isMounted) {
-                        setData(prev => (prev ? { ...prev, ...res.data } : res.data));
+                        setData(prev => (prev ? { ...prev, ...res.data } : res.data) as RideDetailsData);
                         setLoading(false);
                         if (searchParams.get('paymentReported')) setPaymentReported(true);
                     }

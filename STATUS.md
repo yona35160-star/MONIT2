@@ -5,10 +5,11 @@
 - ריפו: https://github.com/yona35160-star/MONIT2
 - Wave 1: Done
 - Wave 2 P2: **verified** (re-smoke PASS)
-- Wave 2 מתכנת (מפה / listeners / rate limits): **In Progress → PR**
+- Wave 2 מתכנת (מפה / listeners / rate limits): **Done** — PR #1
 
 ## עדכון אחרון
 - **Lead Developer:** חיזוק ביצועים — מניעת re-subscribe של Firebase, ניקוי listeners ב-unmount, throttle למיקום, rate-limit ל-GAS הצפוף
+- **Verify:** `npm run typecheck` PASS; `npm run build:all` PASS (passenger/driver/admin)
 - ממתין ל-Vercel preview מ-noma + QA רגרסיה על preview חי
 
 ## הצעד הבא
