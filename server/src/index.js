@@ -110,7 +110,7 @@ async function main() {
     await connectMongo(MONGODB_URI);
   } catch (err) {
     console.error(`
-[taxipro-api] MongoDB is not reachable at ${MONGODB_URI}
+[taxipro-api] MongoDB is not reachable (check MONGODB_URI in server/.env)
 Start Mongo first:
   • Windows: START-MONGO.bat   or   net start MongoDB
   • macOS/Linux: mongod --dbpath <data>
@@ -122,7 +122,8 @@ Then: cd server && cp .env.example .env && npm install && npm run dev
 
   app.listen(PORT, () => {
     console.log(`[taxipro-api] listening on http://localhost:${PORT}`);
-    console.log(`[taxipro-api] Mongo: ${MONGODB_URI}`);
+    const _mongoHost = (() => { try { const u = MONGODB_URI.replace(/^mongodb(\+srv)?:\/\//, 'https://'); return new URL(u).host; } catch { return 'configured'; } })();
+    console.log(`[taxipro-api] Mongo: connected (${_mongoHost})`);
     console.log('[taxipro-api] Frontend: set VITE_WEBAPP_URL=http://localhost:4000');
     console.log('[taxipro-api] Local admin stub: admin@taxi.co.il / 123456');
   });
