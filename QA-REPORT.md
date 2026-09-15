@@ -1,69 +1,48 @@
-# QA-REPORT — TAXIPRO / MONIT2
+# QA-REPORT — TAXIPRO / MONIT2 — Wave Unify
 
 **סוכן:** בדיקות (QA & Security)  
-**עדכון אחרון:** 2026-09-14 — Full local smoke אחרי `0462796` (throttle + DriverPortal GPS)  
-**סביבה:** `dist/{passenger,driver,admin}` בלי `.env` / בלי bridge חי
+**תאריך:** 2026-09-15  
+**קומיטים:** `e6c8f1d` / `b2f3969` / `c9843eb` (+ BAT ללחיצה אחת)  
+**סביבה:** `npm run dev:ops` :5275 + `npm run dev:app` :5273 — בלי `.env` אמיתי, בלי bridge
 
-## פסק דין נוכחי
+## פסק דין
 
-**PASS — Ready לבדיקה מקומית של noma** (מסכים ציבוריים + build).
+**PASS — Ready מקומי ל-noma על 2 המסכים.**
 
-- `npm run typecheck` ירוק  
-- `npm run build:all` ירוק  
-- smoke מלא על 4 מסכים ציבוריים: **ALL_PASS**  
-- אין `pageerror` / uncaught  
-- favicon 200 בכל האפליקציות  
-- אין `.env` בעץ; אין `AIza…` ב-dist
+`npm run typecheck` ירוק. Smoke על `admin.html` + `app.html` כולל בחירת תפקיד והחלפה: **ירוק**.  
+Live data / login מאובטח / WhatsApp עדיין דורשים `.env` חדש + `SETUP-BRIDGE.bat` (צעד ידני מ-noma).
 
-### מה עדיין לא נבדק (דורש `.env` + bridge)
+## Unify smoke
 
-מסלול קריטי מלא הזמנה→שיוך→מעקב חי, OTP, WhatsApp/Telegram, Admin dashboard מאובטח, Driver portal אחרי login.
-
----
-
-## Full smoke — תוצאות
-
-| מסך | כותרת | favicon | קריסה | הערות |
-|---|---|---|---|---|
-| Passenger `/` | TAXIPRO \| הזמנת מונית | 200 | לא | נחיתה RTL תקינה |
-| Driver `/` | TAXIPRO \| פורטל נהג | 200 | לא | באנר setup בעברית (QA-2) |
-| Admin `/` | TAXIPRO \| ניהול מערכת | 200 | לא | `מרכז שליטה` / `למורשים בלבד` |
-| Admin `#/station-order` | כנ״ל | 200 | לא | טופס הזמנה + `מרכז שיגור חכם` |
-
-צילומים: `qa-screenshots/full-*.png`
-
----
-
-## סגירת ממצאי Wave 1/2
-
-| ID | סטטוס | אימות |
+| בדיקה | URL | תוצאה |
 |---|---|---|
-| QA-1 Admin אנגלית | **Closed** | מרכז שליטה / למורשים בלבד |
-| QA-2 Driver Script URL | **Closed** | הודעת setup בעברית |
-| QA-3 indigo קריטי | **Closed** | 0 ב-Login/StationOrder/AdminDashboard |
-| QA-4 favicon 404 | **Closed** | 200 |
-| QA-6 SMART DISPATCH | **Closed** | מרכז שיגור חכם |
+| Ops login | `http://localhost:5275/admin.html` | PASS — מרכז שליטה / למורשים בלבד |
+| Alias `#/station` | `admin.html#/station` | PASS — טופס הזמנה |
+| Alias `#/dispatch` | `admin.html#/dispatch` | PASS — טופס הזמנה |
+| Role picker | `http://localhost:5273/app.html` | PASS — כרטיסי נוסע/נהג |
+| בחירת נוסע + סרגל | לחצן «נוסע» | PASS — `החלף תפקיד` + מסך התחברות |
+| החלף תפקיד | סרגל | PASS — חזרה ל-picker |
+| בחירת נהג | לחצן «נהג» | PASS — פורטל נהגים |
+| הפניית `passenger.html` | dev:app | PASS פונקציונלי (נוחת `/?role=passenger` במקום `/app.html` בגלל Vite mode) |
 
-## בדיקות קוד (Wave 2)
+אין `pageerror` / uncaught. צילומים: `qa-screenshots/unify-*.png`
 
-| נושא | תוצאה |
-|---|---|
-| `throttle.ts` + שימוש ב-DriverPortal GPS | קיים; `throttledSync.cancel()` ב-cleanup |
-| Firebase fail-safe `getDbOrWarn` | 17 שימושים ב-`firebase.ts` |
-| Microcopy סטטוס | `מערכת מחוברת/מנותקת`; ErrorBoundary בעברית |
-| `database.rules.json` | default-deny + auth (מאומת קודם) |
-
-## ממצאים חדשים (לא חוסמים)
+## ממצאים לא-חוסמים
 
 | ID | חומרה | תיאור | למי |
 |---|---|---|---|
-| QA-8 | P3 | `ServerStatusWidget` עדיין מציג נתיב ישן `f:\AVODOT\TAXI-WORK\whatsapp-taxi-bridge` בהוראות הפעלה | @סוכן תיעוד / מתכנת |
-| QA-9 | Info | בלי `.env` Admin מציג «הגשר המקומי לא מגיב» — צפוי | — |
+| QA-10 | P3 | `SETUP.bat` מסתיים ב-`pause` (Enter אחרי שהאפליקציות כבר עלו) | DevOps |
+| QA-11 | P3 | Ops עדיין מציג «הפעל START-ALL.bat» לגשר — צריך `SETUP-BRIDGE.bat` | תיעוד |
+| QA-12 | P3 | Role picker מציג `admin.html` כטקסט למשתמש («נמצא ב־admin.html») | תיעוד/עיצוב |
+| QA-13 | Info | קונסול: PWA script MIME (`text/html`) ב-dev — לא שובר UI | מתכנת Wave הבא |
 
-## המלצה ל-PM / noma
+## אבטחה
 
-1. **Go לבדיקה מקומית** עם `.env` אמיתי + `START-ALL.bat` / `npm run bridge`  
-2. DevOps: לוודא `0462796`+ על origin (כבר דווח)  
-3. QA אחרי env: smoke על dashboard/portal + הזמנה אמיתית  
-4. לתקן QA-8 בגל polish
+- אין `.env` בריפו שנבדק; SETUP מעתיק `.env.example` רק אם חסר  
+- לא נבדקו מפתחות חיים / Firebase חדש
 
+## המלצה ל-PM
+
+1. להכריז **Ready מקומי** ל-noma: `SETUP.bat` או `START-ALL.bat` → 5275/admin + 5273/app  
+2. noma ממלא `.env` (Firebase/GAS/WhatsApp חדשים) ומריץ `SETUP-BRIDGE.bat` כשמוכן  
+3. Polish: QA-10..12

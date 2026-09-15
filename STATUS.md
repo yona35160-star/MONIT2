@@ -1,12 +1,14 @@
-# Status
+﻿# Status
 
 ## מצב נוכחי
-- Wave Unify: **2 מסכים** — Ops (`admin.html` / `dev:ops`) + App (`app.html` / `dev:app`)
-- BAT: `SETUP.bat` (לחיצה אחת) · `START-ALL.bat` · `SETUP-BRIDGE.bat`
+- גל: **Wave Unify** — smoke PASS; Ready מקומי (עם `.env` ידני + bridge בנפרד)
+- כניסות: Ops `5275/admin.html` · Ride `5273/app.html`
 
 ## עדכון אחרון
-- **תיעוד:** README + GUIDE מסונכרנים לפקודות הסופיות + 3 קבצי BAT. DEPLOY עודכן בהתאם.
+- **QA:** Unify smoke PASS (`QA-REPORT.md`)
+- **מתכנת:** QA-11/12 תוקנו (`947b6a3`)
+- **DevOps:** QA-10 — הוסר `pause` מסיום `SETUP.bat` (נשארו pause רק בכשלי install)
 
 ## הצעד הבא
-1. @סוכן בדיקות — smoke על http://localhost:5275/admin.html + http://localhost:5273/app.html (כולל בחירת תפקיד)
-2. אחרי QA ירוק — PM Ready מקומי ל-noma (DB/WhatsApp ידני)
+1. @סוכן מנהל מוצר — להכריז Ready מקומי ל-noma
+2. @noma — למלא `.env` חדש + `SETUP-BRIDGE.bat` כשמוכן לוואטסאפ

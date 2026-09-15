@@ -63,3 +63,7 @@ ios/
 *.backup
 *.bak
 code.gs.pre_cleanup_backup
+
+unify-qa.tgz
+*.tgz
+

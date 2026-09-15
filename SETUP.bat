@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 chcp 65001 >nul
 cd /d "%~dp0"
 
@@ -67,4 +67,6 @@ echo   Bridge     : double-click SETUP-BRIDGE.bat when you have a new WhatsApp
 echo  ----------------------------------------
 echo   Fill .env with NEW Firebase + GAS + WhatsApp before live data.
 echo.
-pause
+
+echo [OK] SETUP finished ? apps are starting in new windows.
+exit /b 0
