@@ -1,8 +1,9 @@
-# TAXIPRO / MONIT2 — מדריך הפעלה (2 מסכים)
+# TAXIPRO / MONIT2 — מדריך הפעלה (Wave Mongo)
 
-> **מרכז שליטה** + **אפליקציית נסיעה** · Firebase/GAS/WhatsApp חדשים · BAT בלחיצה אחת
+> **מרכז שליטה** + **אפליקציית נסיעה** · **Mongo = מקור האמת** · Firebase Realtime זמני · WhatsApp Bridge  
+> Sheets/GAS — deprecated (נספח מעבר בלבד)
 >
-> **התחלה מחדש ל-noma:** [START.md](./START.md) — Firebase → GAS (setupSystemFull) → `.env` → SETUP.bat → Bridge + QR → בדיקת הזמנה
+> **התחלה ממוספרת ל-noma:** [`START.md`](./START.md) · ארכיטקטורה: [`ARCHITECTURE.md`](./ARCHITECTURE.md)
 
 ---
 
@@ -13,82 +14,86 @@
 | מרכז שליטה (Ops) | `admin.html` | `npm run dev:ops` | http://localhost:5275/admin.html |
 | אפליקציית נסיעה | `app.html` | `npm run dev:app` | http://localhost:5273/app.html |
 
-- שיגור מתחנה בתוך האדמין: `#/station-order` (גם `#/station`, `#/dispatch`)
-- באפליקציה: מסך בחירת תפקיד · «החלף תפקיד» · `#/passenger` / `#/driver`
-- כניסות ישנות מפנות ל-`app.html`
+- שיגור: `#/station-order` (גם `#/station`, `#/dispatch`)
+- App: בחירת תפקיד · «החלף תפקיד» · `#/passenger` / `#/driver`
+- API מקומי: http://localhost:4000 (`VITE_WEBAPP_URL`)
 
 ---
 
 ## 2. לחיצה אחת (Windows)
 
-### SETUP.bat — התקנה + הרצה
-בלי שאלות:
-1. מעתיק `.env.example` → `.env` אם חסר (גם `bridge/.env`)
-2. `npm install` בשורש וב-`bridge/`
-3. מפעיל `dev:ops` + `dev:app`
-4. פותח את שני ה-URLs
+### START-MONGO.bat
+מפעיל Mongo מקומי (`127.0.0.1:27017` / DB `taxipro`). אם נחסם — UAC / שירות MongoDB כמנהל, או השתמשו ב-Atlas (ראו START.md).
 
-### START-ALL.bat — הרצה חוזרת
-מפעיל את 2 המסכים. אם אין `node_modules` — קורא ל-`SETUP.bat`.
+### SETUP.bat
+1. מפעיל Mongo (`START-MONGO.bat`)
+2. מעתיק תבניות `.env` / `server/.env` / `bridge/.env` אם חסרות
+3. `npm install` (root + bridge + `server/` אם קיים)
+4. מריץ API על `:4000` כש-`server/` קיים
+5. מפעיל `dev:ops` + `dev:app` ופותח URLs
 
-### SETUP-BRIDGE.bat — WhatsApp בנפרד
-מתקין bridge אם צריך, מריץ `npm run bridge`, פותח `/health`.  
-סריקת QR לבוט החדש — ראו סעיף 4.
+### START-ALL.bat
+הרצה חוזרת של 2 המסכים (או SETUP אם אין `node_modules`).
+
+### SETUP-BRIDGE.bat
+WhatsApp Bridge בנפרד — sessions ב-Mongo.
 
 ---
 
 ## 3. הרצה ידנית
 
 ```bash
+# Mongo רץ (START-MONGO.bat או Atlas)
+
+copy .env.example .env
+copy server\.env.example server\.env
+copy bridge\.env.example bridge\.env
+# מלאו MONGODB_URI + VITE_WEBAPP_URL=http://localhost:4000 + VITE_FIREBASE_*
+
 npm install
 cd bridge && npm install && cd ..
-cp .env.example .env   # פעם אחת; מלאו ערכים חדשים
-
-npm run dev:ops        # מרכז שליטה
-npm run dev:app        # אפליקציית נסיעה
+cd server && npm install && npm run dev   # :4000
+# טרמינלים נוספים:
+npm run dev:ops
+npm run dev:app
 ```
 
 בנייה:
 
 ```bash
 npm run typecheck
-npm run build:unify    # build:ops + build:app
+npm run build:unify
 ```
 
 ---
 
 ## 4. WhatsApp Bridge
 
-לא חלק מ-`SETUP.bat` — הריצו בנפרד:
-
 ```cmd
 SETUP-BRIDGE.bat
 ```
-
-או:
 
 ```bash
 npm run bridge
 curl http://localhost:3000/health
 ```
 
-QR (מפתח מ-`bridge/.env`):
-
-```
-http://localhost:3000/qr?role=dispatcher&key=YOUR_API_KEY
-```
-
-`BRIDGE_API_KEY` חייב להתאים ל-`VITE_BRIDGE_API_KEY`.  
-noma: סריקת QR + יצירת קבוצה חדשה ומסירת IDs.
+QR: `http://localhost:3000/qr?role=dispatcher&key=YOUR_API_KEY`  
+`BRIDGE_API_KEY` ↔ `VITE_BRIDGE_API_KEY` · אותו `MONGODB_URI` כמו ב-server.
 
 ---
 
-## 5. תשתית חדשה ופריסה
+## 5. תשתית ופריסה
 
-1. Firebase חדש → `VITE_FIREBASE_*`
-2. Sheet + GAS חדש מ-`GS/` → setupSystemFull → Deploy Web App → `VITE_WEBAPP_URL` + Login (שדה ריק בהתחלה) — פירוט ב-START.md
-3. אל תדחפו `.env` / `bridge/.env`
-4. פרודקשן: **2** פרויקטי Vercel — ראו [`DEPLOY.md`](./DEPLOY.md) (`build:ops` / `build:app`)
+| רכיב | הערה |
+|------|------|
+| Mongo | מקור האמת — מקומי או Atlas |
+| `server/` | Express+Mongo מחליף GAS — פורט 4000 |
+| Firebase | זמני ל-Realtime עד Phase 2 |
+| Sheets/GAS | בלי פיצ'רים חדשים |
+| פרודקשן UI | 2× Vercel — [`DEPLOY.md`](./DEPLOY.md) |
+
+אל תדחפו `.env` / `server/.env` / `bridge/.env`.
 
 ---
 
@@ -96,17 +101,18 @@ noma: סריקת QR + יצירת קבוצה חדשה ומסירת IDs.
 
 | בעיה | מה לעשות |
 |------|-----------|
-| כתובת שרת לא הוגדרה | גלגל שיניים ב-Login · מלאו `VITE_WEBAPP_URL` |
-| פורט תפוס | סגרו חלון Vite ישן או הריצו מחדש את ה-BAT |
-| Bridge לא מגיב | `SETUP-BRIDGE.bat` · התאמת מפתחות · QR מחדש |
-| Vite שבור | מחקו `node_modules` / `dist` / `.vite` והריצו `SETUP.bat` |
+| Mongo לא עולה | `START-MONGO.bat` · UAC · Atlas |
+| API :4000 לא עונה | `cd server && npm run dev` · בדקו `MONGODB_URI` |
+| Login / כתובת שרת | `.env`: `VITE_WEBAPP_URL=http://localhost:4000` · נקו `taxi_app_script_url` ב-Local Storage |
+| Bridge בלי session | אותו `MONGODB_URI` ב-`bridge/.env` |
+| Vite שבור | מחקו `node_modules` / `dist` / `.vite` · `SETUP.bat` |
 
 ---
 
 ## צוות
 
-[`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) · [`STATUS.md`](./STATUS.md) · [`TASKS.md`](./TASKS.md) · [`MICROCOPY.md`](./MICROCOPY.md)
+[`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) · [`STATUS.md`](./STATUS.md) · [`TASKS.md`](./TASKS.md) · [`MICROCOPY.md`](./MICROCOPY.md) · [`START.md`](./START.md)
 
 ---
 
-*TAXIPRO / MONIT2 — SETUP.bat · START-ALL.bat · SETUP-BRIDGE.bat*
+*TAXIPRO / MONIT2 — START-MONGO · SETUP · START-ALL · SETUP-BRIDGE*
