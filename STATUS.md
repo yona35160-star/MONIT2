@@ -5,6 +5,8 @@
 - Ready מקומי Unify עדיין תקף; זה לא Go-Live
 
 ## עדכון אחרון
+- **PM/עיצוב:** design-system v2.0 (ענבר #F5A524 על charcoal #0B0F14, Heebo) — בשילוב
+- **תיעוד:** MICROCOPY מעודכן למותג v2
 - **תיעוד:** `START.md` + GUIDE/README; Login בלי prefill ל-URL לא תקין
 - **DevOps:** `.env.example` + `bridge/.env.example` ריקים מערכים חיים/ישנים; `VITE_WEBAPP_URL=` ריק; SETUP נשאר לחיצה אחת. בלי secrets בריפו.
 
