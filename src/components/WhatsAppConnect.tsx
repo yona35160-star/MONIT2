@@ -25,7 +25,7 @@ export const WhatsAppConnect: React.FC = () => {
       if (!url) {
         setConnected(false);
         setQr(null);
-        setError('הגשר המקומי לא מגיב — הפעל START-ALL.bat');
+        setError('הגשר המקומי לא מגיב — הפעילו SETUP-BRIDGE.bat');
         return;
       }
       setBridgeUrl(url);
@@ -44,7 +44,7 @@ export const WhatsAppConnect: React.FC = () => {
     } catch {
       setConnected(false);
       setQr(null);
-      setError('הגשר המקומי לא מגיב — הפעל START-ALL.bat');
+      setError('הגשר המקומי לא מגיב — הפעילו SETUP-BRIDGE.bat');
     } finally {
       setChecking(false);
     }

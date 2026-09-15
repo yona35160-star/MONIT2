@@ -87,7 +87,7 @@ export const RolePicker: React.FC<RolePickerProps> = ({ onSelect, className }) =
             </div>
 
             <p className="text-[11px] text-slate-600 font-bold">
-                מרכז שליטה לצוות התחנה נמצא ב־admin.html
+                מרכז שליטה לצוות התחנה: הפעילו SETUP.bat / npm run dev:ops
             </p>
         </div>
     );

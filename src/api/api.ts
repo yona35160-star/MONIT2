@@ -379,7 +379,7 @@ export const notifyLocalWhatsApp = async (opts: {
   const key = getLocalBridgeKey();
   const bridgeUrl = await discoverLocalBridgeUrl();
   if (!jid || !key) return { ok: false, error: 'הגשר לא הוגדר' };
-  if (!bridgeUrl) return { ok: false, error: 'הגשר המקומי לא רץ — הפעל START-ALL.bat' };
+  if (!bridgeUrl) return { ok: false, error: 'הגשר המקומי לא רץ — הפעילו SETUP-BRIDGE.bat' };
   try {
     const res = await fetch(`${bridgeUrl}/new-order`, {
       method: 'POST',
