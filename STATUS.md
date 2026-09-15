@@ -1,15 +1,14 @@
 # Status
 
 ## מצב נוכחי
-- Wave Mongo — Express + Mongo API הוא מקור האמת ל-auth / הזמנות / נהגים
-- Frontend ממשיך `sendToBackend` → `VITE_WEBAPP_URL=http://localhost:4000`
-- Firebase נשאר זמנית ל-realtime בלבד (לא נקרע)
-- DS v2.0 משולב (ענבר #F5A524 על charcoal #0B0F14, Heebo ב-`body` / `font-sans`)
+- גל: **Wave Mongo** — Mongo = SoR; Express API על `:4000`; GAS/Sheets החוצה בהדרגה; Firebase זמני ל-Realtime
+- Frontend: `sendToBackend` → `VITE_WEBAPP_URL=http://localhost:4000`
 
 ## עדכון אחרון
-- **מתכנת:** `server/` (Express + mongodb) עם חוזה GAS `{ action, payload, authToken }`; Login מקבל localhost; dashboard לא קורס כש-settings=null; QA-11b `SETUP-BRIDGE.bat`; QA-14 Heebo ב-body
-- **תיעוד:** START.md / `.env.example` מצביעים ל-Mongo API
+- **מתכנת:** `server/` Express + mongodb עם חוזה GAS `{ action, payload, authToken }`; Login מקבל localhost; dashboard לא קורס כש-settings=null
+- **DevOps:** `START-MONGO.bat`, `SETUP.bat` (Mongo→install→API→2 apps), `ARCHITECTURE.md`, `.env.example`
+- **QA-11b / QA-14:** `SETUP-BRIDGE.bat` · Heebo ב-`body` / `font-sans`
 
 ## הצעד הבא
 1. @סוכן בדיקות — smoke: START-MONGO → `npm run dev:api` → Login Test + הזמנה
-2. @סוכן DevOps — דחיפה אם QA ירוק
+2. Firebase עדיין נדרש למפת realtime; WhatsApp עדיין `SETUP-BRIDGE.bat`

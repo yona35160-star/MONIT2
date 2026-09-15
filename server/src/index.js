@@ -15,9 +15,13 @@ dotenv.config({ path: fs.existsSync(envPath) ? envPath : examplePath });
 
 const PORT = Number(process.env.PORT) || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/taxipro';
+const corsOrigins = (process.env.CORS_ORIGINS || '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({ origin: corsOrigins.length ? corsOrigins : true }));
 app.use(express.json({ type: ['application/json', 'text/plain', 'application/*+json'] }));
 app.use(express.text({ type: ['text/plain', 'text/*'] }));
 app.use(express.urlencoded({ extended: true }));
