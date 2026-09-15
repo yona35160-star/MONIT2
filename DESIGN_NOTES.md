@@ -22,3 +22,7 @@ import { Button, Badge, Card, Input, Spinner } from '../components/ui';
 ## Wave 2 polish — empty/loading/error (2026-09-14)
 - רכיבים חדשים: `EmptyState`, `AlertBanner` ב-`src/components/ui/`
 - שולבו במסלול קריטי: DriverPortal (Spinner+EmptyState), StationOrder (EmptyState+AlertBanner), OrderStatus/DriverLogin/CustomerOrder (AlertBanner)
+
+## Wave Unify — RolePicker (2026-09-15)
+- `RolePicker` + `RoleShell` ב-`src/components/ui/`; `entries/app.tsx` צורך אותם
+- `design-system.json` v1.1: IA ל-`ops` (admin.html) ו-`ride` (app.html + passenger/driver)

@@ -1,57 +1,56 @@
-# TAXIPRO / MONIT2 — דיספאצ'ר מוניות בזמן אמת
+﻿# TAXIPRO / MONIT2 — דיספאצ'ר מוניות (2 מסכים)
 
-מערכת לניהול הזמנות מוניות: **Passenger** · **Driver** · **Admin**  
+מערכת הזמנות מוניות בזמן אמת עם **שני ממשקים בלבד** ותשתית חדשה נקייה.
+
+| מסך | כניסה | למי |
+|-----|--------|-----|
+| **מרכז שליטה** | `admin.html` | אדמין + שיגור מתחנה (אין אתר תחנה נפרד) |
+| **אפליקציית נסיעה** | `app.html` | נוסע ונהג באותו אתר — בחירת תפקיד / `#/passenger` / `#/driver` |
+
 Stack: Vite + React + TypeScript + Tailwind · Firebase · Google Apps Script · WhatsApp Bridge (Baileys)
 
 ריפו: https://github.com/yona35160-star/MONIT2
 
 ---
 
-## מה במערכת
+## התחלה בלחיצה (יעד Wave Unify)
 
-| אפליקציה | תפקיד |
-|----------|--------|
-| Passenger | הזמנה, מעקב חי, דירוג |
-| Driver | קבלת נסיעות, ניווט, רווחים |
-| Admin | שליטה, מפת נהגים חיה, סיכומי AI |
+```cmd
+SETUP.bat
+```
 
-| רכיב | טכנולוגיה |
-|------|-----------|
-| Frontend | Vite + React + TS + Tailwind (3 entry points) |
-| Realtime | Firebase Realtime Database |
-| Backend | Google Apps Script + Sheets |
-| Messaging | Node bridge (`bridge/`) — WhatsApp + Telegram alerts |
-| Mobile | Capacitor (android/ios; לא בסנכרון הראשוני) |
+הסקריפט (כשיהיה מוכן מ-DevOps) אמור:
+1. `npm install` (שורש + `bridge/` אופציונלי)
+2. להעתיק `.env.example` → `.env` אם חסר
+3. להפעיל את **2** האפליקציות (+ bridge אופציונלי)
+
+מדריך מפורט: [`GUIDE.md`](./GUIDE.md) · פריסה: [`DEPLOY.md`](./DEPLOY.md)
 
 ---
 
-## התחלה מהירה
+## הרצה ידנית (יעד)
 
-### דרישות
-- Node.js 18+ (מומלץ 20)
-- חשבון Firebase
-- Google Sheets + Apps Script
-- (אופציונלי) MongoDB Atlas ל-sessions של WhatsApp
+| מסך | פקודה צפויה | כתובת |
+|-----|-------------|--------|
+| מרכז שליטה | `npm run dev:admin` | http://localhost:5175/admin.html |
+| אפליקציית נסיעה | `npm run dev:app` | http://localhost:5173/app.html |
 
-### התקנה
+> **מעבר:** עד שהמתכנת סוגר איחוד entries, עדיין קיימים `passenger.html` / `driver.html`. אחרי Wave U1 הם יופנו ל-`app.html`.
+
+### Bridge (אופציונלי)
 
 ```bash
-npm install
-cp .env.example .env   # מלא ערכים אמיתיים — אל תדחוף .env לריפו
-cd bridge && npm install && cd ..
+npm run bridge
+curl http://localhost:3000/health
 ```
 
-### הרצה מקומית
+---
 
-| אפליקציה | פקודה | כתובת טיפוסית |
-|----------|-------|----------------|
-| נוסע | `npm run dev:passenger` | http://localhost:5173/passenger.html |
-| נהג | `npm run dev:driver` | http://localhost:5174/driver.html |
-| אדמין | `npm run dev:admin` | http://localhost:5175/admin.html |
+## תשתית חדשה (חובה)
 
-ב-Windows אפשר גם: `START-ALL.bat`
-
-מדריך מפורט: [`GUIDE.md`](./GUIDE.md)
+- Firebase project **חדש** + Google Sheet / Apps Script **חדש**
+- WhatsApp: בוט מנהל חדש + קבוצת תחנה חדשה (QR ידני ע״י noma)
+- בריפו רק `.env.example` — **אל תדחפו** `.env` / מפתחות
 
 ---
 
@@ -59,19 +58,9 @@ cd bridge && npm install && cd ..
 
 | פקודה | תיאור |
 |--------|--------|
-| `npm run dev` | אדמין (כניסה מהירה ל-station-order) |
-| `npm run dev:passenger` / `dev:driver` / `dev:admin` | הרצת אפליקציה בודדת |
-| `npm run build:all` | בניית שלוש האפליקציות ל-`dist/` |
-| `npm run typecheck` | בדיקת TypeScript בלי emit |
-| `npm run bridge` | הרצת WhatsApp Bridge (`bridge/multi-bot.js`) |
-
----
-
-## אבטחה
-
-- **אל תדחפו** `.env` / `.env.local` / מפתחות לריפו
-- עבדו מול `.env.example` בלבד כתבנית
-- ראו גם: [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md), [`STATUS.md`](./STATUS.md)
+| `npm run typecheck` | TypeScript |
+| `npm run build:admin` / `build:app` | בניית 2 המסכים (אחרי איחוד) |
+| `npm run bridge` | WhatsApp Bridge |
 
 ---
 
@@ -79,23 +68,14 @@ cd bridge && npm install && cd ..
 
 | קובץ | תוכן |
 |------|------|
-| [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | מבט מוצר וארכיטקטורה |
-| [`GUIDE.md`](./GUIDE.md) | התקנה, הרצה, פתרון בעיות |
-| [`DEPLOY.md`](./DEPLOY.md) | פריסת Vercel ×3 + Render Bridge |
-| [`design-system.json`](./design-system.json) | טוקני עיצוב ל-3 האפליקציות |
-| [`DESIGN_NOTES.md`](./DESIGN_NOTES.md) | הערות מסירת עיצוב Wave 1 |
-| [`MICROCOPY.md`](./MICROCOPY.md) | קול מותג + מילון טקסטים |
-| [`TASKS.md`](./TASKS.md) | גלים ומשימות צוות |
-| [`STATUS.md`](./STATUS.md) | סטטוס שוטף (חובה לעדכן בסיום משימה) |
-| [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) | חוק מסירה בין סוכנים |
-| [`docs/`](./docs/) | מדריכי התקנה ותפעול נוספים |
+| [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | כיוון מוצר — 2 מסכים |
+| [`GUIDE.md`](./GUIDE.md) | התקנה, BAT, הרצה, פתרון בעיות |
+| [`DEPLOY.md`](./DEPLOY.md) | Vercel / Render |
+| [`MICROCOPY.md`](./MICROCOPY.md) | קול מותג + מילון |
+| [`TASKS.md`](./TASKS.md) | Wave Unify |
+| [`STATUS.md`](./STATUS.md) | סטטוס שוטף |
+| [`PROJECT_PROTOCOL.md`](./PROJECT_PROTOCOL.md) | חוק מסירה |
 
 ---
 
-## AI (אופציונלי)
-
-עם `VITE_GEMINI_API_KEY`: Smart Command Box, Executive Briefing, Smart Assigner.
-
----
-
-*TAXIPRO / MONIT2 — Israeli taxi dispatch*
+*TAXIPRO / MONIT2 — 2 screens only*

@@ -1,11 +1,10 @@
 {
   "name": "TAXIPRO / MONIT2 Design System",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "direction": "rtl",
   "apps": [
-    "passenger",
-    "driver",
-    "admin"
+    "ops",
+    "ride"
   ],
   "typography": {
     "fontFamily": {
@@ -212,6 +211,13 @@
         "warning",
         "info"
       ]
+    },
+    "RolePicker": {
+      "path": "src/components/ui/RolePicker.tsx",
+      "exports": [
+        "RolePicker",
+        "RoleShell"
+      ]
     }
   },
   "statusTokens": {
@@ -256,5 +262,54 @@
       "src/styles/index.css",
       "src/utils/statusConfig.ts"
     ]
+  },
+  "informationArchitecture": {
+    "ops": {
+      "entry": "admin.html",
+      "scripts": [
+        "dev:ops",
+        "build:ops"
+      ],
+      "labelHe": "מרכז שליטה",
+      "includes": [
+        "admin dashboard",
+        "station/dispatch order",
+        "settings"
+      ],
+      "theme": "admin (--admin-* tokens, dark default)"
+    },
+    "ride": {
+      "entry": "app.html",
+      "scripts": [
+        "dev:app",
+        "build:app"
+      ],
+      "labelHe": "אפליקציית נסיעה",
+      "rolePicker": "src/components/ui/RolePicker.tsx",
+      "roles": {
+        "passenger": {
+          "theme": "light + accent gold",
+          "flows": [
+            "order",
+            "track",
+            "rate"
+          ]
+        },
+        "driver": {
+          "theme": "dark + accent/primary",
+          "flows": [
+            "queue",
+            "portal",
+            "accept",
+            "complete"
+          ]
+        }
+      },
+      "legacyRedirects": [
+        "passenger.html",
+        "driver.html",
+        "index.html"
+      ]
+    }
   }
 }
