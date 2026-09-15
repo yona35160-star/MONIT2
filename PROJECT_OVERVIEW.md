@@ -1,28 +1,21 @@
 # PROJECT_OVERVIEW — TAXIPRO / MONIT2
 
-מערכת דיספאצ'ר מוניות בזמן אמת (Taxi Dispatch).
+## כיוון מוצר (מעודכן)
+מערכת דיספאצ'ר מוניות עם **2 ממשקים בלבד** + תשתית חדשה נקייה.
 
-## מוצר
-- **Passenger** — הזמנה, מעקב חי, דירוג
-- **Driver** — קבלת נסיעות, ניווט, רווחים
-- **Admin** — שליטה, מפת נהגים חיה, סיכומי AI
+### שני המסכים
+1. **מרכז שליטה** (`admin` / ops) — ניהול, מפת נהגים, שיגור מתחנה (StationOrder מאוחד לכאן). אין אתר תחנה נפרד.
+2. **אפליקציית נסיעה** (`app`) — נוסע ונהג באותו אתר/אפליקציה, עם בחירת תפקיד בכניסה (או לינק `#/passenger` / `#/driver`). אין אתרי passenger/driver נפרדים.
 
-## ארכיטקטורה
-| רכיב | טכנולוגיה | הערות |
-|------|-----------|--------|
-| Frontend | Vite + React + TS + Tailwind | 3 כניסות: passenger/driver/admin |
-| Realtime | Firebase | מיקומי נהגים + סטטוס נסיעה |
-| Backend | Google Apps Script + Sheets | לוגיקה עסקית ומחירים |
-| Messaging | Node bridge (Baileys) | WhatsApp + Telegram alerts |
-| Mobile | Capacitor | android/ios (לא בסנכרון הראשוני) |
+### תשתית חדשה (חובה)
+- **Database חדש** — Firebase project חדש + Google Sheet / Apps Script חדש (בלי לשאת נתונים ישנים)
+- **WhatsApp חדש** — מספר/סשן בוט מנהל חדש + קבוצת תחנה חדשה לשליחת הודעות
+- **התקנה בלחיצה** — `SETUP.bat` / `START-ALL.bat` שמריצים install + env template + dev של 2 המסכים (+ bridge אופציונלי)
 
-## מקור אמת מקומי
-`F:\SAAS\טקסי-פרו-עותק` → עותק נקי לסנכרון: `C:\Users\Pc\MONIT2-sync`  
-ריפו: https://github.com/yona35160-star/MONIT2
+### ארכיטקטורה (נשארת)
+Vite + React + TS | Firebase realtime | Google Apps Script | WhatsApp Bridge (Baileys)
 
-## יעד נוכחי
-מערכת מוכנה מקצה לקצה: ביצועים, חיבורים יציבים, עיצוב עקבי, בדיקות מחזוריות — בלי תקלות במסלול הקריטי (הזמנה → שיוך נהג → מעקב → סיום).
-
-## מגבלות אבטחה
-- לא לדחוף `.env` / `.env.local` / מפתחות
-- לעבוד מול `.env.example` בלבד בריפו
+### מקורות
+- מקומי: `C:\Users\Pc\MONIT2-sync` (מקור עבודה)
+- מקור מקורי: `F:\SAAS\טקסי-פרו-עותק`
+- GitHub: https://github.com/yona35160-star/MONIT2

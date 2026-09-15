@@ -1,31 +1,21 @@
-﻿# TASKS — TAXIPRO (MONIT2)
+# TASKS — Wave Unify + Fresh Infra
 
-עדיפות מלמעלה למטה. כל סוכן מעדכן `STATUS.md` ומעביר לסוכן הבא לפי `PROJECT_PROTOCOL.md`.
+## Wave U0 — החלטת מוצר (Done)
+- [x] PM: 2 מסכים — מרכז שליטה + אפליקציית נסיעה
+- [x] PM: DB חדש + WhatsApp חדש + BAT אחד
 
-## Wave 0 — סנכרון (עכשיו)
-- [ ] PM: סנכרון קוד מקומי → GitHub MONIT2 (בלי node_modules / .env)
-- [x] DevOps: וידוא `.gitignore`, מבנה ריפו, הרצה מקומית `npm install` + `npm run typecheck`
+## Wave U1 — איחוד מסכים
+- [ ] עיצוב: IA + Design System ל-2 אפליקציות (role switch בנוסע/נהג; תחנה בתוך אדמין)
+- [ ] מתכנת: entry אחד ל-ops (`admin.html`), entry אחד ל-`app.html` (passenger+driver), ניתוב לפי תפקיד; להסיר/להפנות 4 הכניסות הישנות
+- [ ] תיעוד: README/GUIDE/MICROCOPY ל-2 מסכים בלבד
+- [ ] QA: smoke על 2 הכניסות בלבד
 
-## Wave 1 — יציבות ובסיס (היום)
-- [x] עיצוב: Design System + בדיקת עקביות UI ב-3 האפליקציות (passenger/driver/admin)
-- [x] מתכנת: תיקון typecheck/build, מסלול קריטי הזמנה→שיוך→מעקב, חיבורי Firebase/GAS בטוחים
-- [x] QA: smoke E2E על 3 האפליקציות + דוח `QA-REPORT.md`
-- [x] תיעוד: יישור README/GUIDE לריפו + microcopy במקומות שבורים
-- [x] DevOps: תסריטי הרצה/פריסה (Vercel front + Render bridge) + env template
+## Wave U2 — תשתית חדשה
+- [ ] DevOps: תבניות `.env.example` לפרויקט Firebase/GAS חדש; סקריפט/מדריך יצירת Sheet+deploy GAS
+- [ ] DevOps + מתכנת: Bridge — session חדש, בוט מנהל, קונפיג קבוצה חדשה
+- [ ] DevOps: `SETUP.bat` בלחיצה אחת (npm i, copy env, optional bridge i, start 2 apps)
+- [ ] noma: לסרוק QR לוואטסאפ החדש + ליצור קבוצה ולמסור IDs (צעד ידני יחיד)
 
-## Wave 2 — ביצועים וחיבורים
-- [x] מתכנת: QA-2 באנר Script URL חסר ב-DriverLogin (הודעת setup עברית)
-- [x] מתכנת: QA-4 favicon 404 — `public/favicon.ico` + קישורי HTML
-- [x] מתכנת: ביצועי מפה/listeners, ניקוי memory leaks, rate limits
-- [ ] DevOps: health checks (bridge `/health`, Firebase rules review)
-- [x] QA: smoke מלא מקומי (מסכים ציבוריים) אחרי throttle — רגרסיית WhatsApp/Telegram עדיין ממתינה ל-.env
-- [ ] QA: רגרסיה על חיבורי WhatsApp/Telegram (אם זמין) + אבטחה בסיסית
-- [x] עיצוב: polish למצבי שגיאה/טעינה/ריק
-
-## Wave 3 — מוכן לייצור
-- [ ] QA: E2E מלא + רשימת חסימות
-- [ ] DevOps: פריסת preview יציבה
-- [ ] PM: אישור Go-Live / חזרה לתיקונים
-
-## שגרה
-כל ~3 שעות בימי עבודה: בדיקת סטטוס + smoke קצר + עדכון `STATUS.md` + דיווח ל-noma על חסימות בלבד.
+## Wave U3 — Ready מקומי
+- [ ] QA: smoke מלא עם `.env` החדש על מסלול הזמנה→שיוך→מעקב + הודעת בוט
+- [ ] PM: Ready ל-noma

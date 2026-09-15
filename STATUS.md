@@ -1,16 +1,15 @@
-﻿# Status
+# Status
 
 ## מצב נוכחי
-- פרויקט: **TAXIPRO / MONIT2**
-- עותק: `C:\Users\Pc\MONIT2-sync`
-- ריפו: https://github.com/yona35160-star/MONIT2 (`main` @ e991372 + polish)
+- כיוון חדש: **2 מסכים** + DB חדש + WhatsApp חדש + BAT אחד
+- מסכים: (1) מרכז שליטה = אדמין+תחנה (2) אפליקציית נסיעה = נוסע+נהג
 
 ## עדכון אחרון
-- **מתכנת:** Wave 2/3 perf + QA-8 נדחף (`e991372`)
-- **QA:** full smoke PASS על `0462796`; ממתין ל-re-smoke על `e991372`+polish
-- **עיצוב:** EmptyState + AlertBanner במסלול הקריטי — נדחף עכשיו
-- **DevOps:** דחיפה בלי secrets; typecheck ירוק
+- **PM:** אישר איחוד והפעיל Wave Unify
 
 ## הצעד הבא
-1. @סוכן בדיקות — re-smoke מלא כולל מצבי ריק/שגיאה
-2. @סוכן מנהל מוצר — Ready ל-noma אחרי QA ירוק (עם `.env` מקומי)
+1. @סוכן עיצוב — IA ל-2 אפליקציות
+2. @סוכן מתכנת — איחוד entries/routing
+3. @סוכן DevOps — SETUP.bat + תבניות env לפרויקט חדש
+4. @סוכן תיעוד — מדריכים ל-2 מסכים
+5. @noma — QR WhatsApp + קבוצה חדשה (כשנהיה מוכנים)
