@@ -14,7 +14,7 @@
 | 1 | Mongo מקומי **או** Atlas | `MONGODB_URI` |
 | 2 | Firebase (זמני ל-Realtime) | `VITE_FIREBASE_*` |
 | 3 | מילוי `.env` / `server/.env` / `bridge/.env` | API על `:4000` |
-| 4 | `SETUP.bat` | Mongo + API (אם קיים) + 2 מסכים |
+| 4 | `SETUP.bat` / `npm run dev:api` | Mongo + API `:4000` + 2 מסכים |
 | 5 | `SETUP-BRIDGE.bat` + QR + קבוצה | WhatsApp |
 | 6 | בדיקת הזמנה | הזמנה → שיוך → מעקב |
 
@@ -30,6 +30,7 @@
    - אחרת מריץ `mongod` עם `data\mongo`
 3. URI: `mongodb://127.0.0.1:27017/taxipro`
 4. בדקו: `mongosh mongodb://127.0.0.1:27017/taxipro --eval "db.runCommand({ping:1})"`
+5. חלופה Docker: `docker run -d --name taxipro-mongo -p 27017:27017 mongo:7`
 
 ### אפשרות ב — MongoDB Atlas (ענן, בלי התקנה מקומית)
 
@@ -87,6 +88,12 @@ copy bridge\.env.example bridge\.env
 הרצה חוזרת: `START-ALL.bat`.
 
 ---
+
+### כניסת פיתוח מקומית (stubs — לא לפרודקשן)
+
+- אדמין: `admin@taxi.co.il` / `123456`
+- OTP: `123456` (`DEV_OTP`)
+- חוזה API כמו GAS: `POST /` עם `{ action, payload, authToken }`
 
 ## 5) WhatsApp
 
