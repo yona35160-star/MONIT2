@@ -144,7 +144,7 @@ export const Login: React.FC = () => {
               <input
                 type="url"
                 className="flex-1 p-4 bg-[#0F172A] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all font-mono"
-                placeholder="https://script.google.com/..."
+                placeholder="הדביקו URL חדש מ-Deploy (ראה START.md)"
                 dir="ltr"
                 value={scriptUrl}
                 onChange={(e) => {

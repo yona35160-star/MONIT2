@@ -1,6 +1,8 @@
 # TAXIPRO / MONIT2 — מדריך הפעלה (2 מסכים)
 
 > **מרכז שליטה** + **אפליקציית נסיעה** · Firebase/GAS/WhatsApp חדשים · BAT בלחיצה אחת
+>
+> **התחלה מחדש ל-noma:** [START.md](./START.md) — Firebase → GAS (setupSystemFull) → `.env` → SETUP.bat → Bridge + QR → בדיקת הזמנה
 
 ---
 
@@ -84,7 +86,7 @@ noma: סריקת QR + יצירת קבוצה חדשה ומסירת IDs.
 ## 5. תשתית חדשה ופריסה
 
 1. Firebase חדש → `VITE_FIREBASE_*`
-2. Sheet + GAS חדש מ-`GS/` → `VITE_WEBAPP_URL`
+2. Sheet + GAS חדש מ-`GS/` → setupSystemFull → Deploy Web App → `VITE_WEBAPP_URL` + Login (שדה ריק בהתחלה) — פירוט ב-START.md
 3. אל תדחפו `.env` / `bridge/.env`
 4. פרודקשן: **2** פרויקטי Vercel — ראו [`DEPLOY.md`](./DEPLOY.md) (`build:ops` / `build:app`)
 

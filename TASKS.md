@@ -19,3 +19,10 @@
 ## Wave U3 ג€” Ready ׳׳§׳•׳׳™
 - [ ] QA: smoke ׳׳׳ ׳¢׳ `.env` ׳”׳—׳“׳© ׳¢׳ ׳׳¡׳׳•׳ ׳”׳–׳׳ ׳”ג†’׳©׳™׳•׳ג†’׳׳¢׳§׳‘ + ׳”׳•׳“׳¢׳× ׳‘׳•׳˜
 - [ ] PM: Ready ׳-noma
+
+## Wave Fresh Start
+- [x] תיעוד: START.md + GUIDE (GAS חדש, צעדים ל-noma)
+- [ ] עיצוב: Design System חדש לגמרי (ops + ride)
+- [ ] מתכנת: שילוב DS
+- [ ] DevOps: .env.example נקי
+- [ ] QA: smoke אחרי מסירות

@@ -67,6 +67,7 @@ npm run bridge         # או SETUP-BRIDGE.bat
 | קובץ | תוכן |
 |------|------|
 | [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | כיוון מוצר |
+| [`START.md`](./START.md) | התחלה מחדש ממוספרת ל-noma |
 | [`GUIDE.md`](./GUIDE.md) | התקנה / BAT / פתרון בעיות |
 | [`DEPLOY.md`](./DEPLOY.md) | Vercel ×2 + Render |
 | [`MICROCOPY.md`](./MICROCOPY.md) | קול מותג |

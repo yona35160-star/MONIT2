@@ -16,7 +16,17 @@ const SCRIPT_URL_KEY = 'taxi_app_script_url';
 
 const savedAdminToken = localStorage.getItem(ADMIN_TOKEN_KEY);
 const savedDriverToken = localStorage.getItem(DRIVER_TOKEN_KEY);
-const savedScriptUrl = localStorage.getItem(SCRIPT_URL_KEY) || import.meta.env.VITE_WEBAPP_URL || '';
+const envWebappUrl = String(import.meta.env.VITE_WEBAPP_URL || '').trim();
+const isPlaceholderUrl = (url: string) =>
+  !url ||
+  url.includes('YOUR_') ||
+  !url.startsWith('https://script.google.com/macros/s/');
+const storedScriptUrl = (localStorage.getItem(SCRIPT_URL_KEY) || '').trim();
+const savedScriptUrl = !isPlaceholderUrl(storedScriptUrl)
+  ? storedScriptUrl
+  : isPlaceholderUrl(envWebappUrl)
+    ? ''
+    : envWebappUrl;
 
 const initialState: AuthState = {
   isAdminAuthenticated: !!savedAdminToken,

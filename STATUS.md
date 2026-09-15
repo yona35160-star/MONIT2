@@ -1,14 +1,15 @@
 ﻿# Status
 
 ## מצב נוכחי
-- גל: **Wave Unify** — smoke PASS; Ready מקומי (עם `.env` ידני + bridge בנפרד)
-- כניסות: Ops `5275/admin.html` · Ride `5273/app.html`
+- גל: **Wave Fresh Start** — Firebase/GAS/WhatsApp חדשים + DS חדש + מדריך START.md
+- Ready מקומי Unify עדיין תקף; זה לא Go-Live
 
 ## עדכון אחרון
-- **QA:** Unify smoke PASS (`QA-REPORT.md`)
-- **מתכנת:** QA-11/12 תוקנו (`947b6a3`)
-- **DevOps:** QA-10 — הוסר `pause` מסיום `SETUP.bat` (נשארו pause רק בכשלי install)
+- **תיעוד:** `START.md` + GUIDE/README; Login בלי prefill ל-URL לא תקין
+- **DevOps:** `.env.example` + `bridge/.env.example` ריקים מערכים חיים/ישנים; `VITE_WEBAPP_URL=` ריק; SETUP נשאר לחיצה אחת. בלי secrets בריפו.
 
 ## הצעד הבא
-1. @סוכן מנהל מוצר — להכריז Ready מקומי ל-noma
-2. @noma — למלא `.env` חדש + `SETUP-BRIDGE.bat` כשמוכן לוואטסאפ
+1. @סוכן עיצוב — Design System חדש לגמרי (ops + ride)
+2. @סוכן מתכנת — שילוב DS
+3. @סוכן בדיקות — smoke אחרי המסירות
+4. @noma — לפי `START.md`
