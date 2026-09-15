@@ -34,3 +34,28 @@ None found in this smoke.
 - After wait: dashboard **fully loaded** (נהגים בזמן אמת / הזמנות פעילות / לוח בקרה). First screenshot was mid-spinner only.
 - Non-blocking console noise: `ERR_CONNECTION_REFUSED` (likely Firebase/bridge) + script MIME `text/html` — P3, not smoke-blocking.
 - Screenshot: `qa-screenshots/noma-dashboard-final.png`
+
+---
+## Wave Mongo UI order-flow (Windows) — 2026-09-15 22:10 Asia/Jerusalem
+
+| # | Check | Result | Evidence |
+|---|-------|--------|----------|
+| 1 | Bridge health `:3000` | **PASS** | `dispatcher.connected=true` (health sessions.dispatcher) |
+| 2 | Control Center Login → UI create order | **PASS** | Login → לוח בקרה → `שדר הזמנה` → API `createOrder` 200 → **TAXI-1004** (QA-UI-FLOW / 0501112299 / תל אביב→ירושלים). Mongo verified. |
+| 3 | Ride app role picker | **PASS** | `:5273/app.html` נוסע/נהג מוצגים (מסך נוסע דורש OTP לפני הזמנה מלאה) |
+| 4 | ERR_CONNECTION_REFUSED / MIME | **PASS** (P3) | רעש קיים; **לא שובר** נתיב קריטי (login/dashboard/create) |
+| 5 | WhatsApp group | **N/A** | אין קבוצת נהגים / JID — לא FAIL לפי PM. הזמנה ל-Mongo = PASS. |
+
+### Order
+- **TAXI-1004** — QA-UI-FLOW, 0501112299, תל אביב → ירושלים
+
+### Blocking bugs
+- **None**
+
+### Screenshots
+- `qa-screenshots/win-login.png`
+- `qa-screenshots/win-dashboard.png`
+- `qa-screenshots/win-order-form.png`
+- `qa-screenshots/win-order-filled.png`
+- `qa-screenshots/win-order-toast.png`
+- `qa-screenshots/win-ride-picker.png`

@@ -1,17 +1,18 @@
 # Status
 
 ## מצב נוכחי
-- Wave Mongo: **QA re-smoke PASS** אחרי QA-15 (`b496f9e`)
-- Login→dashboard→הזמנה (API `TAXI-1003`) ירוק על `:4000`
+- פרויקט: **TAXIPRO / MONIT2**
+- Design System: **v2.1.0** — Dual theme (Dark≈GitHub / Light≈Amazon) + brand amber `#F5A524` + Heebo
+
+## עדכון אחרון
+- **עיצוב:** DS v2.1 — tokens `--tp-*`, Dark GitHub (`#0d1117`/`#161b22`/`#30363d`), Light Amazon (`#EAEDED`/`#FFFFFF`/`#D5D9D9`), `ThemeToggle` מעדכן `theme-light`+`admin-light`, body Heebo (QA-14)
 
 ## הצעד הבא
-1. @סוכן מנהל מוצר — Ready מקומי ל-noma
-2. @noma — Mongo מקומי (Admin אם צריך) + SETUP / START-API
-3. Polish: QA-11b START-ALL→SETUP-BRIDGE
+1. @סוכן מתכנת — לאמת toggle ב-ops + ride אם צריך הרחבה
+2. @סוכן DevOps — דחיפה ל-`main` (בלי secrets)
+3. @סוכן בדיקות — smoke dark/light על ops+app
 
 ---
-## QA live smoke (Wave Mongo) — 2026-09-15 21:49 Asia/Jerusalem
-- Agent: סוכן בדיקות
-- Result: **5/5 PASS** (health, loginAdmin, Login→CC, createOrder TAXI-1002, no secrets)
-- Screenshots under `qa-screenshots/noma-*.png`
-- Next: PM can proceed; no blocking handoff to developer
+## QA UI order-flow (Windows) — 2026-09-15 22:10 Asia/Jerusalem
+- Result: **PASS** — UI createOrder **TAXI-1004**; bridge dispatcher connected; Group WA = N/A
+- No blocking bugs
