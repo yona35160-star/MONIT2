@@ -688,6 +688,51 @@ async function handleBroadcast(req, res) {
     return res.json({ success: true, processed: results.length, details: results });
 }
 
+
+// POST /join-group { invite: "https://chat.whatsapp.com/XXXX" } — dispatcher joins drivers group
+app.post('/join-group', limiter, authMiddleware, async (req, res) => {
+    const raw = String((req.body && (req.body.invite || req.body.code || req.body.url)) || '');
+    const code = raw.replace(/^https?:\/\/chat\.whatsapp\.com\//i, '').split('?')[0].split('/')[0].trim();
+    if (!code) return res.status(400).json({ success: false, error: 'Missing invite code' });
+    const sock = sessions[ROLES.DISPATCHER];
+    if (!sock || !sessionStates[ROLES.DISPATCHER]?.connected) {
+        return res.status(503).json({ success: false, error: 'dispatcher not connected' });
+    }
+    try {
+        let info = null;
+        try { info = await sock.groupGetInviteInfo(code); } catch (_) { /* optional */ }
+        let jid = info?.id || '';
+        try {
+            jid = await sock.groupAcceptInvite(code) || jid;
+        } catch (joinErr) {
+            const msg = joinErr?.message || String(joinErr);
+            if (!jid) throw joinErr;
+            return res.json({ success: true, jid, subject: info?.subject || null, note: msg });
+        }
+        return res.json({ success: true, jid, subject: info?.subject || null });
+    } catch (e) {
+        return res.status(400).json({ success: false, error: e.message || String(e) });
+    }
+});
+
+app.get('/groups', authMiddleware, async (req, res) => {
+    const sock = sessions[ROLES.DISPATCHER];
+    if (!sock || !sessionStates[ROLES.DISPATCHER]?.connected) {
+        return res.status(503).json({ success: false, error: 'dispatcher not connected' });
+    }
+    try {
+        const all = await sock.groupFetchAllParticipating();
+        const groups = Object.values(all || {}).map((g) => ({
+            jid: g.id,
+            subject: g.subject,
+            size: g.size || (g.participants || []).length
+        }));
+        return res.json({ success: true, groups });
+    } catch (e) {
+        return res.status(500).json({ success: false, error: e.message || String(e) });
+    }
+});
+
 app.post('/new-order', limiter, authMiddleware, handleBroadcast);
 app.post('/send-message', limiter, authMiddleware, handleBroadcast);
 
