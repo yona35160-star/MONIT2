@@ -67,3 +67,7 @@ code.gs.pre_cleanup_backup
 unify-qa.tgz
 *.tgz
 
+
+.mongo-data/
+.mongo-logs/
+
