@@ -16,3 +16,7 @@
 ## QA UI order-flow (Windows) — 2026-09-15 22:10 Asia/Jerusalem
 - Result: **PASS** — UI createOrder **TAXI-1004**; bridge dispatcher connected; Group WA = N/A
 - No blocking bugs
+
+---
+## QA Group WA — 2026-09-15 22:12 Asia/Jerusalem
+- **PASS** — UI order TAXI-1005; toast group+customer; bridge /new-order ok:true (msg id)

@@ -59,3 +59,16 @@ None found in this smoke.
 - `qa-screenshots/win-order-filled.png`
 - `qa-screenshots/win-order-toast.png`
 - `qa-screenshots/win-ride-picker.png`
+
+---
+## Group WA check — 2026-09-15 22:12 Asia/Jerusalem
+
+| # | Check | Result | Evidence |
+|---|-------|--------|----------|
+| 1 | Toast | **PASS** | `הזמנה נוצרה ונשלחה לקבוצה וללקוח` |
+| 2 | Bridge `POST /new-order` group | **PASS** | `success:true`, `ok:true`, WA msg id returned (JID redacted) |
+| 3 | Customer phone notify | **PASS** | second `/new-order` `ok:true` to customer JID |
+| 4 | Order | **PASS** | `TAXI-1005` (QA-GROUP-WA / תל אביב→חיפה / ₪130) |
+
+Blocking: **none**
+Screenshots: `qa-screenshots/wa-dashboard.png`, `wa-order-form.png`, `wa-toast.png`
