@@ -68,5 +68,6 @@ echo  ----------------------------------------
 echo   Fill .env with NEW Firebase + GAS + WhatsApp before live data.
 echo.
 
-echo [OK] SETUP finished ? apps are starting in new windows.
+echo [OK] SETUP finished - apps are starting in new windows.
 exit /b 0
+
