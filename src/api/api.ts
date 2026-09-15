@@ -1,9 +1,9 @@
-import { ApiResponse, Order, Driver, LoginPayload, DashboardStats, SystemSettings } from '../types';
+﻿import { ApiResponse, Order, Driver, LoginPayload, DashboardStats, SystemSettings } from '../types';
 import { normalizeResponseKeys, toSnakeCaseLite, isValidWebappUrl } from '../utils/apiUtils';
 
 export { isValidWebappUrl };
 
-/** Chatty GAS reads / location pings — coalesce in-flight + skip if a fresh OK is cached. Mutations are not limited. */
+/** Chatty GAS reads / location pings ג€” coalesce in-flight + skip if a fresh OK is cached. Mutations are not limited. */
 const CHATTY_ACTION_MIN_MS: Record<string, number> = {
   getOrders: 8000,
   getOrderStatus: 4000,
@@ -90,7 +90,7 @@ export const sendToTelegram = async (message: string, isError: boolean = true) =
     if (!token || !chatId) return;
 
     // Use text/plain to avoid complicated escapes for simple error messages
-    const prefix = isError ? '🚨 *שגיאת מערכת:* ' : 'ℹ️ *עדכון מערכת:* ';
+    const prefix = isError ? 'נ¨ *׳©׳’׳™׳׳× ׳׳¢׳¨׳›׳×:* ' : 'ג„¹ן¸ *׳¢׳“׳›׳•׳ ׳׳¢׳¨׳›׳×:* ';
     const fullMessage = `${prefix}\n${message}`;
 
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -171,7 +171,7 @@ const sendToBackendUnthrottled = async <T>(
     }
 
     const url = getApiUrl();
-    if (!url) return { ok: false, error: 'כתובת השרת לא הוגדרה.' };
+    if (!url) return { ok: false, error: '׳›׳×׳•׳‘׳× ׳”׳©׳¨׳× ׳׳ ׳”׳•׳’׳“׳¨׳”.' };
 
     const response = await fetch(url, {
       method: 'POST',
@@ -187,8 +187,8 @@ const sendToBackendUnthrottled = async <T>(
     });
 
     if (!response.ok) {
-      const err = `שגיאת שרת (${response.status})`;
-      if (response.status >= 500) sendToTelegram(`כשל שרת (HTTP ${response.status}) בפעולה: ${action}`);
+      const err = `׳©׳’׳™׳׳× ׳©׳¨׳× (${response.status})`;
+      if (response.status >= 500) sendToTelegram(`׳›׳©׳ ׳©׳¨׳× (HTTP ${response.status}) ׳‘׳₪׳¢׳•׳׳”: ${action}`);
       return { ok: false, error: err };
     }
 
@@ -214,10 +214,10 @@ const sendToBackendUnthrottled = async <T>(
       }
 
       if (!result.ok && result.error && String(result.error).includes('Messaging gateway offline')) {
-        sendToTelegram(`⚠️ וואטסאפ אופליין! פעולה: ${action}`);
+        sendToTelegram(`ג ן¸ ׳•׳•׳׳˜׳¡׳׳₪ ׳׳•׳₪׳׳™׳™׳! ׳₪׳¢׳•׳׳”: ${action}`);
         return { 
           ok: false, 
-          error: '⚠️ שגיאת תקשורת: גשר הוואטסאפ המקומי לא זמין. וודא שה-Tunnel (ngrok) פעיל והכתובת מעודכנת בהגדרות.',
+          error: 'ג ן¸ ׳©׳’׳™׳׳× ׳×׳§׳©׳•׳¨׳×: ׳’׳©׳¨ ׳”׳•׳•׳׳˜׳¡׳׳₪ ׳”׳׳§׳•׳׳™ ׳׳ ׳–׳׳™׳. ׳•׳•׳“׳ ׳©׳”-Tunnel (ngrok) ׳₪׳¢׳™׳ ׳•׳”׳›׳×׳•׳‘׳× ׳׳¢׳•׳“׳›׳ ׳× ׳‘׳”׳’׳“׳¨׳•׳×.',
           error_code: 'GATEWAY_OFFLINE'
         };
       }
@@ -225,20 +225,20 @@ const sendToBackendUnthrottled = async <T>(
       return result;
     } catch (e) {
       if (text.includes('<!DOCTYPE html>') || text.includes('<html')) {
-        sendToTelegram(`🔥 שרת גוגל עמוס/כשל (HTML Error Response)`);
-        return { ok: false, error: 'השרת עמוס מדי כרגע, אנא נסה שוב בעוד מספר רגעים.' };
+        sendToTelegram(`נ”¥ ׳©׳¨׳× ׳’׳•׳’׳ ׳¢׳׳•׳¡/׳›׳©׳ (HTML Error Response)`);
+        return { ok: false, error: '׳”׳©׳¨׳× ׳¢׳׳•׳¡ ׳׳“׳™ ׳›׳¨׳’׳¢, ׳׳ ׳ ׳ ׳¡׳” ׳©׳•׳‘ ׳‘׳¢׳•׳“ ׳׳¡׳₪׳¨ ׳¨׳’׳¢׳™׳.' };
       }
-      return { ok: false, error: 'תגובה לא תקינה מהשרת' };
+      return { ok: false, error: '׳×׳’׳•׳‘׳” ׳׳ ׳×׳§׳™׳ ׳” ׳׳”׳©׳¨׳×' };
     }
   } catch (error: any) {
     if (error.name === 'TimeoutError' || error.name === 'AbortError') {
-      return { ok: false, error: 'הבקשה ארכה מדי. אנא בדוק את החיבור לאינטרנט.' };
+      return { ok: false, error: '׳”׳‘׳§׳©׳” ׳׳¨׳›׳” ׳׳“׳™. ׳׳ ׳ ׳‘׳“׳•׳§ ׳׳× ׳”׳—׳™׳‘׳•׳¨ ׳׳׳™׳ ׳˜׳¨׳ ׳˜.' };
     }
-    const errMsg = error.message || 'אירעה שגיאה';
+    const errMsg = error.message || '׳׳™׳¨׳¢׳” ׳©׳’׳™׳׳”';
     if (!errMsg.includes('AbortError')) {
-       sendToTelegram(`🔌 שגיאת תקשורת קריטית: ${errMsg}`);
+       sendToTelegram(`נ” ׳©׳’׳™׳׳× ׳×׳§׳©׳•׳¨׳× ׳§׳¨׳™׳˜׳™׳×: ${errMsg}`);
     }
-    return { ok: false, error: 'בעיה בתקשורת לשרת.' };
+    return { ok: false, error: '׳‘׳¢׳™׳” ׳‘׳×׳§׳©׳•׳¨׳× ׳׳©׳¨׳×.' };
   }
 };
 
@@ -278,7 +278,7 @@ export const sendToBackendWithRetry = async <T>(action: string, payload: any = {
     }
     await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
   }
-  return { ok: false, error: 'כל הנסיונות לביצוע הפעולה נכשלו. אנא פנה לתמיכה.' };
+  return { ok: false, error: '׳›׳ ׳”׳ ׳¡׳™׳•׳ ׳•׳× ׳׳‘׳™׳¦׳•׳¢ ׳”׳₪׳¢׳•׳׳” ׳ ׳›׳©׳׳•. ׳׳ ׳ ׳₪׳ ׳” ׳׳×׳׳™׳›׳”.' };
 };
 
 /* ===============================
@@ -290,7 +290,7 @@ export const searchAddress = (q: string, lat?: number, lon?: number) =>
   sendToBackend<{ display_name: string, lat: string, lon: string }[]>('searchAddress', { q, lat, lon });
 
 export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
-  if (!bridgeUrl) return { ok: false, error: 'כתובת הגשר לא הוגדרה' };
+  if (!bridgeUrl) return { ok: false, error: '׳›׳×׳•׳‘׳× ׳”׳’׳©׳¨ ׳׳ ׳”׳•׳’׳“׳¨׳”' };
 
   const cleanUrl = bridgeUrl.replace(/\/$/, '');
 
@@ -299,7 +299,7 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
       const res = await sendToBackend<any>('proxyBridgeStatus', { bridgeUrl: cleanUrl });
       return res;
     } catch (e: any) {
-      return { ok: false, error: e.message || 'שגיאת תקשורת דרך שרת' };
+      return { ok: false, error: e.message || '׳©׳’׳™׳׳× ׳×׳§׳©׳•׳¨׳× ׳“׳¨׳ ׳©׳¨׳×' };
     }
   }
 
@@ -313,9 +313,9 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
     });
 
     if (!response.ok) {
-      if (response.status === 401) return { ok: false, error: 'אין הרשאה: חסר מפתח API' };
-      if (response.status === 403) return { ok: false, error: 'אין הרשאה: מפתח API שגוי' };
-      return { ok: false, error: `שגיאת גשר: ${response.status}` };
+      if (response.status === 401) return { ok: false, error: '׳׳™׳ ׳”׳¨׳©׳׳”: ׳—׳¡׳¨ ׳׳₪׳×׳— API' };
+      if (response.status === 403) return { ok: false, error: '׳׳™׳ ׳”׳¨׳©׳׳”: ׳׳₪׳×׳— API ׳©׳’׳•׳™' };
+      return { ok: false, error: `׳©׳’׳™׳׳× ׳’׳©׳¨: ${response.status}` };
     }
 
     const json: any = await response.json();
@@ -323,10 +323,10 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
       if (json.ok === true && json.data) return json;
       if (json.success === true) return { ok: true, data: json };
     }
-    return { ok: false, error: 'תשובת גשר לא תקינה' };
+    return { ok: false, error: '׳×׳©׳•׳‘׳× ׳’׳©׳¨ ׳׳ ׳×׳§׳™׳ ׳”' };
   } catch (error) {
     console.error("API Call Error:", error);
-    return { ok: false, error: 'שגיאת תקשורת עם השרת' };
+    return { ok: false, error: '׳©׳’׳™׳׳× ׳×׳§׳©׳•׳¨׳× ׳¢׳ ׳”׳©׳¨׳×' };
   }
 };
 
@@ -335,8 +335,8 @@ export const getBridgeStatus = async (bridgeUrl: string, apiKey: string) => {
  */
 export const getBothBridgeStatuses = async (localUrl: string, renderUrl: string, apiKey: string) => {
   const [localRes, renderRes] = await Promise.all([
-    localUrl ? getBridgeStatus(localUrl, apiKey) : Promise.resolve({ ok: false, error: 'לא הוגדר URL מקומי' }),
-    renderUrl ? getBridgeStatus(renderUrl, apiKey) : Promise.resolve({ ok: false, error: 'לא הוגדר URL לענן' })
+    localUrl ? getBridgeStatus(localUrl, apiKey) : Promise.resolve({ ok: false, error: '׳׳ ׳”׳•׳’׳“׳¨ URL ׳׳§׳•׳׳™' }),
+    renderUrl ? getBridgeStatus(renderUrl, apiKey) : Promise.resolve({ ok: false, error: '׳׳ ׳”׳•׳’׳“׳¨ URL ׳׳¢׳ ׳' })
   ]);
 
   return {
@@ -374,14 +374,14 @@ export const notifyLocalWhatsApp = async (opts: {
 }): Promise<{ ok: boolean; queued?: boolean; error?: string }> => {
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
   const isLocalHost = host === 'localhost' || host === '127.0.0.1';
-  if (!isLocalHost) return { ok: false, error: 'הגשר המקומי זמין רק ב-localhost' };
+  if (!isLocalHost) return { ok: false, error: '׳”׳’׳©׳¨ ׳”׳׳§׳•׳׳™ ׳–׳׳™׳ ׳¨׳§ ׳‘-localhost' };
 
   const { discoverLocalBridgeUrl, getLocalBridgeKey } = await import('./localBridge');
   const jid = opts.jid || LOCAL_GROUP_JID;
   const key = getLocalBridgeKey();
   const bridgeUrl = await discoverLocalBridgeUrl();
-  if (!jid || !key) return { ok: false, error: 'הגשר לא הוגדר' };
-  if (!bridgeUrl) return { ok: false, error: 'הגשר המקומי לא רץ — הפעילו SETUP-BRIDGE.bat' };
+  if (!jid || !key) return { ok: false, error: '׳”׳’׳©׳¨ ׳׳ ׳”׳•׳’׳“׳¨' };
+  if (!bridgeUrl) return { ok: false, error: '׳”׳’׳©׳¨ ׳”׳׳§׳•׳׳™ ׳׳ ׳¨׳¥ ג€” ׳”׳₪׳¢׳™׳׳• SETUP-BRIDGE.bat' };
   try {
     const res = await fetch(`${bridgeUrl}/new-order`, {
       method: 'POST',
@@ -395,7 +395,7 @@ export const notifyLocalWhatsApp = async (opts: {
     if (res.ok && json.success && (!first || first.ok !== false)) return { ok: true };
     return { ok: false, error: first?.error || json.error || `HTTP ${res.status}` };
   } catch (e: any) {
-    return { ok: false, error: e.message || 'הגשר המקומי לא מגיב' };
+    return { ok: false, error: e.message || '׳”׳’׳©׳¨ ׳”׳׳§׳•׳׳™ ׳׳ ׳׳’׳™׳‘' };
   }
 };
 
@@ -408,10 +408,18 @@ export const formatNewRideGroupMessage = (order: {
   pickupTime?: string;
   notes?: string;
 }) => {
-  const driverBase = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_DRIVER_SITE_URL) || 'http://localhost:5274/driver.html';
-  const link = `${String(driverBase).replace(/\/$/, '')}#/accept-ride?orderId=${order.orderId}`;
-  const time = [order.pickupDate, order.pickupTime].filter(Boolean).join(' ') || 'מיידי';
-  return `🚖 *נסיעה חדשה זמינה! - ${order.orderId}*\n\n📍 *מאיפה:* ${order.pickupAddress}\n🏁 *לאן:* ${order.destinationAddress}\n\n💰 *מחיר:* ${order.price} ₪\n🕒 *זמן:* ${time}\n${order.notes ? `\n📝 *הערות:* ${order.notes}\n` : ''}\n👇 *לחץ כאן לקבלת הנסיעה והכתובת המלאה:*\n${link}`;
+  const driverBase = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_DRIVER_SITE_URL) || 'http://localhost:5273/app.html';
+  const link = (() => {
+    try {
+      const u = new URL(String(driverBase));
+      u.hash = `/accept-ride?orderId=${encodeURIComponent(order.orderId)}`;
+      return u.toString();
+    } catch {
+      return `${String(driverBase).replace(/\/$/, '')}#/accept-ride?orderId=${order.orderId}`;
+    }
+  })();
+  const time = [order.pickupDate, order.pickupTime].filter(Boolean).join(' ') || '׳׳™׳™׳“׳™';
+  return `נ– *׳ ׳¡׳™׳¢׳” ׳—׳“׳©׳” ׳–׳׳™׳ ׳”! - ${order.orderId}*\n\nנ“ *׳׳׳™׳₪׳”:* ${order.pickupAddress}\nנ *׳׳׳:* ${order.destinationAddress}\n\nנ’° *׳׳—׳™׳¨:* ${order.price} ג‚×\nנ•’ *׳–׳׳:* ${time}\n${order.notes ? `\nנ“ *׳”׳¢׳¨׳•׳×:* ${order.notes}\n` : ''}\nנ‘‡ *׳׳—׳¥ ׳›׳׳ ׳׳§׳‘׳׳× ׳”׳ ׳¡׳™׳¢׳” ׳•׳”׳›׳×׳•׳‘׳× ׳”׳׳׳׳”:*\n${link}`;
 };
 
 if (typeof window !== 'undefined') {

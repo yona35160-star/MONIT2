@@ -1,4 +1,4 @@
-﻿import { defineConfig } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -24,8 +24,11 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
+      host: true,
       port: modeToPort[mode] || 5173,
       strictPort: true,
+      // Cloudflare quick tunnels send Host: *.trycloudflare.com
+      allowedHosts: true,
     },
     plugins: [
       react(),

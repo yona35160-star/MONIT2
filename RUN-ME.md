@@ -106,3 +106,22 @@ Invoke-RestMethod http://localhost:4000/ -Method Post -Body $body -ContentType '
    - הדבק ב-`.env` בשורש: `VITE_WHATSAPP_GROUP_JID=...`
    - הפעל מחדש את `npm run dev:ops` (Vite קורא env בהפעלה)
 3. בלי השורה הזו הזמנה תישמר ב-Mongo, אבל **לא** תשלח לקבוצה. הודעה ללקוח לפי מספר טלפון עדיין יכולה להישלח.
+
+---
+
+## לינק ציבורי לבדיקת WhatsApp עד הקצה
+
+Quick Tunnel (Cloudflare) חושף את המחשב לטלפון בלי Vercel:
+
+1. ודא ש-API + Ride + Ops רצים מקומית
+2. הרץ מנהרות (או השאר את מה שה-PM הפעיל):
+   - app → פורט 5273
+   - api → פורט 4000
+   - ops → פורט 5275
+3. עדכן ב-`.env` (מקומי בלבד):
+   - `VITE_DRIVER_SITE_URL` / `VITE_APP_SITE_URL` = `https://….trycloudflare.com/app.html`
+   - `VITE_WEBAPP_URL` = `https://….trycloudflare.com` (API)
+4. הפעל מחדש `npm run dev:app` ו-`npm run dev:ops` (Vite קורא env בהפעלה)
+5. הזמנה חדשה מהממשק → הלינק בקבוצה אמור להיפתח בטלפון ל-`#/accept-ride`
+
+הערה: כתובות trycloudflare משתנות בכל הפעלה של המנהרה. אל תעשה להן commit.
