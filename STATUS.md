@@ -1,13 +1,15 @@
 # Status
 
 ## מצב נוכחי
-- Wave Fresh Start — DS **v2.0 משולב** (ענבר #F5A524 על charcoal #0B0F14, Heebo)
-- 2 כניסות: ops `5275/admin` · ride `5273/app`
+- גל: **Wave Mongo** — Mongo = SoR; GAS/Sheets החוצה בהדרגה; Firebase זמני ל-Realtime
+- חוסם: מחשב `DESKTOP-54EVA7N` היה מנותק בזמן הכנת DevOps — קבצים מוכנים לדחיפה
 
 ## עדכון אחרון
-- **מתכנת:** שילוב DS v2 ב-tailwind / index.css / HTML / Login / RolePicker / Button
-- **תיעוד/DevOps:** START.md + .env.example נקי (קודם)
+- **DevOps (מוכן לדחיפה):** `START-MONGO.bat`, `SETUP.bat` (Mongo→install→API→2 apps), `ARCHITECTURE.md`, `.env.example` עם `VITE_WEBAPP_URL=http://localhost:4000`, `server/.env.example`, `bridge/.env.example` עם Mongo מקומי/Atlas, `START.md` Mongo-first
+- **תיעוד:** עדכון Mongo ב-START (סנכרון למכונה אחרי חיבור)
+- **מתכנת:** שלד `server/` Express+Mongo
 
 ## הצעד הבא
-1. @סוכן בדיקות — smoke ops+app (look חדש + Login GAS ריק)
-2. @סוכן DevOps — דחיפה אם צריך אחרי QA
+1. @noma — לחבר מחדש את המחשב / לאשר חיבור GitHub ל-Cloud Agent
+2. @סוכן מתכנת — `server/` API
+3. @סוכן בדיקות — smoke אחרי API

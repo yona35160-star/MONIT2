@@ -64,10 +64,11 @@ ios/
 *.bak
 code.gs.pre_cleanup_backup
 
-unify-qa.tgz
-*.tgz
-
-
+# Local Mongo data
+data/mongo/
 .mongo-data/
 .mongo-logs/
+
+unify-qa.tgz
+*.tgz
 
