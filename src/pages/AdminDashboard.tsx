@@ -77,7 +77,7 @@ export const AdminDashboard: React.FC = () => {
   const orders = useSelector((state: any) => state.orders.activeOrders as Order[]);
   const stats = useSelector((state: any) => state.stats.data as DashboardStats);
   const drivers = useSelector((state: any) => state.drivers.activeDrivers as Driver[]);
-  const settings = useSelector((state: any) => state.settings.data as SystemSettings);
+  const settings = (useSelector((state: any) => state.settings.data) as SystemSettings) || {};
   const isLoading = useSelector((state: any) => (
     state.orders.isLoading || state.drivers.isLoading || state.stats.isLoading
   ));
@@ -848,7 +848,7 @@ export const AdminDashboard: React.FC = () => {
                   drivers={mapData.drivers}
                   passengers={Object.values(passengerLocations)}
                   globalMode={true}
-                  apiKey={settings.googleMapsApiKey || settings['GOOGLE_MAPS_API_KEY']}
+                  apiKey={settings?.googleMapsApiKey || settings?.['GOOGLE_MAPS_API_KEY']}
                   heatmapData={heatmapData}
                   showHeatmap={false}
                   onSmartAssignClick={handleSmartAssign}
@@ -909,7 +909,7 @@ export const AdminDashboard: React.FC = () => {
                   isLoading={isLoading}
                   onEdit={handleEditOrder}
                   onRefresh={handleRefresh}
-                  stationPaymentPhone={settings.stationPaymentPhone || settings['STATION_PAYMENT_PHONE']}
+                  stationPaymentPhone={settings?.stationPaymentPhone || settings?.['STATION_PAYMENT_PHONE']}
                   messageStatuses={messageStatuses}
                 />
               </div>
@@ -942,7 +942,7 @@ export const AdminDashboard: React.FC = () => {
                 orderId={selectedOrderId}
                 onClose={() => setSelectedOrderId(null)}
                 onUpdate={() => fetchData(false)}
-                googleMapsApiKey={settings.googleMapsApiKey || settings['GOOGLE_MAPS_API_KEY']}
+                googleMapsApiKey={settings?.googleMapsApiKey || settings?.['GOOGLE_MAPS_API_KEY']}
               />
             </React.Suspense>
           </div>
