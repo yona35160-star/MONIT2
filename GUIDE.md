@@ -29,14 +29,12 @@
 1. מפעיל Mongo (`START-MONGO.bat`)
 2. מעתיק תבניות `.env` / `server/.env` / `bridge/.env` אם חסרות
 3. `npm install` (root + bridge + `server/` אם קיים)
-4. מריץ API על `:4000` כש-`server/` קיים
+4. מריץ API על `:4000` כש-`server/` קיים (`npm run dev:api` / `START-API.bat`)
 5. מפעיל `dev:ops` + `dev:app` ופותח URLs
+6. Health API: http://localhost:4000/health
 
 ### START-ALL.bat
 הרצה חוזרת של 2 המסכים (או SETUP אם אין `node_modules`).
-
-### START-API.bat
-Express API בלבד: `npm run dev:api` על http://localhost:4000.
 
 ### SETUP-BRIDGE.bat
 WhatsApp Bridge בנפרד — sessions ב-Mongo.
@@ -56,6 +54,7 @@ copy bridge\.env.example bridge\.env
 npm install
 cd bridge && npm install && cd ..
 cd server && npm install && npm run dev   # :4000
+# או מהשורש: npm run dev:api   / START-API.bat
 # טרמינלים נוספים:
 npm run dev:ops
 npm run dev:app
@@ -104,8 +103,9 @@ QR: `http://localhost:3000/qr?role=dispatcher&key=YOUR_API_KEY`
 
 | בעיה | מה לעשות |
 |------|-----------|
-| Mongo לא עולה | `START-MONGO.bat` · UAC · Atlas |
-| API :4000 לא עונה | `cd server && npm run dev` · בדקו `MONGODB_URI` |
+| Mongo לא עולה | `START-MONGO.bat` · UAC · Atlas · או `docker run -d --name taxipro-mongo -p 27017:27017 mongo:7` |
+| API :4000 לא עונה | `npm run dev:api` / `START-API.bat` · בדקו `MONGODB_URI` |
+| כניסת אדמין מקומית | stubs: `admin@taxi.co.il` / `123456` · OTP `123456` (רק DEV) |
 | Login / כתובת שרת | `.env`: `VITE_WEBAPP_URL=http://localhost:4000` · נקו `taxi_app_script_url` ב-Local Storage |
 | Bridge בלי session | אותו `MONGODB_URI` ב-`bridge/.env` |
 | Vite שבור | מחקו `node_modules` / `dist` / `.vite` · `SETUP.bat` |
