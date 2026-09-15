@@ -65,7 +65,7 @@ const CONFIG = {
             'http://localhost:5273',
             'http://localhost:5274',
             'http://localhost:5275',
-            'http://localhost:3012',
+            'http://localhost:3000',
             'http://127.0.0.1:5273',
             'http://127.0.0.1:5274',
             'http://127.0.0.1:5275'
