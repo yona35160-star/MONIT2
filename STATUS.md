@@ -7,7 +7,7 @@
 - DS v2.0 משולב (ענבר #F5A524 על charcoal #0B0F14, Heebo ב-`body` / `font-sans`)
 
 ## עדכון אחרון
-- **מתכנת:** `server/` (Express + mongodb) עם חוזה GAS `{ action, payload, authToken }`; Login מקבל localhost; QA-11b `SETUP-BRIDGE.bat`; QA-14 Heebo ב-body
+- **מתכנת:** `server/` (Express + mongodb) עם חוזה GAS `{ action, payload, authToken }`; Login מקבל localhost; dashboard לא קורס כש-settings=null; QA-11b `SETUP-BRIDGE.bat`; QA-14 Heebo ב-body
 - **תיעוד:** START.md / `.env.example` מצביעים ל-Mongo API
 
 ## הצעד הבא
