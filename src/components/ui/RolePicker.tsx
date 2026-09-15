@@ -36,23 +36,32 @@ const roles: Array<{
     },
 ];
 
-/** מסך בחירת תפקיד — אפליקציית נסיעה (Wave Unify) */
+/** מסך בחירת תפקיד — אפליקציית נסיעה (theme-aware via --tp-*) */
 export const RolePicker: React.FC<RolePickerProps> = ({ onSelect, className }) => {
     return (
         <div
-            className={[
-                'min-h-screen flex flex-col items-center justify-center gap-8 p-6',
-                'bg-[radial-gradient(ellipse_at_top,_#1C2430_0%,_#0B0F14_55%)] text-white',
-                className || '',
-            ].join(' ')}
+            className={cn(
+                'relative min-h-screen flex flex-col items-center justify-center gap-8 p-6',
+                className
+            )}
+            style={{
+                background: 'radial-gradient(ellipse at top, var(--tp-bg-elevated, #21262d) 0%, var(--tp-bg, #0d1117) 55%)',
+                color: 'var(--tp-text, #e6edf3)',
+            }}
             dir="rtl"
         >
+            <div className="absolute top-4 left-4 z-10">
+                <ThemeToggle />
+            </div>
+
             <div className="text-center space-y-3 max-w-md">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-300 text-[11px] font-black tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-400 text-[11px] font-black tracking-widest uppercase">
                     TAXIPRO
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-black tracking-tight">אפליקציית נסיעה</h1>
-                <p className="text-slate-400 text-sm font-medium leading-relaxed">
+                <h1 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ color: 'var(--tp-text)' }}>
+                    אפליקציית נסיעה
+                </h1>
+                <p className="text-sm font-medium leading-relaxed" style={{ color: 'var(--tp-text-secondary)' }}>
                     בחרו תפקיד להמשך. אפשר להחליף בכל רגע מסרגל העליון.
                 </p>
             </div>
@@ -63,31 +72,39 @@ export const RolePicker: React.FC<RolePickerProps> = ({ onSelect, className }) =
                         key={id}
                         type="button"
                         onClick={() => onSelect(id)}
-                        className={[
-                            'group text-right w-full rounded-[1.75rem] border border-surface-border bg-surface-card/90 backdrop-blur-xl p-5',
+                        className={cn(
+                            'group text-right w-full rounded-[1.75rem] border backdrop-blur-xl p-5',
                             'transition-all duration-200 active:scale-[0.98]',
-                            accent,
-                        ].join(' ')}
+                            accent
+                        )}
+                        style={{
+                            backgroundColor: 'color-mix(in srgb, var(--tp-bg-subtle, #161b22) 92%, transparent)',
+                            borderColor: 'var(--tp-border, #30363d)',
+                            color: 'var(--tp-text)',
+                        }}
                     >
                         <div className="flex items-center gap-4">
-                            <div className={['w-14 h-14 rounded-2xl flex items-center justify-center shrink-0', iconWrap].join(' ')}>
+                            <div className={cn('w-14 h-14 rounded-2xl flex items-center justify-center shrink-0', iconWrap)}>
                                 <Icon size={28} strokeWidth={2.5} aria-hidden />
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-xl font-black tracking-tight">{title}</div>
-                                <div className="text-sm text-slate-400 font-medium mt-0.5">{subtitle}</div>
+                                <div className="text-sm font-medium mt-0.5" style={{ color: 'var(--tp-text-secondary)' }}>
+                                    {subtitle}
+                                </div>
                             </div>
                             <ArrowLeft
-                                className="text-slate-600 group-hover:text-white transition-colors shrink-0"
+                                className="shrink-0 opacity-50 group-hover:opacity-100 transition-opacity"
                                 size={20}
                                 aria-hidden
+                                style={{ color: 'var(--tp-text)' }}
                             />
                         </div>
                     </button>
                 ))}
             </div>
 
-            <p className="text-[11px] text-slate-600 font-bold">
+            <p className="text-[11px] font-bold" style={{ color: 'var(--tp-text-muted)' }}>
                 מרכז שליטה לצוות התחנה: הפעילו SETUP.bat / npm run dev:ops
             </p>
         </div>
@@ -104,21 +121,23 @@ interface RoleShellProps {
 export const RoleShell: React.FC<RoleShellProps> = ({ role, onSwitch, children }) => {
     const isPassenger = role === 'passenger';
     return (
-        <div className="min-h-screen flex flex-col" dir="rtl">
+        <div className="min-h-screen flex flex-col" dir="rtl" style={{ background: 'var(--tp-bg)', color: 'var(--tp-text)' }}>
             <div
-                className={[
-                    'sticky top-0 z-[200] flex items-center justify-between gap-3 px-4 py-2.5 border-b backdrop-blur-xl',
-                    isPassenger
-                        ? 'bg-white/95 text-slate-900 border-slate-200'
-                        : 'bg-slate-950/95 text-white border-slate-800',
-                ].join(' ')}
+                className="sticky top-0 z-[200] flex items-center justify-between gap-3 px-4 py-2.5 border-b backdrop-blur-xl"
+                style={{
+                    backgroundColor: isPassenger
+                        ? 'color-mix(in srgb, var(--tp-bg-subtle) 95%, transparent)'
+                        : 'color-mix(in srgb, var(--tp-bg) 95%, transparent)',
+                    borderColor: 'var(--tp-border)',
+                    color: 'var(--tp-text)',
+                }}
             >
                 <div className="flex items-center gap-2 min-w-0">
                     <span
-                        className={[
+                        className={cn(
                             'w-2.5 h-2.5 rounded-full shrink-0',
-                            isPassenger ? 'bg-accent-400' : 'bg-primary-400',
-                        ].join(' ')}
+                            isPassenger ? 'bg-primary-400' : 'bg-primary-500'
+                        )}
                         aria-hidden
                     />
                     <div className="text-sm font-black truncate">
@@ -130,12 +149,12 @@ export const RoleShell: React.FC<RoleShellProps> = ({ role, onSwitch, children }
                     <button
                         type="button"
                         onClick={onSwitch}
-                        className={[
-                            'text-xs font-black px-3 py-1.5 rounded-xl border transition-colors',
-                            isPassenger
-                                ? 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                                : 'border-slate-700 text-accent-300 hover:bg-slate-900',
-                        ].join(' ')}
+                        className="text-xs font-black px-3 py-1.5 rounded-xl border transition-colors"
+                        style={{
+                            borderColor: 'var(--tp-border)',
+                            color: 'var(--tp-text-secondary)',
+                            backgroundColor: 'transparent',
+                        }}
                     >
                         החלף תפקיד
                     </button>
