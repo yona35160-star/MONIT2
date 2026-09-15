@@ -15,8 +15,9 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setSettingsData(state, action: PayloadAction<SystemSettings>) {
-      state.data = action.payload;
+    setSettingsData(state, action: PayloadAction<SystemSettings | null | undefined>) {
+      const payload = action.payload;
+      state.data = payload && typeof payload === 'object' ? payload : ({} as SystemSettings);
       state.isLoading = false;
     },
     setSettingsLoading(state, action: PayloadAction<boolean>) {

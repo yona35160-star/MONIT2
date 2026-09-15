@@ -1,4 +1,4 @@
-﻿import { Button } from '../components/ui';
+import { Button } from '../components/ui';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,7 +77,8 @@ export const AdminDashboard: React.FC = () => {
   const orders = useSelector((state: any) => state.orders.activeOrders as Order[]);
   const stats = useSelector((state: any) => state.stats.data as DashboardStats);
   const drivers = useSelector((state: any) => state.drivers.activeDrivers as Driver[]);
-  const settings = (useSelector((state: any) => state.settings.data) as SystemSettings) || {};
+  const settingsRaw = useSelector((state: any) => state.settings?.data);
+  const settings: SystemSettings = (settingsRaw && typeof settingsRaw === 'object' ? settingsRaw : {}) as SystemSettings;
   const isLoading = useSelector((state: any) => (
     state.orders.isLoading || state.drivers.isLoading || state.stats.isLoading
   ));
@@ -297,7 +298,7 @@ export const AdminDashboard: React.FC = () => {
           const sorted = [...apiDrivers].sort((a, b) => (b.totalRevenue || 0) - (a.totalRevenue || 0));
           dispatch(setActiveDrivers(sorted));
         }
-        if (apiSettings) dispatch(setSettingsData(apiSettings));
+        dispatch(setSettingsData((apiSettings && typeof apiSettings === 'object' ? apiSettings : {}) as SystemSettings));
       }
     } catch (e) {
       console.error("Fetch Error", e);
@@ -909,7 +910,7 @@ export const AdminDashboard: React.FC = () => {
                   isLoading={isLoading}
                   onEdit={handleEditOrder}
                   onRefresh={handleRefresh}
-                  stationPaymentPhone={settings?.stationPaymentPhone || settings?.['STATION_PAYMENT_PHONE']}
+                  stationPaymentPhone={String(settings?.stationPaymentPhone || (settings as any)?.['STATION_PAYMENT_PHONE'] || '')}
                   messageStatuses={messageStatuses}
                 />
               </div>
