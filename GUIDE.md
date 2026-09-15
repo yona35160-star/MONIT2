@@ -1,8 +1,8 @@
 # TAXIPRO / MONIT2 — מדריך הפעלה (2 מסכים)
 
-> **מרכז שליטה** + **אפליקציית נסיעה** · Firebase/GAS/WhatsApp חדשים · BAT בלחיצה אחת
+> **מרכז שליטה** + **אפליקציית נסיעה** · Mongo API + Firebase realtime · BAT בלחיצה אחת
 >
-> **התחלה מחדש ל-noma:** [START.md](./START.md) — Firebase → GAS (setupSystemFull) → `.env` → SETUP.bat → Bridge + QR → בדיקת הזמנה
+> **התחלה מחדש ל-noma:** [START.md](./START.md) — Mongo + API → `.env` (`VITE_WEBAPP_URL=http://localhost:4000`) → SETUP.bat → Bridge + QR → בדיקת הזמנה
 
 ---
 
@@ -23,12 +23,18 @@
 
 ### SETUP.bat — התקנה + הרצה
 בלי שאלות:
-1. מעתיק `.env.example` → `.env` אם חסר (גם `bridge/.env`)
-2. `npm install` בשורש וב-`bridge/`
-3. מפעיל `dev:ops` + `dev:app`
+1. מעתיק `.env.example` → `.env` אם חסר (גם `bridge/.env` ו-`server/.env`)
+2. `npm install` בשורש, ב-`bridge/` וב-`server/`
+3. מפעיל `dev:api` (פורט 4000) + `dev:ops` + `dev:app`
 4. פותח את שני ה-URLs
 
-### START-ALL.bat — הרצה חוזרת
+### START-MONGO.bat — MongoDB מקומי
+מריץ `mongod`, שירות Windows `MongoDB`, או Docker `mongo:7`.
+
+### START-API.bat — Express API
+`npm run dev:api` על http://localhost:4000 — זה ה-`VITE_WEBAPP_URL`.
+
+### START-ALL.bat — הרצה חוזרת (מסכים)
 מפעיל את 2 המסכים. אם אין `node_modules` — קורא ל-`SETUP.bat`.
 
 ### SETUP-BRIDGE.bat — WhatsApp בנפרד
@@ -42,8 +48,11 @@
 ```bash
 npm install
 cd bridge && npm install && cd ..
-cp .env.example .env   # פעם אחת; מלאו ערכים חדשים
+cd server && npm install && cd ..
+cp .env.example .env
+cp server/.env.example server/.env
 
+npm run dev:api        # Mongo API :4000
 npm run dev:ops        # מרכז שליטה
 npm run dev:app        # אפליקציית נסיעה
 ```

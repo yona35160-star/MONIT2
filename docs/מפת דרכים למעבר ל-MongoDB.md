@@ -51,4 +51,5 @@
 ---
 
 ## ⏭️ הצעד הבא המיידי
-מומלץ לבצע **Smoke Test** למערכת ה-Firebase הנוכחית לפני שמתחילים את הקמת שרת ה-Node.js עבור MongoDB.
+**Wave Mongo (מקומי) Done:** `server/` Express מאזין על פורט 4000 מול `MONGODB_URI=mongodb://127.0.0.1:27017/taxipro`.
+הפרונט מצביע ל-`VITE_WEBAPP_URL=http://localhost:4000`. Firebase נשאר ל-realtime בלבד. GAS/Sheets בהדרגה החוצה.

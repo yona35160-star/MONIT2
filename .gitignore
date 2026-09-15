@@ -1,5 +1,5 @@
-﻿# Logs
-logs
+﻿# Local Mongo data from START-MONGO.bat
+data/mongo/
 *.log
 npm-debug.log*
 yarn-debug.log*

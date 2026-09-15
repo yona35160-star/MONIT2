@@ -150,7 +150,7 @@ export const ServerStatusWidget: React.FC<ServerStatusWidgetProps> = ({ serverSp
                                     (e.target as HTMLElement).innerText = 'הועתק!';
                                     setTimeout(() => (e.target as HTMLElement).innerText = path, 1500);
                                 }}>{serverSpot || 'bridge'}</span> (לחץ להעתקה)</li>
-                                <li>הפעל את <b>restart.bat</b></li>
+                                <li>הפעל את <b>SETUP-BRIDGE.bat</b></li>
                             </ol>
                         </div>
 

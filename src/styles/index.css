@@ -127,7 +127,7 @@
   }
 
   body {
-    font-family: 'Rubik', 'Inter', system-ui, sans-serif;
+    font-family: 'Heebo', 'Rubik', 'Assistant', system-ui, sans-serif;
     background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
     background-attachment: fixed;
     min-height: 100vh;

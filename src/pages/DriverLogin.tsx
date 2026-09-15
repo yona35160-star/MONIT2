@@ -82,9 +82,12 @@ export const DriverLogin: React.FC<{ onLogin?: () => void }> = ({ onLogin }) => 
   const [isApiReady, setIsApiReady] = useState<boolean | null>(null);
 
   useEffect(() => {
-    import('../api/api').then(({ initializeApiUrl, DEFAULT_WEBAPP_URL }) => {
+    Promise.all([
+      import('../api/api'),
+      import('../utils/apiUtils'),
+    ]).then(([{ DEFAULT_WEBAPP_URL }, { isValidWebappUrl }]) => {
       const url = localStorage.getItem('taxi_app_script_url') || DEFAULT_WEBAPP_URL;
-      setIsApiReady(!!url && url.startsWith('https://'));
+      setIsApiReady(!!url && isValidWebappUrl(url));
     });
   }, []);
 
@@ -141,7 +144,7 @@ export const DriverLogin: React.FC<{ onLogin?: () => void }> = ({ onLogin }) => 
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4 font-heebo">
+    <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4 font-sans">
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl border border-slate-200 relative">
         <Link to="/" className="absolute top-6 left-6 text-gray-400 hover:text-slate-900 transition">
           <ArrowRight />

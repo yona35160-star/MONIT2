@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAdmin, testConnection } from '../api/adminApi';
+import { isValidWebappUrl } from '../utils/apiUtils';
 import { Lock, Mail, Loader2, AlertCircle, ArrowRight, Settings, Zap, CheckCircle, XCircle } from 'lucide-react';
 import { ShakeInput } from '../components/ShakeInput';
 import { WhatsAppConnect } from '../components/WhatsAppConnect';
@@ -42,9 +43,9 @@ export const Login: React.FC = () => {
 
   const handleTestConnection = async () => {
     const trimmedUrl = scriptUrl.trim();
-    if (!trimmedUrl || !trimmedUrl.startsWith('https://')) {
+    if (!isValidWebappUrl(trimmedUrl)) {
       setTestStatus('failure');
-      setTestMessage('יש להזין כתובת תקינה המתחילה ב-https://');
+      setTestMessage('יש להזין כתובת תקינה (https:// או http://localhost:4000)');
       return;
     }
     
@@ -72,8 +73,8 @@ export const Login: React.FC = () => {
     setError('');
 
     const trimmedUrl = scriptUrl.trim();
-    if (!trimmedUrl || !trimmedUrl.startsWith('https://')) {
-      setError('⚙️ יש להגדיר כתובת שרת תקנית (הדבק את Google Script URL בשדה למעלה ולחץ Test).');
+    if (!isValidWebappUrl(trimmedUrl)) {
+      setError('⚙️ יש להגדיר כתובת שרת תקנית (הדבק http://localhost:4000 או Google Script URL ולחץ Test).');
       setIsLoading(false);
       setShowUrlInput(true);
       return;
@@ -144,7 +145,7 @@ export const Login: React.FC = () => {
               <input
                 type="url"
                 className="flex-1 p-4 bg-[#0B0F14] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all font-mono"
-                placeholder="הדביקו URL חדש מ-Deploy (ראה START.md)"
+                placeholder="http://localhost:4000 או URL מ-Deploy"
                 dir="ltr"
                 value={scriptUrl}
                 onChange={(e) => {

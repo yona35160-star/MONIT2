@@ -1,0 +1,20 @@
+{
+  "name": "taxipro-api",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TAXIPRO / MONIT2 Express + Mongo API (GAS-compatible WebApp actions)",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0"
+  }
+}

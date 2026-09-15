@@ -20,9 +20,11 @@
 - [ ] QA: smoke ׳׳׳ ׳¢׳ `.env` ׳”׳—׳“׳© ׳¢׳ ׳׳¡׳׳•׳ ׳”׳–׳׳ ׳”ג†’׳©׳™׳•׳ג†’׳׳¢׳§׳‘ + ׳”׳•׳“׳¢׳× ׳‘׳•׳˜
 - [ ] PM: Ready ׳-noma
 
-## Wave Fresh Start
-- [x] תיעוד: START.md + GUIDE (GAS חדש, צעדים ל-noma)
-- [ ] עיצוב: Design System חדש לגמרי (ops + ride)
-- [ ] מתכנת: שילוב DS
-- [ ] DevOps: .env.example נקי
-- [ ] QA: smoke אחרי מסירות
+## Wave Mongo — Express API (Done)
+- [x] מתכנת: `server/` Express + Mongo, PORT 4000, חוזה `sendToBackend`
+- [x] `.env.example`: `VITE_WEBAPP_URL=http://localhost:4000` · `server/.env.example` בלי סודות חיים
+- [x] סקריפטים: `npm run dev:api` / `npm run api` · `START-MONGO.bat` · `START-API.bat`
+- [x] QA-11b: WhatsApp/ops מצביע ל-`SETUP-BRIDGE.bat`
+- [x] QA-14: `body` + `font-sans` Heebo-first
+- [ ] QA: smoke Login/orders מול Mongo מקומי
+

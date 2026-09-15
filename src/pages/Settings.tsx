@@ -41,7 +41,7 @@ export const Settings: React.FC = () => {
       // Initialize API URL from settings on load
       const responseData = formattedData;
       const scriptsUrl = responseData['SCRIPTS_URL'] || responseData['SCRIPTS_GAS_URL'] || responseData['WEBAPP_URL'];
-      if (scriptsUrl && scriptsUrl.startsWith('https://')) {
+      if (scriptsUrl) {
         await import('../api/api').then(({ initializeApiUrl }) => {
           initializeApiUrl(scriptsUrl);
         });
@@ -101,7 +101,7 @@ export const Settings: React.FC = () => {
     if (res.ok) {
       // Update API URL from settings if SCRIPTS_URL or SCRIPTS_GAS_URL is provided
       const scriptsUrl = settings['SCRIPTS_URL'] || settings['SCRIPTS_GAS_URL'] || settings['WEBAPP_URL'];
-      if (scriptsUrl && scriptsUrl.startsWith('https://')) {
+      if (scriptsUrl) {
         await import('../api/api').then(({ initializeApiUrl }) => {
           initializeApiUrl(scriptsUrl);
         });
@@ -193,9 +193,9 @@ export const Settings: React.FC = () => {
             <div className="text-sm">
               <p className="font-bold text-blue-900 mb-1">⚙️ הגדרת Script URL</p>
               <p className="text-blue-800 text-xs">
-                אם קיבלת שגיאה "כתובת השרת לא הוגדרה", הוסף את ה-Google Apps Script URL כ-<code className="bg-blue-100 px-1 rounded">SCRIPTS_URL</code> או <code className="bg-blue-100 px-1 rounded">SCRIPTS_GAS_URL</code> בהגדרות למטה ועדכנו את השרת.
+                אם קיבלת שגיאה "כתובת השרת לא הוגדרה", הגדירו <code className="bg-blue-100 px-1 rounded">VITE_WEBAPP_URL=http://localhost:4000</code> (Mongo API) או הדביקו GAS URL ב-Login.
                 <br />
-                דוגמה: <code className="bg-blue-100 px-1.5 py-0.5 text-xs font-mono">https://script.google.com/macros/s/YOUR_ID/exec</code>
+                דוגמה: <code className="bg-blue-100 px-1.5 py-0.5 text-xs font-mono">http://localhost:4000</code>
               </p>
             </div>
           </div>

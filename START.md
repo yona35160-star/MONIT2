@@ -1,7 +1,8 @@
 # START — התחלה מחדש (Fresh Start) ל-noma
 
-מדריך ממוספר להרמת **TAXIPRO / MONIT2** על תשתית חדשה לגמרי.
+מדריך ממוספר להרמת **TAXIPRO / MONIT2** על תשתית חדשה.
 2 מסכים בלבד: מרכז שליטה + אפליקציית נסיעה.
+**Wave Mongo:** מקור האמת הוא Express + Mongo ב-`http://localhost:4000` (לא GAS). Firebase נשאר זמנית ל-realtime בלבד.
 
 > אל תדחפו `.env` / מפתחות ל-GitHub. רק תבניות `.env.example`.
 
@@ -11,16 +12,16 @@
 
 | # | שלב | תוצאה |
 |---|-----|--------|
-| 1 | Firebase חדש | ערכי `VITE_FIREBASE_*` |
-| 2 | Google Sheet + GAS חדש | URL של Web App ל-Login ול-`.env` |
-| 3 | מילוי `.env` | קובץ מקומי בלבד |
-| 4 | `SETUP.bat` | 2 מסכים רצים |
+| 1 | Firebase חדש | ערכי `VITE_FIREBASE_*` (realtime בלבד) |
+| 2 | MongoDB מקומי + API | `START-MONGO.bat` ואז `npm run dev:api` על פורט 4000 |
+| 3 | מילוי `.env` | `VITE_WEBAPP_URL=http://localhost:4000` |
+| 4 | `SETUP.bat` | 2 מסכים + API |
 | 5 | `SETUP-BRIDGE.bat` + QR + קבוצה | WhatsApp חדש |
 | 6 | בדיקת הזמנה | הזמנה → שיוך → מעקב |
 
 ---
 
-## 1) Firebase חדש
+## 1) Firebase חדש (realtime בלבד)
 
 1. היכנסו ל-[Firebase Console](https://console.firebase.google.com/) → **Add project**.
 2. הוסיפו **Realtime Database** (למשל `europe-west1`).
@@ -30,37 +31,46 @@
 
 ---
 
-## 2) Google Sheet + Apps Script חדש (GAS)
+## 2) MongoDB + Express API (מקור האמת)
 
-### 2.1 יצירת Sheet
-1. [Google Sheets](https://sheets.google.com/) → גיליון ריק חדש.
-2. שם מומלץ: `TAXIPRO-MONIT2-Fresh`.
+GAS/Sheets יוצאים בהדרגה. הפרונט ממשיך לשלוח `POST { action, payload, authToken }` — עכשיו ל-`http://localhost:4000`.
 
-### 2.2 העלאת הקוד מ-`GS/`
-1. בגיליון: **Extensions → Apps Script**.
-2. מחקו קבצי ברירת מחדל אם קיימים.
-3. העתיקו את כל הקבצים מתיקיית `GS/` שבפרויקט (כולל `SystemSetup.gs`, `Config.gs`, `Order.gs` וכו') לפרויקט ה-Apps Script.
-   - ידנית קובץ-קובץ, או עם `clasp` מול `GS/.clasp.json` אחרי התחברות.
-4. שמרו (Ctrl+S).
+### 2.1 הפעלת Mongo
+Windows:
+```cmd
+START-MONGO.bat
+```
+או שירות: `net start MongoDB` · או `mongod --dbpath data\mongo` · או Docker:
+```cmd
+docker run -d --name taxipro-mongo -p 27017:27017 mongo:7
+```
 
-### 2.3 הרצת Setup ראשונה
-1. בחרו את הפונקציה **`setupSystemFull`** (`SystemSetup.gs`).
-2. **Run** → אשרו הרשאות לחשבון Google.
-3. בדקו בלוג שאין כשלים קריטיים.
+URI ברירת מחדל (ב-`server/.env.example`, בלי סודות חיים):
+`MONGODB_URI=mongodb://127.0.0.1:27017/taxipro`
 
-### 2.4 Deploy כ-Web App
-1. **Deploy → New deployment**.
-2. סוג: **Web app**.
-3. Execute as: **Me**.
-4. Who has access: **Anyone**.
-5. **Deploy** → העתיקו את ה-URL שנראה כמו:
-   `https://script.google.com/macros/s/…/exec`
+### 2.2 הפעלת ה-API
+```cmd
+START-API.bat
+```
+או:
+```bash
+cd server
+cp .env.example .env   # אם חסר
+npm install
+npm run dev            # = node --watch src/index.js
+```
+מהשורש: `npm run dev:api` / `npm run api`.
 
-### 2.5 חיבור ל-Login ול-.env
-1. מרכז שליטה → Login → גלגל השיניים.
-2. הדביקו את ה-URL בשדה **כתובת שרת** (השדה מתחיל **ריק** — בלי ברירת מחדל חיה).
-3. **Test** עד להצלחה, ואז התחברות עם פרטי האדמין מ-`Config.gs` / ה-Setup.
-4. שימו את אותו URL ב-`.env` כ-`VITE_WEBAPP_URL`.
+Health: http://localhost:4000/health
+
+אדמין מקומי (stub): `admin@taxi.co.il` / `123456`  
+OTP מקומי: `123456` (`DEV_OTP` ב-`server/.env`).
+
+### 2.3 חיבור ל-Login
+1. `.env` בשורש: `VITE_WEBAPP_URL=http://localhost:4000`
+2. מרכז שליטה → Login → גלגל השיניים → אותה כתובת → **Test**.
+
+GAS נשאר ב-`GS/` כ-fallback / ארכיון — לא חובה ל-Ready מקומי.
 
 ---
 
@@ -69,24 +79,27 @@
 1. `SETUP.bat` מעתיק מ-`.env.example` אם חסר, או:
    ```cmd
    copy .env.example .env
+   copy server\.env.example server\.env
    ```
-2. מלאו לפחות: `VITE_WEBAPP_URL` + כל `VITE_FIREBASE_*`.
+2. מלאו לפחות: `VITE_WEBAPP_URL=http://localhost:4000` + `VITE_FIREBASE_*` למעקב חי.
 3. אופציונלי: Gemini / Telegram / Bridge.
-4. `bridge/.env`: `BRIDGE_API_KEY`, `GAS_SCRIPT_URL` (אותו URL), Mongo אם בשימוש.
+4. `bridge/.env`: `BRIDGE_API_KEY`, Mongo אם בשימוש לסשן WhatsApp.
 5. **אל תעלו** `.env` לריפו.
 
 ---
 
 ## 4) הפעלת 2 המסכים
 
-לחיצה כפולה על `SETUP.bat` ב-`C:\Users\Pc\MONIT2-sync`:
+לחיצה כפולה על `SETUP.bat`:
 
+- Mongo API: http://localhost:4000
 - מרכז שליטה: http://localhost:5275/admin.html
 - אפליקציית נסיעה: http://localhost:5273/app.html
 
-הרצה חוזרת: `START-ALL.bat`.
+הרצה חוזרת: `START-ALL.bat` (מסכים) + `START-API.bat` (אם ה-API לא רץ) + `START-MONGO.bat` (אם Mongo לא רץ).
 
 ```bash
+npm run dev:api
 npm run dev:ops
 npm run dev:app
 ```
@@ -118,9 +131,9 @@ npm run dev:app
 
 | תסמין | פעולה |
 |--------|--------|
-| שדה כתובת שרת ריק | תקין ב-Fresh Start — הדביקו URL מ-Deploy |
-| Test נכשל | Deploy מחדש · הרשאות · `setupSystemFull` |
-| Firebase לא מתחבר | בדקו `VITE_FIREBASE_*` ו-DB פעיל |
+| API לא עולה | `START-MONGO.bat` ואז `npm run dev:api` |
+| Test נכשל ב-Login | ודאו `http://localhost:4000/health` ו-`VITE_WEBAPP_URL` |
+| Firebase לא מתחבר | בדקו `VITE_FIREBASE_*` ו-DB פעיל (realtime בלבד) |
 | Bridge לא מגיב | `SETUP-BRIDGE.bat` · QR · מפתחות |
 | URL ישן בדפדפן | Local Storage → מחקו `taxi_app_script_url` |
 
@@ -130,4 +143,4 @@ npm run dev:app
 
 - [`GUIDE.md`](./GUIDE.md) · [`README.md`](./README.md) · [`DEPLOY.md`](./DEPLOY.md) · [`MICROCOPY.md`](./MICROCOPY.md)
 
-*TAXIPRO / MONIT2 — Fresh Start*
+*TAXIPRO / MONIT2 — Wave Mongo · Fresh Start*

@@ -17,6 +17,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "bridge": "node bridge/multi-bot.js",
+    "api": "npm --prefix server run start",
+    "dev:api": "npm --prefix server run dev",
     "dev:ops": "vite --mode admin --open /admin.html",
     "dev:app": "vite --mode app --open /app.html",
     "build:ops": "vite build --mode admin",
