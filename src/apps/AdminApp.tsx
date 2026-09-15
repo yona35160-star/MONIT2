@@ -71,6 +71,8 @@ export const AdminApp: React.FC = () => {
                         {/* Login page navigates to /admin after success */}
                         <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/station-order" element={<StationOrder />} />
+                        <Route path="/station" element={<Navigate to="/station-order" replace />} />
+                        <Route path="/dispatch" element={<Navigate to="/station-order" replace />} />
                         <Route element={
                             <ErrorBoundary key="admin-boundary">
                                 <ProtectedRoutes />
