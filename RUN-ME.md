@@ -94,3 +94,15 @@ Invoke-RestMethod http://localhost:4000/ -Method Post -Body $body -ContentType '
 ## אחרי שהכל ירוק אצלך
 
 נתיב קריטי: Login → לוח בקרה → הזמנה → שיוך נהג → מעקב → WhatsApp.
+
+---
+
+## WhatsApp אחרי סריקת QR
+
+1. ודא: `http://localhost:3000/health` → `dispatcher.connected: true`
+2. **הודעות לקבוצה** דורשות מזהה קבוצה:
+   - בקבוצת הוואטסאפ עם הבוט, כתוב: `jid`
+   - הבוט ישיב `Group JID` (נראה כמו `1203...@g.us`)
+   - הדבק ב-`.env` בשורש: `VITE_WHATSAPP_GROUP_JID=...`
+   - הפעל מחדש את `npm run dev:ops` (Vite קורא env בהפעלה)
+3. בלי השורה הזו הזמנה תישמר ב-Mongo, אבל **לא** תשלח לקבוצה. הודעה ללקוח לפי מספר טלפון עדיין יכולה להישלח.

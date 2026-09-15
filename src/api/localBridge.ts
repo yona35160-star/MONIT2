@@ -1,8 +1,10 @@
-const ENV_URL =
+﻿const ENV_URL =
   (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_WHATSAPP_BRIDGE_URL) || '';
 
 const CANDIDATES = [
   ENV_URL,
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
   'http://localhost:3012',
   'http://127.0.0.1:3012',
 ]
