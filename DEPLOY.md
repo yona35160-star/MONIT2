@@ -1,60 +1,33 @@
-﻿# DEPLOY — TAXIPRO / MONIT2
+﻿# DEPLOY — TAXIPRO / MONIT2 (Wave Unify)
 
-Frontend על **Vercel** (או Netlify). WhatsApp Bridge על **Render** בלבד (לא Vercel).
+**2 frontends only** + WhatsApp Bridge on Render.
 
-## A) Frontend — 3 פרויקטי Vercel (אותו ריפו)
+## A) Frontend — 2 Vercel projects (same repo)
 
-| פרויקט Vercel | Root Directory | Build Command | Output | Framework |
-|---------------|----------------|---------------|--------|-----------|
-| taxipro-passenger | `.` | `npm run build:passenger` | `dist` | Vite |
-| taxipro-driver | `.` | `npm run build:driver` | `dist` | Vite |
-| taxipro-admin | `.` | `npm run build:admin` | `dist` | Vite |
+| Vercel project | Build Command | Output | Open |
+|----------------|---------------|--------|------|
+| taxipro-ops | `npm run build:ops` | `dist` | `/admin.html` (Ops Center) |
+| taxipro-app | `npm run build:app` | `dist` | `/app.html` (Ride App + role picker) |
 
-### Environment Variables (בכל 3 הפרויקטים)
-העתיקו מ-`.env.example` ללוח Vercel (Production + Preview):
-- כל `VITE_FIREBASE_*`
-- `VITE_WEBAPP_URL`
-- `VITE_GEMINI_API_KEY` (אופציונלי; בעיקר Admin)
-- `VITE_TELEGRAM_*` (אופציונלי)
-- `VITE_WHATSAPP_BRIDGE_URL` / `VITE_BRIDGE_API_KEY` / `VITE_WHATSAPP_RENDER_URL`
-- אחרי deploy ראשון: `VITE_SITE_URL`, `VITE_DRIVER_SITE_URL`, `VITE_ADMIN_SITE_URL` → Redeploy
+Env: copy from `.env.example` into each project (Production + Preview). After first deploy set:
+- `VITE_OPS_SITE_URL`
+- `VITE_APP_SITE_URL`
+then Redeploy.
 
-### SPA rewrites
-בכל פרויקט Vercel → Settings → Rewrites: `/(.*) → /index.html` (או קובץ `vercel.json` per-project אם תרצו).  
-הערה: כל mode בונה entry HTML שונה (`passenger.html` / `driver.html` / `admin.html`) — ודאו שה-Output כולל את קובץ ה-HTML הנכון מ-Vite.
+SPA rewrite: `/(.*) → /index.html` (see `vercel.json`).
 
-### חלופה
-קיים `netlify.toml` — אפשר Netlify באותה חלוקה ל-3 אתרים.
+## B) Bridge — Render
 
-## B) WhatsApp Bridge — Render
+Use `bridge/render.yaml`. Secrets only in Dashboard. Health: `GET /health`.
 
-קובץ מוכן: `bridge/render.yaml`
+## C) Local one-click
 
-1. Render → New → Blueprint → בחרו את הריפו, root `bridge/` או ייבוא ה-yaml
-2. מלאו secrets ב-Dashboard (לא בריפו):
-   - `BRIDGE_API_KEY`
-   - `GAS_SCRIPT_URL`
-   - `MONGODB_URI` (מומלץ ל-sessions)
-   - `CORS_ORIGINS` (דומייני Vercel/GAS)
-   - `RENDER_URL` (URL של השירות עצמו ל-self-ping)
-3. Health: `GET /health`
-4. Free tier נרדם — cron `keep-alive-ping` ב-yaml + UptimeRobot מומלץ
+```bat
+SETUP.bat
+```
 
-## C) CI קיים
+Does: `npm i` (root+bridge), copies env templates if missing, starts Ops + Ride App, optional bridge.
 
-`.github/workflows/deploy.yml`:
-- `npm ci` + `npm run build` על push
-- GAS via clasp (דורש `CLASP_TOKEN`)
-- Firebase Hosting (אופציונלי, דורש `FIREBASE_SERVICE_ACCOUNT`)
+## D) Security
 
-מומלץ להוסיף שלב `npm run typecheck` לפני build (Wave 1: typecheck מקומי עבר).
-
-## D) אבטחה
-- לא לדחוף `.env` / `.env.local`
-- רק `.env.example` ו-`bridge/.env.example` בריפו
-- מחכים לחיבור GitHub מלא לפני דחיפה גדולה
-
-## E) בדיקות מקומיות (בוצעו Wave 1)
-- `npm install` (root) ✅
-- `cd bridge && npm install` ✅
-- `npm run typecheck` ✅
+Never commit `.env` / `bridge/.env`. Templates only: `.env.example`, `bridge/.env.example`.

@@ -15,7 +15,12 @@
     "build:admin": "vite build --mode admin",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "bridge": "node bridge/multi-bot.js"
+    "bridge": "node bridge/multi-bot.js",
+    "dev:ops": "vite --mode admin --open /admin.html",
+    "dev:app": "vite --mode app --open /app.html",
+    "build:ops": "vite build --mode admin",
+    "build:app": "vite build --mode app",
+    "build:unify": "npm run build:ops && npm run build:app"
   },
   "dependencies": {
     "@capacitor-community/background-geolocation": "^1.2.26",

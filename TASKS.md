@@ -1,21 +1,21 @@
-# TASKS — Wave Unify + Fresh Infra
+﻿# TASKS ג€” Wave Unify + Fresh Infra
 
-## Wave U0 — החלטת מוצר (Done)
-- [x] PM: 2 מסכים — מרכז שליטה + אפליקציית נסיעה
-- [x] PM: DB חדש + WhatsApp חדש + BAT אחד
+## Wave U0 ג€” ׳”׳—׳׳˜׳× ׳׳•׳¦׳¨ (Done)
+- [x] PM: 2 ׳׳¡׳›׳™׳ ג€” ׳׳¨׳›׳– ׳©׳׳™׳˜׳” + ׳׳₪׳׳™׳§׳¦׳™׳™׳× ׳ ׳¡׳™׳¢׳”
+- [x] PM: DB ׳—׳“׳© + WhatsApp ׳—׳“׳© + BAT ׳׳—׳“
 
-## Wave U1 — איחוד מסכים
-- [ ] עיצוב: IA + Design System ל-2 אפליקציות (role switch בנוסע/נהג; תחנה בתוך אדמין)
-- [ ] מתכנת: entry אחד ל-ops (`admin.html`), entry אחד ל-`app.html` (passenger+driver), ניתוב לפי תפקיד; להסיר/להפנות 4 הכניסות הישנות
-- [ ] תיעוד: README/GUIDE/MICROCOPY ל-2 מסכים בלבד
-- [ ] QA: smoke על 2 הכניסות בלבד
+## Wave U1 ג€” ׳׳™׳—׳•׳“ ׳׳¡׳›׳™׳
+- [ ] ׳¢׳™׳¦׳•׳‘: IA + Design System ׳-2 ׳׳₪׳׳™׳§׳¦׳™׳•׳× (role switch ׳‘׳ ׳•׳¡׳¢/׳ ׳”׳’; ׳×׳—׳ ׳” ׳‘׳×׳•׳ ׳׳“׳׳™׳)
+- [ ] ׳׳×׳›׳ ׳×: entry ׳׳—׳“ ׳-ops (`admin.html`), entry ׳׳—׳“ ׳-`app.html` (passenger+driver), ׳ ׳™׳×׳•׳‘ ׳׳₪׳™ ׳×׳₪׳§׳™׳“; ׳׳”׳¡׳™׳¨/׳׳”׳₪׳ ׳•׳× 4 ׳”׳›׳ ׳™׳¡׳•׳× ׳”׳™׳©׳ ׳•׳×
+- [x] ׳×׳™׳¢׳•׳“: README/GUIDE/MICROCOPY ׳-2 ׳׳¡׳›׳™׳ ׳‘׳׳‘׳“
+- [ ] QA: smoke ׳¢׳ 2 ׳”׳›׳ ׳™׳¡׳•׳× ׳‘׳׳‘׳“
 
-## Wave U2 — תשתית חדשה
-- [ ] DevOps: תבניות `.env.example` לפרויקט Firebase/GAS חדש; סקריפט/מדריך יצירת Sheet+deploy GAS
-- [ ] DevOps + מתכנת: Bridge — session חדש, בוט מנהל, קונפיג קבוצה חדשה
-- [ ] DevOps: `SETUP.bat` בלחיצה אחת (npm i, copy env, optional bridge i, start 2 apps)
-- [ ] noma: לסרוק QR לוואטסאפ החדש + ליצור קבוצה ולמסור IDs (צעד ידני יחיד)
+## Wave U2 ג€” ׳×׳©׳×׳™׳× ׳—׳“׳©׳”
+- [x] DevOps: ׳×׳‘׳ ׳™׳•׳× `.env.example` ׳׳₪׳¨׳•׳™׳§׳˜ Firebase/GAS ׳—׳“׳©; ׳¡׳§׳¨׳™׳₪׳˜/׳׳“׳¨׳™׳ ׳™׳¦׳™׳¨׳× Sheet+deploy GAS
+- [ ] DevOps + ׳׳×׳›׳ ׳×: Bridge ג€” session ׳—׳“׳©, ׳‘׳•׳˜ ׳׳ ׳”׳, ׳§׳•׳ ׳₪׳™׳’ ׳§׳‘׳•׳¦׳” ׳—׳“׳©׳”
+- [x] DevOps: `SETUP.bat` ׳‘׳׳—׳™׳¦׳” ׳׳—׳× (npm i, copy env, optional bridge i, start 2 apps)
+- [ ] noma: ׳׳¡׳¨׳•׳§ QR ׳׳•׳•׳׳˜׳¡׳׳₪ ׳”׳—׳“׳© + ׳׳™׳¦׳•׳¨ ׳§׳‘׳•׳¦׳” ׳•׳׳׳¡׳•׳¨ IDs (׳¦׳¢׳“ ׳™׳“׳ ׳™ ׳™׳—׳™׳“)
 
-## Wave U3 — Ready מקומי
-- [ ] QA: smoke מלא עם `.env` החדש על מסלול הזמנה→שיוך→מעקב + הודעת בוט
-- [ ] PM: Ready ל-noma
+## Wave U3 ג€” Ready ׳׳§׳•׳׳™
+- [ ] QA: smoke ׳׳׳ ׳¢׳ `.env` ׳”׳—׳“׳© ׳¢׳ ׳׳¡׳׳•׳ ׳”׳–׳׳ ׳”ג†’׳©׳™׳•׳ג†’׳׳¢׳§׳‘ + ׳”׳•׳“׳¢׳× ׳‘׳•׳˜
+- [ ] PM: Ready ׳-noma

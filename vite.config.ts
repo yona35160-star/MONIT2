@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+﻿import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
     passenger: 'passenger.html',
     driver: 'driver.html',
     admin: 'admin.html',
+    app: 'app.html',
   };
 
   const htmlFile = modeToHtml[mode] || 'index.html';
@@ -18,6 +19,7 @@ export default defineConfig(({ mode }) => {
     passenger: 5273,
     driver: 5274,
     admin: 5275,
+    app: 5273,
   };
 
   return {
@@ -136,3 +138,4 @@ export default defineConfig(({ mode }) => {
     },
   };
 });
+
