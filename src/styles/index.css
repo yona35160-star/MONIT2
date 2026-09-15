@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* ============================================
-   PIXEL DESIGN SYSTEM - TAXI EXPRESS
-   Premium, Dark-First, Responsive, RTL-Ready
+   TAXIPRO DS v2.1 — Dual theme
+   Dark≈GitHub · Light≈Amazon · Brand amber #F5A524 · Heebo
    ============================================ */
 
 /* Base Styles */
@@ -18,82 +18,110 @@
     --color-surface-soft: 248 250 252;
     --radius-card: 1.5rem;
     --radius-button: 0.875rem;
+    /* App theme tokens — Dark default (GitHub-like) */
+    --tp-bg: #0d1117;
+    --tp-bg-subtle: #161b22;
+    --tp-bg-elevated: #21262d;
+    --tp-border: #30363d;
+    --tp-text: #e6edf3;
+    --tp-text-secondary: #9198a1;
+    --tp-text-muted: #6e7681;
+    --tp-link: #2f81f7;
+    --tp-cta: #F5A524;
+    --tp-cta-text: #0d1117;
+    --tp-shadow: 0 8px 24px rgba(1,4,9,0.5);
+
 
     /* Pixel Premium Palette */
     --brand-primary: #F5A524;
     --brand-accent: #F59E0B;
     --brand-surface-light: #FFFFFF;
-    --brand-surface-dark: #0F172A;
-    --brand-panel-dark: #1E293B;
-    --brand-border-light: #E2E8F0;
-    --brand-border-dark: #334155;
+    --brand-surface-dark: #0d1117;
+    --brand-panel-dark: #161b22;
+    --brand-border-light: #D5D9D9;
+    --brand-border-dark: #30363d;
 
     /* Semantic Colors */
-    --success: #10B981;
+    --success: #3fb950;
     --warning: #F59E0B;
     --danger: #EF4444;
-    --info: #3B82F6;
+    --info: #2f81f7;
 
     /* Role Based Themes */
-    --theme-customer-bg: #F8FAFC;
-    --theme-customer-accent: #F5A623;
-    --theme-driver-bg: #0F172A;
-    --theme-driver-accent: #FACC15;
-    --theme-admin-bg: #0F172A;
-    --theme-admin-accent: #6366F1;
+    --theme-customer-bg: #EAEDED;
+    --theme-customer-accent: #F5A524;
+    --theme-driver-bg: #0d1117;
+    --theme-driver-accent: #F5A524;
+    --theme-admin-bg: #0d1117;
+    --theme-admin-accent: #F5A524;
 
     /* ============================================
        ADMIN THEME TOKENS  —  Default = Dark
        Toggled via: html.admin-light class
        ============================================ */
-    --admin-bg:             #0B0F14;
-    --admin-sidebar:        #0B0F14;
-    --admin-sidebar-border: #2A3441;
-    --admin-panel:          #141A22;
-    --admin-panel-soft:     #1C2430;
-    --admin-card:           #141A22;
-    --admin-card-border:    #2A3441;
-    --admin-text-primary:   #F1F5F9;
-    --admin-text-secondary: #94A3B8;
-    --admin-text-muted:     #64748B;
-    --admin-input-bg:       #0B0F14;
-    --admin-input-border:   #2A3441;
-    --admin-input-text:     #F1F5F9;
+    --admin-bg:             #0d1117;
+    --admin-sidebar:        #010409;
+    --admin-sidebar-border: #30363d;
+    --admin-panel:          #161b22;
+    --admin-panel-soft:     #21262d;
+    --admin-card:           #161b22;
+    --admin-card-border:    #30363d;
+    --admin-text-primary:   #e6edf3;
+    --admin-text-secondary: #9198a1;
+    --admin-text-muted:     #6e7681;
+    --admin-input-bg:       #0d1117;
+    --admin-input-border:   #30363d;
+    --admin-input-text:     #e6edf3;
     --admin-hover:          rgba(255,255,255,0.05);
-    --admin-active-bg:      rgba(251,191,36,0.15);
+    --admin-active-bg:      rgba(245,165,36,0.14);
     --admin-active-text:    #F5A524;
-    --admin-active-border:  rgba(251,191,36,0.3);
-    --admin-divider:        #1C2430;
+    --admin-active-border:  rgba(245,165,36,0.35);
+    --admin-divider:        #21262d;
     --admin-shadow:         0 4px 24px rgba(0,0,0,0.4);
     --admin-shadow-lg:      0 12px 48px rgba(0,0,0,0.5);
-    --admin-mobile-header:  rgba(11,17,32,0.95);
+    --admin-mobile-header:  rgba(1,4,9,0.92);
   }
 
   /* ── Admin Light Mode ──────────────────────
      Applied by adding class "admin-light" to <html>
      All colors flip to high-contrast light equivalents
      ─────────────────────────────────────────── */
-  html.admin-light {
-    --admin-bg:             #F1F5F9;
+  html.admin-light,
+  html.theme-light {
+    /* Amazon-day light */
+    --tp-bg: #EAEDED;
+    --tp-bg-subtle: #FFFFFF;
+    --tp-bg-elevated: #FFFFFF;
+    --tp-border: #D5D9D9;
+    --tp-text: #0F1111;
+    --tp-text-secondary: #565959;
+    --tp-text-muted: #888C8C;
+    --tp-link: #007185;
+    --tp-cta: #F5A524;
+    --tp-cta-text: #0F1111;
+    --tp-cta-amazon: #FFA41C;
+    --tp-shadow: 0 2px 5px rgba(15,17,17,0.08);
+
+    --admin-bg:             #EAEDED;
     --admin-sidebar:        #FFFFFF;
-    --admin-sidebar-border: #E2E8F0;
+    --admin-sidebar-border: #D5D9D9;
     --admin-panel:          #FFFFFF;
-    --admin-panel-soft:     #F8FAFC;
+    --admin-panel-soft:     #F7F8F8;
     --admin-card:           #FFFFFF;
-    --admin-card-border:    #E2E8F0;
-    --admin-text-primary:   #0F172A;
-    --admin-text-secondary: #475569;
-    --admin-text-muted:     #94A3B8;
-    --admin-input-bg:       #F8FAFC;
-    --admin-input-border:   #CBD5E1;
-    --admin-input-text:     #0F172A;
+    --admin-card-border:    #D5D9D9;
+    --admin-text-primary:   #0F1111;
+    --admin-text-secondary: #565959;
+    --admin-text-muted:     #888C8C;
+    --admin-input-bg:       #FFFFFF;
+    --admin-input-border:   #888C8C;
+    --admin-input-text:     #0F1111;
     --admin-hover:          rgba(0,0,0,0.04);
-    --admin-active-bg:      rgba(217,119,6,0.10);
-    --admin-active-text:    #92400E;
-    --admin-active-border:  rgba(217,119,6,0.35);
-    --admin-divider:        #F1F5F9;
-    --admin-shadow:         0 2px 12px rgba(0,0,0,0.07);
-    --admin-shadow-lg:      0 8px 32px rgba(0,0,0,0.10);
+    --admin-active-bg:      rgba(255,164,28,0.16);
+    --admin-active-text:    #B12704;
+    --admin-active-border:  rgba(255,164,28,0.45);
+    --admin-divider:        #E3E6E6;
+    --admin-shadow:         0 2px 5px rgba(15,17,17,0.08);
+    --admin-shadow-lg:      0 4px 12px rgba(15,17,17,0.12);
     --admin-mobile-header:  rgba(255,255,255,0.97);
   }
 
@@ -128,7 +156,7 @@
 
   body {
     font-family: 'Heebo', 'Rubik', 'Assistant', system-ui, sans-serif;
-    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    background: var(--tp-bg, #0d1117);
     background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
@@ -228,7 +256,7 @@
   }
 
   .bg-driver {
-    background: radial-gradient(circle at top right, #1e293b, #0f172a);
+    background: radial-gradient(circle at top right, #21262d, #0d1117);
     @apply min-h-screen text-slate-100 selection:bg-primary-900/50;
   }
 

@@ -1,67 +1,158 @@
-﻿{
+{
   "name": "TAXIPRO / MONIT2 Design System",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "direction": "rtl",
-  "apps": ["ops", "ride"],
+  "apps": [
+    "ops",
+    "ride"
+  ],
   "theme": {
-    "mood": "premium taxi night",
-    "notes": "Full visual refresh Wave Fresh Start — amber taxi accent on deep charcoal; Heebo-first Hebrew typography."
+    "default": "dark",
+    "toggleClass": "theme-light",
+    "compatClass": "admin-light",
+    "storageKey": "taxipro_theme",
+    "mood": "brand amber on GitHub-dark / Amazon-light",
+    "notes": "v2.1 expands v2 brand (#F5A524 + Heebo) into dual themes: Dark≈GitHub canvas, Light≈Amazon day. Brand CTA stays amber in both."
   },
   "typography": {
     "fontFamily": {
-      "sans": ["Heebo", "Rubik", "Assistant", "system-ui", "sans-serif"],
-      "display": ["Heebo", "Rubik", "sans-serif"]
+      "sans": [
+        "Heebo",
+        "Rubik",
+        "Assistant",
+        "system-ui",
+        "sans-serif"
+      ],
+      "display": [
+        "Heebo",
+        "Rubik",
+        "sans-serif"
+      ]
     },
-    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap",
-    "scale": {
-      "xs": "0.75rem",
-      "sm": "0.875rem",
-      "base": "1rem",
-      "lg": "1.125rem",
-      "xl": "1.25rem",
-      "2xl": "1.5rem",
-      "3xl": "1.875rem",
-      "4xl": "2.25rem"
-    },
-    "weights": { "regular": 400, "medium": 500, "semibold": 600, "bold": 700, "extrabold": 800 }
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap"
   },
-  "colors": {
-    "brand": {
-      "primary": { "hex": "#F5A524", "tailwind": "primary-500", "usage": "CTA, accents, taxi yellow-amber" },
-      "primaryDark": { "hex": "#D4890F", "tailwind": "primary-600" },
-      "primaryLight": { "hex": "#FFC857", "tailwind": "primary-300" },
-      "accent": { "hex": "#22D3EE", "tailwind": "accent-400", "usage": "live status, map pins" }
+  "brand": {
+    "primary": {
+      "hex": "#F5A524",
+      "tailwind": "primary-500",
+      "usage": "CTA both themes — taxi amber"
     },
-    "surface": {
-      "bg": { "hex": "#0B0F14", "tailwind": "surface-bg" },
-      "card": { "hex": "#141A22", "tailwind": "surface-card" },
-      "elevated": { "hex": "#1C2430", "tailwind": "surface-elevated" },
-      "border": { "hex": "#2A3441", "tailwind": "surface-border" }
+    "primaryDark": {
+      "hex": "#D4890F",
+      "tailwind": "primary-600"
     },
-    "text": {
-      "primary": { "hex": "#F3F4F6", "tailwind": "text-primary" },
-      "secondary": { "hex": "#9CA3AF", "tailwind": "text-secondary" },
-      "muted": { "hex": "#6B7280", "tailwind": "text-muted" }
+    "primaryLight": {
+      "hex": "#FFC857",
+      "tailwind": "primary-300"
     },
-    "semantic": {
-      "success": "#22C55E",
-      "warning": "#F59E0B",
-      "danger": "#EF4444",
-      "info": "#38BDF8"
+    "live": {
+      "hex": "#22D3EE",
+      "tailwind": "accent-400",
+      "usage": "live / map"
+    },
+    "success": {
+      "hex": "#3FB950",
+      "usage": "GitHub-like success in dark"
+    },
+    "amazonCta": {
+      "hex": "#FFA41C",
+      "usage": "optional warm Amazon hover in light"
     }
   },
-  "radius": { "sm": "0.5rem", "md": "0.875rem", "lg": "1.25rem", "xl": "1.5rem", "full": "9999px" },
-  "shadow": {
-    "card": "0 8px 30px rgba(0,0,0,0.35)",
-    "glow": "0 0 24px rgba(245,165,36,0.35)"
+  "themes": {
+    "dark": {
+      "inspiredBy": "GitHub dark",
+      "cssVars": {
+        "--tp-bg": "#0d1117",
+        "--tp-bg-subtle": "#161b22",
+        "--tp-bg-elevated": "#21262d",
+        "--tp-border": "#30363d",
+        "--tp-border-muted": "#21262d",
+        "--tp-text": "#e6edf3",
+        "--tp-text-secondary": "#9198a1",
+        "--tp-text-muted": "#6e7681",
+        "--tp-link": "#2f81f7",
+        "--tp-success": "#3fb950",
+        "--tp-danger": "#f85149",
+        "--tp-cta": "#F5A524",
+        "--tp-cta-text": "#0d1117",
+        "--tp-shadow": "0 8px 24px rgba(1,4,9,0.5)"
+      },
+      "adminMap": {
+        "--admin-bg": "#0d1117",
+        "--admin-sidebar": "#010409",
+        "--admin-sidebar-border": "#30363d",
+        "--admin-panel": "#161b22",
+        "--admin-panel-soft": "#21262d",
+        "--admin-card": "#161b22",
+        "--admin-card-border": "#30363d",
+        "--admin-text-primary": "#e6edf3",
+        "--admin-text-secondary": "#9198a1",
+        "--admin-text-muted": "#6e7681",
+        "--admin-input-bg": "#0d1117",
+        "--admin-input-border": "#30363d",
+        "--admin-input-text": "#e6edf3",
+        "--admin-active-bg": "rgba(245,165,36,0.14)",
+        "--admin-active-text": "#F5A524",
+        "--admin-active-border": "rgba(245,165,36,0.35)"
+      }
+    },
+    "light": {
+      "inspiredBy": "Amazon day",
+      "cssVars": {
+        "--tp-bg": "#EAEDED",
+        "--tp-bg-subtle": "#FFFFFF",
+        "--tp-bg-elevated": "#FFFFFF",
+        "--tp-border": "#D5D9D9",
+        "--tp-border-muted": "#E3E6E6",
+        "--tp-text": "#0F1111",
+        "--tp-text-secondary": "#565959",
+        "--tp-text-muted": "#888C8C",
+        "--tp-link": "#007185",
+        "--tp-success": "#067D62",
+        "--tp-danger": "#CC0C39",
+        "--tp-cta": "#F5A524",
+        "--tp-cta-text": "#0F1111",
+        "--tp-cta-amazon": "#FFA41C",
+        "--tp-shadow": "0 2px 5px rgba(15,17,17,0.08)"
+      },
+      "adminMap": {
+        "--admin-bg": "#EAEDED",
+        "--admin-sidebar": "#FFFFFF",
+        "--admin-sidebar-border": "#D5D9D9",
+        "--admin-panel": "#FFFFFF",
+        "--admin-panel-soft": "#F7F8F8",
+        "--admin-card": "#FFFFFF",
+        "--admin-card-border": "#D5D9D9",
+        "--admin-text-primary": "#0F1111",
+        "--admin-text-secondary": "#565959",
+        "--admin-text-muted": "#888C8C",
+        "--admin-input-bg": "#FFFFFF",
+        "--admin-input-border": "#888C8C",
+        "--admin-input-text": "#0F1111",
+        "--admin-active-bg": "rgba(255,164,28,0.16)",
+        "--admin-active-text": "#B12704",
+        "--admin-active-border": "rgba(255,164,28,0.45)"
+      }
+    }
   },
   "components": {
-    "Button": { "primary": "bg-primary-500 text-black font-semibold rounded-lg hover:bg-primary-600" },
-    "Card": { "base": "bg-surface-card border border-surface-border rounded-xl shadow-card" },
-    "Input": { "base": "bg-surface-elevated border border-surface-border rounded-lg text-text-primary" }
+    "Button": {
+      "primary": "bg-[var(--tp-cta)] text-[var(--tp-cta-text)] font-semibold rounded-lg hover:brightness-105",
+      "amazonLight": "bg-[#FFD814] hover:bg-[#F7CA00] text-[#0F1111] border border-[#FCD200] rounded-lg"
+    },
+    "Card": "bg-[var(--tp-bg-subtle)] border border-[var(--tp-border)] rounded-xl shadow-[var(--tp-shadow)]",
+    "ThemeToggle": "src/components/ThemeToggle.tsx — toggles theme-light + admin-light"
   },
   "ia": {
     "ops": "Control center = admin + station dispatch",
     "ride": "Single app with passenger/driver role picker"
-  }
+  },
+  "rules": [
+    "Brand CTA stays #F5A524 in both themes",
+    "Dark surfaces follow GitHub (#0d1117/#161b22/#30363d)",
+    "Light surfaces follow Amazon day (#EAEDED/#FFFFFF/#D5D9D9)",
+    "Toggle: html.theme-light (+ admin-light for compat)",
+    "Heebo first for all body text"
+  ]
 }

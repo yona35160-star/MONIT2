@@ -13,3 +13,10 @@ Full visual refresh: **amber taxi** accent on **deep charcoal** surfaces. Typogr
 ## Do not
 - Keep old sky `#0EA5E9` as primary.
 - Keep indigo leftovers.
+
+## v2.1 Dual theme (2026-09-15)
+- **Dark (default):** GitHub-like canvas `#0d1117` / `#161b22` / border `#30363d`
+- **Light:** Amazon-day `#EAEDED` / white cards / border `#D5D9D9` / warm CTA
+- Brand CTA unchanged: `#F5A524`
+- Toggle classes: `html.theme-light` + `html.admin-light` (compat)
+- CSS vars: `--tp-*` for app chrome; `--admin-*` mapped for Control Center

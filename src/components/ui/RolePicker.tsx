@@ -1,5 +1,6 @@
 import React from 'react';
 import { Car, User, ArrowLeft } from 'lucide-react';
+import { ThemeToggle } from '../ThemeToggle';
 import { cn } from '../../utils/ui';
 
 export type RideRole = 'passenger' | 'driver';
@@ -124,18 +125,21 @@ export const RoleShell: React.FC<RoleShellProps> = ({ role, onSwitch, children }
                         אפליקציית נסיעה · {isPassenger ? 'נוסע' : 'נהג'}
                     </div>
                 </div>
-                <button
-                    type="button"
-                    onClick={onSwitch}
-                    className={[
-                        'text-xs font-black px-3 py-1.5 rounded-xl border transition-colors shrink-0',
-                        isPassenger
-                            ? 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                            : 'border-slate-700 text-accent-300 hover:bg-slate-900',
-                    ].join(' ')}
-                >
-                    החלף תפקיד
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                    <ThemeToggle />
+                    <button
+                        type="button"
+                        onClick={onSwitch}
+                        className={[
+                            'text-xs font-black px-3 py-1.5 rounded-xl border transition-colors',
+                            isPassenger
+                                ? 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                                : 'border-slate-700 text-accent-300 hover:bg-slate-900',
+                        ].join(' ')}
+                    >
+                        החלף תפקיד
+                    </button>
+                </div>
             </div>
             <div className="flex-1 min-h-0">{children}</div>
         </div>
