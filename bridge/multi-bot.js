@@ -1,4 +1,10 @@
-require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+// Always load bridge/.env (works when launched from repo root via npm run bridge)
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+// Root .env may expose VITE_BRIDGE_API_KEY as a fallback during local setup
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+
 const {
     makeWASocket,
     DisconnectReason,
@@ -14,19 +20,19 @@ const qrcodeTerminal = require('qrcode-terminal');
 const qrcode = require('qrcode');
 const rateLimit = require('express-rate-limit');
 const PINO = require('pino');
-const path = require('path');
-const fs = require('fs');
 
 // ==============================================
 // CONFIGURATION
 // ==============================================
 
-const BRIDGE_API_KEY = process.env.BRIDGE_API_KEY;
-if (!BRIDGE_API_KEY) {
-    console.error('\n❌ FATAL: BRIDGE_API_KEY environment variable is required.\n');
+const PLACEHOLDER_KEY = /^(replace_with_strong_random_key_here)?$/i;
+let BRIDGE_API_KEY = (process.env.BRIDGE_API_KEY || process.env.VITE_BRIDGE_API_KEY || '').trim();
+if (!BRIDGE_API_KEY || PLACEHOLDER_KEY.test(BRIDGE_API_KEY)) {
+    console.error('\n❌ FATAL: BRIDGE_API_KEY missing or still a placeholder.');
+    console.error('   Fix: run SETUP-BRIDGE.bat (auto-generates a key), or set BRIDGE_API_KEY in bridge/.env');
+    console.error('   Then set the SAME value as VITE_BRIDGE_API_KEY in the root .env\n');
     process.exit(1);
 }
-
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || '';
 if (!MONGO_URI) {
     console.warn('\n⚠️ WARNING: MONGO_URI not provided. Using local filesystem for sessions.\n');
