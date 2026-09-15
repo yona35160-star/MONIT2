@@ -48,8 +48,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 </div>
 
                 <SystemStatusIndicator />
-                <div className="hidden md:block"><ServerStatusWidget serverSpot={settings.serverSpot || settings['SERVER_SPOT']} /></div>
-                <div className="md:hidden"><ServerStatusWidget serverSpot={settings.serverSpot || settings['SERVER_SPOT']} compact={true} /></div>
+                <div className="hidden md:block"><ServerStatusWidget serverSpot={settings?.serverSpot || settings?.['SERVER_SPOT']} /></div>
+                <div className="md:hidden"><ServerStatusWidget serverSpot={settings?.serverSpot || settings?.['SERVER_SPOT']} compact={true} /></div>
 
                 <div className="flex-grow md:flex-grow-0"></div>
 

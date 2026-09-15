@@ -35,6 +35,9 @@
 ### START-ALL.bat
 הרצה חוזרת של 2 המסכים (או SETUP אם אין `node_modules`).
 
+### START-API.bat
+Express API בלבד: `npm run dev:api` על http://localhost:4000.
+
 ### SETUP-BRIDGE.bat
 WhatsApp Bridge בנפרד — sessions ב-Mongo.
 

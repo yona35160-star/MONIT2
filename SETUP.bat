@@ -12,7 +12,7 @@ echo.
 if not exist ".env" (
   if exist ".env.example" (
     copy /Y ".env.example" ".env" >nul
-    echo [OK] Created .env from .env.example
+    echo [OK] Created .env from .env.example - VITE_WEBAPP_URL defaults to http://localhost:4000.
   ) else (
     echo [ERROR] .env.example missing.
     pause & exit /b 1
@@ -35,8 +35,10 @@ if not exist "bridge\.env" (
 if not exist "server\.env" (
   if exist "server\.env.example" (
     copy /Y "server\.env.example" "server\.env" >nul
-    echo [OK] Created server\.env from template.
+    echo [OK] Created server\.env from template (local Mongo API).
   )
+) else (
+  echo [OK] server\.env already exists - left untouched.
 )
 
 echo.
@@ -82,10 +84,11 @@ start "" "http://localhost:5273/app.html"
 echo.
 echo  ----------------------------------------
 echo   Mongo     : mongodb://127.0.0.1:27017/taxipro  (or Atlas)
-echo   API       : http://localhost:4000              (when server/ exists)
+echo   API       : http://localhost:4000
 echo   Ops       : http://localhost:5275/admin.html
 echo   Ride App  : http://localhost:5273/app.html
 echo   Bridge    : SETUP-BRIDGE.bat
 echo  ----------------------------------------
+echo   Local admin stub: admin@taxi.co.il / 123456
 echo [OK] SETUP finished - apps are starting in new windows.
 exit /b 0

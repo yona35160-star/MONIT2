@@ -1,5 +1,7 @@
 import { ApiResponse, Order, Driver, LoginPayload, DashboardStats, SystemSettings } from '../types';
-import { normalizeResponseKeys, toSnakeCaseLite } from '../utils/apiUtils';
+import { normalizeResponseKeys, toSnakeCaseLite, isValidWebappUrl } from '../utils/apiUtils';
+
+export { isValidWebappUrl };
 
 /** Chatty GAS reads / location pings — coalesce in-flight + skip if a fresh OK is cached. Mutations are not limited. */
 const CHATTY_ACTION_MIN_MS: Record<string, number> = {
@@ -33,26 +35,26 @@ let cachedScriptsUrl: string | null = null;
 
 const getApiUrl = (): string => {
   // 1. Check cached URL
-  if (cachedScriptsUrl && cachedScriptsUrl.startsWith('https://')) return cachedScriptsUrl;
+  if (cachedScriptsUrl && isValidWebappUrl(cachedScriptsUrl)) return cachedScriptsUrl;
 
   // 2. Main localStorage key (Unified)
   const savedUrl = localStorage.getItem('taxi_app_script_url');
-  if (savedUrl && savedUrl.startsWith('https://')) {
+  if (savedUrl && isValidWebappUrl(savedUrl)) {
     cachedScriptsUrl = savedUrl;
     return savedUrl;
   }
 
   // 3. Migration: Check legacy localStorage v3/v2 and move to unified key
   const legacyV3 = localStorage.getItem('taxi_app_script_url_v3');
-  if (legacyV3 && legacyV3.startsWith('https://')) {
+  if (legacyV3 && isValidWebappUrl(legacyV3)) {
     localStorage.setItem('taxi_app_script_url', legacyV3);
     localStorage.removeItem('taxi_app_script_url_v3');
     cachedScriptsUrl = legacyV3;
     return legacyV3;
   }
 
-  // 4. Use build-time VITE_WEBAPP_URL
-  if (DEFAULT_WEBAPP_URL && DEFAULT_WEBAPP_URL.startsWith('https://')) {
+  // 4. Use build-time VITE_WEBAPP_URL (GAS https or local Mongo http://localhost:4000)
+  if (DEFAULT_WEBAPP_URL && isValidWebappUrl(DEFAULT_WEBAPP_URL)) {
     cachedScriptsUrl = DEFAULT_WEBAPP_URL;
     return DEFAULT_WEBAPP_URL;
   }
@@ -61,14 +63,14 @@ const getApiUrl = (): string => {
 };
 
 export const initializeApiUrl = async (settingsUrl?: string): Promise<string> => {
-  if (settingsUrl && settingsUrl.startsWith('https://')) {
+  if (settingsUrl && isValidWebappUrl(settingsUrl)) {
     cachedScriptsUrl = settingsUrl;
     localStorage.setItem('taxi_app_script_url', settingsUrl);
     return settingsUrl;
   }
 
   const fromStore = localStorage.getItem('taxi_app_script_url');
-  if (fromStore && fromStore.startsWith('https://')) {
+  if (fromStore && isValidWebappUrl(fromStore)) {
     cachedScriptsUrl = fromStore;
     return fromStore;
   }

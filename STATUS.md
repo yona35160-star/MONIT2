@@ -1,15 +1,14 @@
 # Status
 
 ## מצב נוכחי
-- גל: **Wave Mongo** — Mongo = SoR; GAS/Sheets החוצה בהדרגה; Firebase זמני ל-Realtime
-- חוסם: מחשב `DESKTOP-54EVA7N` היה מנותק בזמן הכנת DevOps — קבצים מוכנים לדחיפה
+- גל: **Wave Mongo** — Mongo = SoR; Express API על `:4000`; GAS/Sheets החוצה בהדרגה; Firebase זמני ל-Realtime
+- Frontend: `sendToBackend` → `VITE_WEBAPP_URL=http://localhost:4000`
 
 ## עדכון אחרון
-- **DevOps (מוכן לדחיפה):** `START-MONGO.bat`, `SETUP.bat` (Mongo→install→API→2 apps), `ARCHITECTURE.md`, `.env.example` עם `VITE_WEBAPP_URL=http://localhost:4000`, `server/.env.example`, `bridge/.env.example` עם Mongo מקומי/Atlas, `START.md` Mongo-first
-- **תיעוד:** עדכון Mongo ב-START (סנכרון למכונה אחרי חיבור)
-- **מתכנת:** שלד `server/` Express+Mongo
+- **מתכנת:** `server/` Express + mongodb עם חוזה GAS `{ action, payload, authToken }`; Login מקבל localhost; dashboard לא קורס כש-settings=null
+- **DevOps:** `START-MONGO.bat`, `SETUP.bat` (Mongo→install→API→2 apps), `ARCHITECTURE.md`, `.env.example`
+- **QA-11b / QA-14:** `SETUP-BRIDGE.bat` · Heebo ב-`body` / `font-sans`
 
 ## הצעד הבא
-1. @noma — לחבר מחדש את המחשב / לאשר חיבור GitHub ל-Cloud Agent
-2. @סוכן מתכנת — `server/` API
-3. @סוכן בדיקות — smoke אחרי API
+1. @סוכן בדיקות — smoke: START-MONGO → `npm run dev:api` → Login Test + הזמנה
+2. Firebase עדיין נדרש למפת realtime; WhatsApp עדיין `SETUP-BRIDGE.bat`

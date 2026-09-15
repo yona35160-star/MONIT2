@@ -1,6 +1,28 @@
 /**
  * @file utils/apiUtils.ts
- * @description Lightweight, non-recursive key normalizer for GAS API responses.
+ * @description Lightweight, non-recursive key normalizer for GAS API responses,
+ * plus WebApp URL validation (GAS https + local Mongo http://localhost).
+ */
+
+/**
+ * True for a GAS Web App URL or a local Mongo API (http://localhost / 127.0.0.1).
+ * Used by sendToBackend and Login so VITE_WEBAPP_URL=http://localhost:4000 works.
+ */
+export const isValidWebappUrl = (url: string): boolean => {
+    const trimmed = String(url || '').trim();
+    if (!trimmed || trimmed.includes('YOUR_')) return false;
+    try {
+        const u = new URL(trimmed);
+        if (u.protocol === 'https:') return true;
+        const host = u.hostname.toLowerCase();
+        return u.protocol === 'http:' && (host === 'localhost' || host === '127.0.0.1');
+    } catch {
+        return false;
+    }
+};
+
+/**
+ * Lightweight, non-recursive key normalizer for GAS API responses.
  *
  * Replaces the old recursive toCamelCase / toSnakeCase approach in api.ts.
  * Instead of walking the entire object tree with regex, we:
