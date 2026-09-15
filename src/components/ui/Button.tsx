@@ -13,7 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 /** Aligns with design-system.json + .btn-* utilities in index.css */
 const variantClasses: Record<NonNullable<ButtonProps['variant']>, string> = {
     primary:
-        'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25 hover:from-primary-600 hover:to-primary-700 focus-visible:ring-primary-400',
+        'bg-gradient-to-r from-primary-500 to-primary-600 text-slate-950 shadow-lg shadow-primary-500/30 hover:from-primary-400 hover:to-primary-500 focus-visible:ring-primary-400',
     secondary:
         'bg-surface-100 hover:bg-surface-200 text-slate-800 border border-slate-200/80 focus-visible:ring-primary-300',
     accent:

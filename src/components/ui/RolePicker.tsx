@@ -21,8 +21,8 @@ const roles: Array<{
         id: 'passenger',
         title: 'נוסע',
         subtitle: 'הזמנה, מעקב חי ודירוג',
-        accent: 'hover:border-accent-400/60 hover:shadow-glow-accent',
-        iconWrap: 'bg-accent-400 text-slate-900 shadow-glow-accent',
+        accent: 'hover:border-primary-500/60 hover:shadow-glow-primary',
+        iconWrap: 'bg-primary-500 text-slate-950 shadow-glow-primary',
         Icon: User,
     },
     {
@@ -30,7 +30,7 @@ const roles: Array<{
         title: 'נהג',
         subtitle: 'תור נסיעות, ניווט ופורטל',
         accent: 'hover:border-primary-400/60 hover:shadow-glow-primary',
-        iconWrap: 'bg-primary-500 text-white shadow-glow-primary',
+        iconWrap: 'bg-primary-500 text-slate-950 shadow-glow-primary',
         Icon: Car,
     },
 ];
@@ -41,13 +41,13 @@ export const RolePicker: React.FC<RolePickerProps> = ({ onSelect, className }) =
         <div
             className={[
                 'min-h-screen flex flex-col items-center justify-center gap-8 p-6',
-                'bg-[radial-gradient(ellipse_at_top,_#1e293b_0%,_#020617_55%)] text-white',
+                'bg-[radial-gradient(ellipse_at_top,_#1C2430_0%,_#0B0F14_55%)] text-white',
                 className || '',
             ].join(' ')}
             dir="rtl"
         >
             <div className="text-center space-y-3 max-w-md">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-400/15 border border-accent-400/30 text-accent-300 text-[11px] font-black tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/15 border border-primary-500/30 text-primary-300 text-[11px] font-black tracking-widest uppercase">
                     TAXIPRO
                 </div>
                 <h1 className="text-3xl sm:text-4xl font-black tracking-tight">אפליקציית נסיעה</h1>
@@ -63,7 +63,7 @@ export const RolePicker: React.FC<RolePickerProps> = ({ onSelect, className }) =
                         type="button"
                         onClick={() => onSelect(id)}
                         className={[
-                            'group text-right w-full rounded-[1.75rem] border border-white/10 bg-slate-900/70 backdrop-blur-xl p-5',
+                            'group text-right w-full rounded-[1.75rem] border border-surface-border bg-surface-card/90 backdrop-blur-xl p-5',
                             'transition-all duration-200 active:scale-[0.98]',
                             accent,
                         ].join(' ')}

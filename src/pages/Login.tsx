@@ -103,12 +103,12 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#020617] p-4 relative overflow-hidden font-sans" dir="rtl">
+    <div className="min-h-screen flex items-center justify-center bg-[#0B0F14] p-4 relative overflow-hidden font-sans" dir="rtl">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-500/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
-      <div className="bg-[#1E293B] w-full max-w-md p-10 rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] border border-white/5 relative z-10 overflow-hidden group">
+      <div className="bg-[#141A22] w-full max-w-md p-10 rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] border border-white/5 relative z-10 overflow-hidden group">
         <Link to="/" className="absolute top-8 left-8 text-slate-500 hover:text-white transition-all bg-white/5 p-2 rounded-xl border border-white/5">
           <ArrowRight size={20} />
         </Link>
@@ -138,12 +138,12 @@ export const Login: React.FC = () => {
         </div>
 
         {showUrlInput && (
-          <div className="mb-8 p-6 bg-[#0F172A]/50 rounded-[1.5rem] border border-white/5 animate-in slide-in-from-top-4 duration-500">
+          <div className="mb-8 p-6 bg-[#0B0F14]/50 rounded-[1.5rem] border border-white/5 animate-in slide-in-from-top-4 duration-500">
             <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 px-1">כתובת שרת</label>
             <div className="flex gap-3 items-center">
               <input
                 type="url"
-                className="flex-1 p-4 bg-[#0F172A] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all font-mono"
+                className="flex-1 p-4 bg-[#0B0F14] border border-white/10 rounded-xl text-xs text-white placeholder:text-slate-700 outline-none focus:ring-2 focus:ring-primary-500/50 transition-all font-mono"
                 placeholder="הדביקו URL חדש מ-Deploy (ראה START.md)"
                 dir="ltr"
                 value={scriptUrl}
@@ -152,7 +152,7 @@ export const Login: React.FC = () => {
                   setTestStatus('idle');
                 }}
               />
-              <button type="button" onClick={handleTestConnection} className="p-4 bg-primary-600 text-white rounded-xl hover:bg-primary-500 transition-all shadow-lg shadow-primary-500/20 disabled:opacity-50" disabled={testStatus === 'testing'}>
+              <button type="button" onClick={handleTestConnection} className="p-4 bg-primary-500 text-slate-950 rounded-xl hover:bg-primary-400 transition-all shadow-lg shadow-primary-500/20 disabled:opacity-50" disabled={testStatus === 'testing'}>
                 {testStatus === 'testing' ? <Loader2 size={18} className="animate-spin" /> : <Zap size={18} />}
               </button>
             </div>
@@ -177,7 +177,7 @@ export const Login: React.FC = () => {
                 type="email"
                 required
                 autoComplete="email"
-                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700"
+                className="w-full pr-12 pl-4 py-4 bg-[#0B0F14] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700"
                 placeholder="name@taxi-pro.ai"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -194,7 +194,7 @@ export const Login: React.FC = () => {
                 type="password"
                 required
                 autoComplete="current-password"
-                className="w-full pr-12 pl-4 py-4 bg-[#0F172A] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700 font-mono"
+                className="w-full pr-12 pl-4 py-4 bg-[#0B0F14] border border-white/5 rounded-2xl text-white font-bold outline-none focus:ring-2 focus:ring-primary-500/50 transition-all placeholder:text-slate-700 font-mono"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -212,7 +212,7 @@ export const Login: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-primary-600 hover:bg-primary-500 text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-primary-600/20 flex items-center justify-center gap-3 relative overflow-hidden group/btn"
+            className="w-full bg-primary-500 hover:bg-primary-400 text-slate-950 font-black py-5 rounded-2xl transition-all shadow-xl shadow-primary-600/20 flex items-center justify-center gap-3 relative overflow-hidden group/btn"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_2s_infinite]"></div>
             {isLoading ? <Loader2 className="animate-spin" size={24} /> : (

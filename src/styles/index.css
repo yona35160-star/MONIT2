@@ -10,9 +10,9 @@
 /* Base Styles */
 @layer base {
   :root {
-    --color-primary: 37 99 235;
-    --color-primary-light: 96 165 250;
-    --color-primary-dark: 29 78 216;
+    --color-primary: 245 165 36;
+    --color-primary-light: 255 200 87;
+    --color-primary-dark: 212 137 15;
     --color-accent: 245 158 11;
     --color-surface: 255 255 255;
     --color-surface-soft: 248 250 252;
@@ -20,7 +20,7 @@
     --radius-button: 0.875rem;
 
     /* Pixel Premium Palette */
-    --brand-primary: #1E40AF;
+    --brand-primary: #F5A524;
     --brand-accent: #F59E0B;
     --brand-surface-light: #FFFFFF;
     --brand-surface-dark: #0F172A;
@@ -46,24 +46,24 @@
        ADMIN THEME TOKENS  —  Default = Dark
        Toggled via: html.admin-light class
        ============================================ */
-    --admin-bg:             #0F172A;
-    --admin-sidebar:        #0B1120;
-    --admin-sidebar-border: #334155;
-    --admin-panel:          #1E293B;
-    --admin-panel-soft:     #263248;
-    --admin-card:           #1E293B;
-    --admin-card-border:    #334155;
+    --admin-bg:             #0B0F14;
+    --admin-sidebar:        #0B0F14;
+    --admin-sidebar-border: #2A3441;
+    --admin-panel:          #141A22;
+    --admin-panel-soft:     #1C2430;
+    --admin-card:           #141A22;
+    --admin-card-border:    #2A3441;
     --admin-text-primary:   #F1F5F9;
     --admin-text-secondary: #94A3B8;
     --admin-text-muted:     #64748B;
-    --admin-input-bg:       #0F172A;
-    --admin-input-border:   #334155;
+    --admin-input-bg:       #0B0F14;
+    --admin-input-border:   #2A3441;
     --admin-input-text:     #F1F5F9;
     --admin-hover:          rgba(255,255,255,0.05);
     --admin-active-bg:      rgba(251,191,36,0.15);
-    --admin-active-text:    #FBB924;
+    --admin-active-text:    #F5A524;
     --admin-active-border:  rgba(251,191,36,0.3);
-    --admin-divider:        #263248;
+    --admin-divider:        #1C2430;
     --admin-shadow:         0 4px 24px rgba(0,0,0,0.4);
     --admin-shadow-lg:      0 12px 48px rgba(0,0,0,0.5);
     --admin-mobile-header:  rgba(11,17,32,0.95);
