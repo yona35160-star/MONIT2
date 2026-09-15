@@ -26,7 +26,19 @@ Use `bridge/render.yaml`. Secrets only in Dashboard. Health: `GET /health`.
 SETUP.bat
 ```
 
-Does: `npm i` (root+bridge), copies env templates if missing, starts Ops + Ride App, optional bridge.
+Does: `npm i` (root+bridge), copies env templates if missing, starts **Ops + Ride App** (no prompts).
+
+```bat
+START-ALL.bat
+```
+
+Starts the 2 screens (calls `SETUP.bat` if `node_modules` is missing).
+
+```bat
+SETUP-BRIDGE.bat
+```
+
+WhatsApp bridge separately (new bot / QR).
 
 ## D) Security
 

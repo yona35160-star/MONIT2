@@ -1,16 +1,12 @@
 # Status
 
 ## מצב נוכחי
-- פרויקט: **TAXIPRO / MONIT2** — Wave Unify
-- 2 כניסות: מרכז שליטה (dmin.html / dev:ops) · אפליקציית נסיעה (pp.html / dev:app + בחירת תפקיד)
-- הפניות: passenger.html / driver.html / index.html → pp.html
+- Wave Unify: **2 מסכים** — Ops (`admin.html` / `dev:ops`) + App (`app.html` / `dev:app`)
+- BAT: `SETUP.bat` (לחיצה אחת) · `START-ALL.bat` · `SETUP-BRIDGE.bat`
 
 ## עדכון אחרון
-- **עיצוב Unify:** Done — RolePicker/RoleShell מלוטשים + IA ב-design-system.json (ops/ride v1.1); typecheck ירוק
-- **מתכנת Unify:** routing + RoleShell + uild:unify (e6c8f1d)
-- **DevOps/תיעוד:** SETUP.bat + מדריכים
+- **תיעוד:** README + GUIDE מסונכרנים לפקודות הסופיות + 3 קבצי BAT. DEPLOY עודכן בהתאם.
 
 ## הצעד הבא
-1. @סוכן DevOps — דחיפת polish RolePicker ל-origin/main (בלי secrets)
-2. @סוכן בדיקות — smoke על 2 הכניסות בלבד + QA-REPORT
-3. @סוכן תיעוד — לוודא שמות פקודות סופיים במדריך
+1. @סוכן בדיקות — smoke על http://localhost:5275/admin.html + http://localhost:5273/app.html (כולל בחירת תפקיד)
+2. אחרי QA ירוק — PM Ready מקומי ל-noma (DB/WhatsApp ידני)
