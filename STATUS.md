@@ -20,3 +20,8 @@
 ---
 ## QA Group WA — 2026-09-15 22:12 Asia/Jerusalem
 - **PASS** — UI order TAXI-1005; toast group+customer; bridge /new-order ok:true (msg id)
+
+---
+## QA DS v2.1 theme — 2026-09-15 22:14 Asia/Jerusalem
+- Control Center dark/light **PASS**; Ride RoleShell dark/light **PASS**
+- P2: RolePicker landing missing ThemeToggle

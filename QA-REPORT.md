@@ -72,3 +72,19 @@ None found in this smoke.
 
 Blocking: **none**
 Screenshots: `qa-screenshots/wa-dashboard.png`, `wa-order-form.png`, `wa-toast.png`
+
+---
+## DS v2.1 dark/light smoke — 2026-09-15 22:14 Asia/Jerusalem
+
+| App | Dark | Light | ThemeToggle | Crash | Result |
+|-----|------|-------|-------------|-------|--------|
+| Control Center `:5275` | bg `#0d1117` (GitHub) | bg `#eaeded` (Amazon-ish) | PASS (toggle + reverse) | none | **PASS** |
+| Ride `:5273` (after נוסע → RoleShell) | bg `#0d1117` | bg `#eaeded` | PASS | none | **PASS** |
+
+### Notes (non-blocking P2)
+- RolePicker landing page has **no** ThemeToggle (import present, unused) — toggle only appears in `RoleShell` after role select. Hardcoded dark gradient on picker.
+- No pageerrors.
+
+### Screenshots
+- `qa-screenshots/ds-ops-dark.png` / `ds-ops-light.png`
+- `qa-screenshots/ds-ride-shell-dark.png` / `ds-ride-shell-light.png`
