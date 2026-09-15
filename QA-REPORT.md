@@ -1,48 +1,36 @@
-# QA-REPORT — TAXIPRO / MONIT2 — Wave Unify
+﻿# QA-REPORT — TAXIPRO/MONIT2 (Wave Mongo live smoke)
 
-**סוכן:** בדיקות (QA & Security)  
-**תאריך:** 2026-09-15  
-**קומיטים:** `e6c8f1d` / `b2f3969` / `c9843eb` (+ BAT ללחיצה אחת)  
-**סביבה:** `npm run dev:ops` :5275 + `npm run dev:app` :5273 — בלי `.env` אמיתי, בלי bridge
+**Date:** 2026-09-15 21:49 Asia/Jerusalem  
+**Machine:** DESKTOP-54EVA7N (C:\Users\Pc\MONIT2-sync)  
+**Env:** Mongo Atlas (server/.env), API `http://localhost:4000`, `VITE_WEBAPP_URL=http://localhost:4000`  
+**Stub:** `admin@taxi.co.il` / `123456`
 
-## פסק דין
+## Results
 
-**PASS — Ready מקומי ל-noma על 2 המסכים.**
+| # | Check | Result | Notes |
+|---|--------|--------|-------|
+| 1 | `GET /health` | **PASS** | `{"ok":true,"service":"taxipro-api","mongo":true,"port":4000}` |
+| 2 | `loginAdmin` API | **PASS** | Token issued; wrong password rejected |
+| 3 | Login UI → Control Center | **PASS** | GAS field empty; login → `#/dashboard`; no crash / pageerrors |
+| 4 | Basic ride order | **PASS** | API `createOrder` → `TAXI-1002` (UI order flow not fully exercised; API path OK) |
+| 5 | No secrets in logs/Git | **PASS** | `.env` / `server/.env` / `bridge/.env` gitignored & untracked; no credential dumps in scanned logs |
 
-`npm run typecheck` ירוק. Smoke על `admin.html` + `app.html` כולל בחירת תפקיד והחלפה: **ירוק**.  
-Live data / login מאובטח / WhatsApp עדיין דורשים `.env` חדש + `SETUP-BRIDGE.bat` (צעד ידני מ-noma).
+## UI extras
+- Ride app `:5273/app.html` role picker: **PASS** (נוסע / נהג)
 
-## Unify smoke
+## Screenshots
+- `qa-screenshots/noma-login.png`
+- `qa-screenshots/noma-dashboard.png`
+- `qa-screenshots/noma-app.png`
 
-| בדיקה | URL | תוצאה |
-|---|---|---|
-| Ops login | `http://localhost:5275/admin.html` | PASS — מרכז שליטה / למורשים בלבד |
-| Alias `#/station` | `admin.html#/station` | PASS — טופס הזמנה |
-| Alias `#/dispatch` | `admin.html#/dispatch` | PASS — טופס הזמנה |
-| Role picker | `http://localhost:5273/app.html` | PASS — כרטיסי נוסע/נהג |
-| בחירת נוסע + סרגל | לחצן «נוסע» | PASS — `החלף תפקיד` + מסך התחברות |
-| החלף תפקיד | סרגל | PASS — חזרה ל-picker |
-| בחירת נהג | לחצן «נהג» | PASS — פורטל נהגים |
-| הפניית `passenger.html` | dev:app | PASS פונקציונלי (נוחת `/?role=passenger` במקום `/app.html` בגלל Vite mode) |
+## Blocking bugs
+None found in this smoke.
 
-אין `pageerror` / uncaught. צילומים: `qa-screenshots/unify-*.png`
+## Notes for PM
+- Started `dev:ops` (:5275) and `dev:app` (:5273) for the run (were down).
+- Local Mongo `:27017` closed — Atlas via `MONGODB_URI` is what `/health` used (`mongo:true`).
 
-## ממצאים לא-חוסמים
-
-| ID | חומרה | תיאור | למי |
-|---|---|---|---|
-| QA-10 | P3 | `SETUP.bat` מסתיים ב-`pause` (Enter אחרי שהאפליקציות כבר עלו) | DevOps |
-| QA-11 | P3 | Ops עדיין מציג «הפעל START-ALL.bat» לגשר — צריך `SETUP-BRIDGE.bat` | תיעוד |
-| QA-12 | P3 | Role picker מציג `admin.html` כטקסט למשתמש («נמצא ב־admin.html») | תיעוד/עיצוב |
-| QA-13 | Info | קונסול: PWA script MIME (`text/html`) ב-dev — לא שובר UI | מתכנת Wave הבא |
-
-## אבטחה
-
-- אין `.env` בריפו שנבדק; SETUP מעתיק `.env.example` רק אם חסר  
-- לא נבדקו מפתחות חיים / Firebase חדש
-
-## המלצה ל-PM
-
-1. להכריז **Ready מקומי** ל-noma: `SETUP.bat` או `START-ALL.bat` → 5275/admin + 5273/app  
-2. noma ממלא `.env` (Firebase/GAS/WhatsApp חדשים) ומריץ `SETUP-BRIDGE.bat` כשמוכן  
-3. Polish: QA-10..12
+## Follow-up (dashboard settle)
+- After wait: dashboard **fully loaded** (נהגים בזמן אמת / הזמנות פעילות / לוח בקרה). First screenshot was mid-spinner only.
+- Non-blocking console noise: `ERR_CONNECTION_REFUSED` (likely Firebase/bridge) + script MIME `text/html` — P3, not smoke-blocking.
+- Screenshot: `qa-screenshots/noma-dashboard-final.png`
