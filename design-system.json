@@ -1,21 +1,18 @@
-{
+﻿{
   "name": "TAXIPRO / MONIT2 Design System",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "direction": "rtl",
-  "apps": [
-    "ops",
-    "ride"
-  ],
+  "apps": ["ops", "ride"],
+  "theme": {
+    "mood": "premium taxi night",
+    "notes": "Full visual refresh Wave Fresh Start — amber taxi accent on deep charcoal; Heebo-first Hebrew typography."
+  },
   "typography": {
     "fontFamily": {
-      "sans": [
-        "Rubik",
-        "Heebo",
-        "Inter",
-        "system-ui",
-        "sans-serif"
-      ]
+      "sans": ["Heebo", "Rubik", "Assistant", "system-ui", "sans-serif"],
+      "display": ["Heebo", "Rubik", "sans-serif"]
     },
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap",
     "scale": {
       "xs": "0.75rem",
       "sm": "0.875rem",
@@ -23,293 +20,48 @@
       "lg": "1.125rem",
       "xl": "1.25rem",
       "2xl": "1.5rem",
-      "3xl": "1.875rem"
+      "3xl": "1.875rem",
+      "4xl": "2.25rem"
     },
-    "weights": {
-      "regular": 400,
-      "medium": 500,
-      "semibold": 600,
-      "bold": 700
-    }
+    "weights": { "regular": 400, "medium": 500, "semibold": 600, "bold": 700, "extrabold": 800 }
   },
   "colors": {
     "brand": {
-      "primary": {
-        "hex": "#0EA5E9",
-        "tailwind": "primary-500",
-        "usage": "CTA ראשי, קישורים, פוקוס"
-      },
-      "primaryDark": {
-        "hex": "#0284C7",
-        "tailwind": "primary-600"
-      },
-      "accent": {
-        "hex": "#FACC15",
-        "tailwind": "accent-400",
-        "usage": "מוטיב מונית / דגש חם"
-      },
-      "accentStrong": {
-        "hex": "#EAB308",
-        "tailwind": "accent-500"
-      },
-      "taxiYellow": {
-        "hex": "#FFD60A",
-        "tailwind": "taxi-yellow"
-      },
-      "taxiBlack": {
-        "hex": "#1A1A1A",
-        "tailwind": "taxi-black"
-      }
-    },
-    "semantic": {
-      "success": {
-        "hex": "#10B981",
-        "tailwind": "success-500"
-      },
-      "warning": {
-        "hex": "#F59E0B",
-        "tailwind": "warning-500"
-      },
-      "danger": {
-        "hex": "#EF4444",
-        "tailwind": "danger-500"
-      },
-      "info": {
-        "hex": "#3B82F6",
-        "tailwind": "primary-500"
-      }
+      "primary": { "hex": "#F5A524", "tailwind": "primary-500", "usage": "CTA, accents, taxi yellow-amber" },
+      "primaryDark": { "hex": "#D4890F", "tailwind": "primary-600" },
+      "primaryLight": { "hex": "#FFC857", "tailwind": "primary-300" },
+      "accent": { "hex": "#22D3EE", "tailwind": "accent-400", "usage": "live status, map pins" }
     },
     "surface": {
-      "light": {
-        "bg": "#F8FAFC",
-        "card": "#FFFFFF",
-        "border": "#E2E8F0",
-        "text": "#0F172A",
-        "muted": "#64748B"
-      },
-      "dark": {
-        "bg": "#0F172A",
-        "panel": "#1E293B",
-        "border": "#334155",
-        "text": "#F1F5F9",
-        "muted": "#94A3B8"
-      }
-    }
-  },
-  "roles": {
-    "passenger": {
-      "mode": "light",
-      "bgClass": "bg-customer",
-      "accent": "#F5A623",
-      "loader": "border-accent-400",
-      "notes": "ממשק בהיר, דגש צהוב-מונית, RTL מובייל"
+      "bg": { "hex": "#0B0F14", "tailwind": "surface-bg" },
+      "card": { "hex": "#141A22", "tailwind": "surface-card" },
+      "elevated": { "hex": "#1C2430", "tailwind": "surface-elevated" },
+      "border": { "hex": "#2A3441", "tailwind": "surface-border" }
     },
-    "driver": {
-      "mode": "dark",
-      "bgClass": "bg-driver",
-      "accent": "#FACC15",
-      "loader": "text-accent-400",
-      "notes": "רקע כהה, צהוב לסטטוס/CTA, ניגודיות גבוהה בשטח"
+    "text": {
+      "primary": { "hex": "#F3F4F6", "tailwind": "text-primary" },
+      "secondary": { "hex": "#9CA3AF", "tailwind": "text-secondary" },
+      "muted": { "hex": "#6B7280", "tailwind": "text-muted" }
     },
-    "admin": {
-      "mode": "dark-default",
-      "toggleClass": "admin-light",
-      "cssVarsPrefix": "--admin-",
-      "activeAccent": "#FBB924",
-      "notes": "טוקני --admin-* ב-index.css; ThemeToggle מחליף light/dark"
+    "semantic": {
+      "success": "#22C55E",
+      "warning": "#F59E0B",
+      "danger": "#EF4444",
+      "info": "#38BDF8"
     }
   },
-  "radius": {
-    "button": "0.875rem",
-    "input": "0.75rem",
-    "card": "1.5rem",
-    "badge": "9999px",
-    "tailwind": {
-      "button": "rounded-xl",
-      "card": "rounded-3xl",
-      "badge": "rounded-full"
-    }
-  },
+  "radius": { "sm": "0.5rem", "md": "0.875rem", "lg": "1.25rem", "xl": "1.5rem", "full": "9999px" },
   "shadow": {
-    "card": "shadow-card",
-    "cardHover": "shadow-card-hover",
-    "glowPrimary": "shadow-glow-primary",
-    "glowAccent": "shadow-glow-accent"
-  },
-  "spacing": {
-    "pageX": "1rem",
-    "pageY": "1.25rem",
-    "stack": "1rem",
-    "section": "1.5rem"
+    "card": "0 8px 30px rgba(0,0,0,0.35)",
+    "glow": "0 0 24px rgba(245,165,36,0.35)"
   },
   "components": {
-    "Button": {
-      "path": "src/components/ui/Button.tsx",
-      "variants": [
-        "primary",
-        "secondary",
-        "accent",
-        "danger",
-        "ghost",
-        "outline"
-      ],
-      "sizes": [
-        "xs",
-        "sm",
-        "md",
-        "lg"
-      ]
-    },
-    "Badge": {
-      "path": "src/components/ui/Badge.tsx",
-      "variants": [
-        "primary",
-        "success",
-        "warning",
-        "danger",
-        "neutral",
-        "status"
-      ]
-    },
-    "Card": {
-      "path": "src/components/ui/Card.tsx",
-      "variants": [
-        "default",
-        "glass",
-        "dark"
-      ]
-    },
-    "Input": {
-      "path": "src/components/ui/Input.tsx",
-      "sizes": [
-        "md",
-        "lg"
-      ]
-    },
-    "Spinner": {
-      "path": "src/components/ui/Spinner.tsx",
-      "roles": [
-        "passenger",
-        "driver",
-        "admin"
-      ]
-    },
-    "EmptyState": {
-      "path": "src/components/ui/EmptyState.tsx",
-      "tones": [
-        "empty",
-        "error",
-        "offline",
-        "search"
-      ]
-    },
-    "AlertBanner": {
-      "path": "src/components/ui/AlertBanner.tsx",
-      "tones": [
-        "error",
-        "success",
-        "warning",
-        "info"
-      ]
-    },
-    "RolePicker": {
-      "path": "src/components/ui/RolePicker.tsx",
-      "exports": [
-        "RolePicker",
-        "RoleShell"
-      ]
-    }
+    "Button": { "primary": "bg-primary-500 text-black font-semibold rounded-lg hover:bg-primary-600" },
+    "Card": { "base": "bg-surface-card border border-surface-border rounded-xl shadow-card" },
+    "Input": { "base": "bg-surface-elevated border border-surface-border rounded-lg text-text-primary" }
   },
-  "statusTokens": {
-    "source": "src/utils/statusConfig.ts",
-    "keys": [
-      "pending",
-      "confirmed",
-      "on_route",
-      "completed",
-      "waiting_approval",
-      "cancelled"
-    ]
-  },
-  "cssUtilities": {
-    "source": "src/styles/index.css",
-    "classes": [
-      "btn-primary",
-      "btn-accent",
-      "btn-ghost",
-      "btn-outline",
-      "card",
-      "card-hover",
-      "input",
-      "badge",
-      "bg-customer",
-      "bg-driver"
-    ]
-  },
-  "rules": [
-    "לא להשתמש ב-indigo/gray אד-הוק בכפתורים — רק טוקני primary/accent/danger/surface",
-    "צבעי סטטוס רק דרך STATUS_CONFIG / Badge status",
-    "Passenger = light + accent; Driver = dark + accent-400; Admin = --admin-* vars",
-    "כל רכיב UI חדש ב-src/components/ui ומיוצא מ-index.ts",
-    "RTL ברירת מחדל; אייקונים עם רווחים לוגיים (gap) לא margin קשיח LTR"
-  ],
-  "handoff": {
-    "for": "Lead Developer",
-    "use": [
-      "design-system.json",
-      "src/components/ui/*",
-      "tailwind.config.js colors",
-      "src/styles/index.css",
-      "src/utils/statusConfig.ts"
-    ]
-  },
-  "informationArchitecture": {
-    "ops": {
-      "entry": "admin.html",
-      "scripts": [
-        "dev:ops",
-        "build:ops"
-      ],
-      "labelHe": "מרכז שליטה",
-      "includes": [
-        "admin dashboard",
-        "station/dispatch order",
-        "settings"
-      ],
-      "theme": "admin (--admin-* tokens, dark default)"
-    },
-    "ride": {
-      "entry": "app.html",
-      "scripts": [
-        "dev:app",
-        "build:app"
-      ],
-      "labelHe": "אפליקציית נסיעה",
-      "rolePicker": "src/components/ui/RolePicker.tsx",
-      "roles": {
-        "passenger": {
-          "theme": "light + accent gold",
-          "flows": [
-            "order",
-            "track",
-            "rate"
-          ]
-        },
-        "driver": {
-          "theme": "dark + accent/primary",
-          "flows": [
-            "queue",
-            "portal",
-            "accept",
-            "complete"
-          ]
-        }
-      },
-      "legacyRedirects": [
-        "passenger.html",
-        "driver.html",
-        "index.html"
-      ]
-    }
+  "ia": {
+    "ops": "Control center = admin + station dispatch",
+    "ride": "Single app with passenger/driver role picker"
   }
 }

@@ -1,28 +1,15 @@
-# Design Wave 1 — הערות מסירה
+﻿# Design Notes — v2.0 Fresh Start
 
-## מה נעשה
-1. `design-system.json` — מקור אמת לטוקנים, תפקידים (passenger/driver/admin), רדיוסים, כללים.
-2. יישור `Button` מ-indigo/gray אד-הוק לטוקני `primary` / `accent` / `danger` (+ `outline`).
-3. רכיבים חדשים ב-`src/components/ui/`: `Badge`, `Card`, `Input`, `Spinner`, ו-`index.ts`.
-4. `Spinner` לפי תפקיד — מחליף loaders כפולים באפליקציות.
+## Direction
+Full visual refresh: **amber taxi** accent on **deep charcoal** surfaces. Typography: **Heebo** first (Hebrew).
 
-## אי-עקביות שזוהו (למתכנת / Wave 2 polish)
-- `Button` הישן השתמש ב-`indigo` בניגוד ל-`.btn-primary` ב-CSS ול-`primary-*` ב-Tailwind.
-- Tailwind `fontFamily.sans` היה Heebo; `index.css` body משתמש ב-Rubik — עדיפות: Rubik → Heebo → Inter.
-- צבעי brand ב-CSS (`--brand-primary: #1E40AF`) שונים מ-`primary-500` (#0EA5E9). מקור האמת לכפתורים/CTA: `design-system.json` + סולם `primary`/`accent` ב-Tailwind. `--admin-*` נשאר ל-Admin בלבד.
+## Apply
+1. Load Google Font Heebo in HTML entries / CSS.
+2. Remap Tailwind `primary` palette to amber scale (see design-system.json).
+3. Surfaces: `#0B0F14` bg, `#141A22` cards.
+4. Login (ops): keep padlock motif; amber glow instead of sky-blue.
+5. Ride RolePicker: amber CTAs, charcoal cards.
 
-## שימוש
-```tsx
-import { Button, Badge, Card, Input, Spinner } from '../components/ui';
-```
-
-## QA-3 (2026-09-14)
-הוחלפו כל מופעי `indigo-*` ב-`src/` בטוקני `primary-*` לפי `design-system.json`. מסלול קריטי (Login / StationOrder / AdminDashboard / DriverPortal / PassengerApp) + רכיבים נלווים + `btn-premium` ב-CSS.
-
-## Wave 2 polish — empty/loading/error (2026-09-14)
-- רכיבים חדשים: `EmptyState`, `AlertBanner` ב-`src/components/ui/`
-- שולבו במסלול קריטי: DriverPortal (Spinner+EmptyState), StationOrder (EmptyState+AlertBanner), OrderStatus/DriverLogin/CustomerOrder (AlertBanner)
-
-## Wave Unify — RolePicker (2026-09-15)
-- `RolePicker` + `RoleShell` ב-`src/components/ui/`; `entries/app.tsx` צורך אותם
-- `design-system.json` v1.1: IA ל-`ops` (admin.html) ו-`ride` (app.html + passenger/driver)
+## Do not
+- Keep old sky `#0EA5E9` as primary.
+- Keep indigo leftovers.
